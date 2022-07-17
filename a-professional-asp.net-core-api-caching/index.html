@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Caching | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,cache,caching,inmemory,distributed,redis,sqlserver" />
+    
+    <meta name="description" content="Caching is a technique of storing the frequently accessed&#x2F;used data so that the future requests for those sets of data can be served much faster to the client. In other terms, you take the most freque">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Caching">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-caching/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="Caching is a technique of storing the frequently accessed&#x2F;used data so that the future requests for those sets of data can be served much faster to the client. In other terms, you take the most freque">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-08T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="cache">
+<meta property="article:tag" content="caching">
+<meta property="article:tag" content="inmemory">
+<meta property="article:tag" content="distributed">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="sqlserver">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-caching" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Caching
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-caching/" class="article-date">
+       <time datetime="2020-10-08T00:00:00.000Z" itemprop="datePublished">2020-10-08</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-caching/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/cache/" rel="tag">cache</a>, <a class="tag-link-link" href="/tags/caching/" rel="tag">caching</a>, <a class="tag-link-link" href="/tags/distributed/" rel="tag">distributed</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/inmemory/" rel="tag">inmemory</a>, <a class="tag-link-link" href="/tags/redis/" rel="tag">redis</a>, <a class="tag-link-link" href="/tags/sqlserver/" rel="tag">sqlserver</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">2.2k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">13 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Caching is a technique of storing the frequently accessed/used data so that the future requests for those sets of data can be served much faster to the client.</p>
+<p>In other terms, you take the most frequently used data, which is also least-modified, and copy it temporary storage so that it can be accessed much faster for the future calls from the client. This awesome technique can boost the performance of your application drastically by removing unnecessary and frequent requests to the data source.</p>
+<p>It is important to note that applications should be designed in a way that they never depend directly on the cached memory. The Application should use the cache data only if it is available. If the cache data has expired or not available, the application would ideally request the original data source.</p>
+<span id="more"></span>
+
+<h2 id="Caching-in-ASP-NET-Core"><a href="#Caching-in-ASP-NET-Core" class="headerlink" title="Caching in ASP.NET Core"></a>Caching in ASP.NET Core</h2><p>ASP.NET Core has some great out-of-the-box support for various types of caching as follows.</p>
+<ul>
+<li><code>In-Memory caching</code>: Where the data is cached within the server’s memory.</li>
+<li><code>Distributed caching</code>: The data is stored external to the application in sources like Redis cache etc.</li>
+</ul>
+<h2 id="In-Memory-Caching"><a href="#In-Memory-Caching" class="headerlink" title="In-Memory Caching"></a>In-Memory Caching</h2><p>With ASP.NET Core, it is now possible to cache the data within the application. This is known as <code>In-Memory</code> Caching in ASP.NET Core. The Application stores the data on to the server’s instance which in turn drastically improves the application’s performance. This is probably the easiest way to implement caching in your application.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Much quicker than other forms of distributed caching as it avoids communicating over a network.</li>
+<li>Highly reliable.</li>
+<li>Best suited for Small to Mid Scale Applications.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>If configured incorrectly, it can consume your server’s resources.</li>
+<li>With the scaling of application and longer caching periods, it can prove to be costly to maintain the server.</li>
+<li>If deployed in the cloud, maintaining consistent caches can be difficult.</li>
+</ul>
+<h2 id="How-to-add-In-Memory-caching"><a href="#How-to-add-In-Memory-caching" class="headerlink" title="How to add In-Memory caching?"></a>How to add In-Memory caching?</h2><p>Add <code>AddMemoryCache</code> to your services as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddMemoryCache();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="How-to-use-In-Memory-caching"><a href="#How-to-use-In-Memory-caching" class="headerlink" title="How to use In-Memory caching?"></a>How to use In-Memory caching?</h2><p>In the Controllers folder, add a new Empty API Controller and name it <code>CacheController</code>. Here we will define just 2 endpoints using GET and POST Methods.</p>
+<p>The POST Method will be responsible for setting the cache. Now how cache works is quite similar to a C# dictionary. That means you will need 2 parameters, a key, and a value. We will use the key to identify the value (data).</p>
+<p>The Cache that we set earlier can be viewed using the GET Endpoint. But this depends on whether the cache is available/expired/exists.</p>
+<p>Here is how the controller looks like.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// CacheRequest.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CacheRequest</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Key &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Value &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// CacheController.cs</span><br><br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/[controller]&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiController</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CacheController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IMemoryCache memoryCache;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CacheController</span>(<span class="hljs-params">IMemoryCache memoryCache <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.memoryCache = memoryCache;<br>    &#125;<br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;key&#125;&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">GetCache</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> key</span>)</span><br>    &#123;<br>        <span class="hljs-built_in">string</span> <span class="hljs-keyword">value</span> = <span class="hljs-built_in">string</span>.Empty;<br>        memoryCache.TryGetValue(key, <span class="hljs-keyword">out</span> <span class="hljs-keyword">value</span>);<br>        <span class="hljs-keyword">return</span> Ok(<span class="hljs-keyword">value</span>);<br>    &#125;<br>    [<span class="hljs-meta">HttpPost</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">SetCache</span>(<span class="hljs-params">CacheRequest data</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> cacheExpiryOptions = <span class="hljs-keyword">new</span> MemoryCacheEntryOptions<br>        &#123;<br>            AbsoluteExpiration = DateTime.Now.AddMinutes(<span class="hljs-number">5</span>),<br>            Priority = CacheItemPriority.High,<br>            SlidingExpiration = TimeSpan.FromMinutes(<span class="hljs-number">2</span>),<br>            Size = <span class="hljs-number">1024</span>,<br>        &#125;;<br>        memoryCache.Set(data.Key, data.Value, cacheExpiryOptions);<br>        <span class="hljs-keyword">return</span> Ok();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Settings</strong></p>
+<p><code>MemoryCacheEntryOptions</code> is used to define the crucial properties of the concerned caching technique. We will be creating an instance of this class and passing it to the memoryCache object later on.</p>
+<ul>
+<li><code>Priority</code>: Sets the priority of keeping the cache entry in the cache. The default setting is <code>Normal</code>. Other options are <code>High</code>, <code>Low</code> and <code>Never</code> Remove. This is pretty self-explanatory.</li>
+<li><code>Size</code>: Allows you to set the size of this particular cache entry, so that it doesn’t start consuming the server resources.</li>
+<li><code>Sliding Expiration</code>: A defined Timespan within which a cache entry will expire if it is not used by anyone for this particular time period. In our case, we set it to 2 minutes. If, after setting the cache, no client requests for this cache entry for 2 minutes, the cache will be deleted.</li>
+<li><code>Absolute Expiration</code>: The problem with <code>Sliding Expiration</code> is that theoretically, it can last forever. Let’s say someone requests for the data every 1.59 minutes for the next couple of days, the application would be technically serving an outdated cache for days together. With <code>Absolute expiration</code>, we can set the actual expiration of the cache entry. Here it is set as 5 minutes. So, every 5 minutes, without taking into consideration the sliding expiration, the cache will be expired. It’s always a good practice to use both these expirations checks to improve performance.</li>
+</ul>
+<p><strong>Note</strong>: The <code>Absolute Expiration</code> <em>should never be less</em> than the <code>Sliding Expiration</code>.</p>
+<h2 id="Practical-In-Memory-caching-implementation"><a href="#Practical-In-Memory-caching-implementation" class="headerlink" title="Practical In-Memory caching implementation"></a>Practical In-Memory caching implementation</h2><p>For testing purposes, I have set up an API and configured Entity Framework Core. This API will return a <code>list of all customers</code> in the database.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/[controller]&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiController</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomerController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IMemoryCache memoryCache;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ApplicationDbContext context;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomerController</span>(<span class="hljs-params">IMemoryCache memoryCache, ApplicationDbContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>.memoryCache = memoryCache;<br>        <span class="hljs-keyword">this</span>.context = context;<br>    &#125;<br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;IActionResult&gt; <span class="hljs-title">GetAll</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> cacheKey = <span class="hljs-string">&quot;customerList&quot;</span>;<br>        <span class="hljs-keyword">if</span>(!memoryCache.TryGetValue(cacheKey, <span class="hljs-keyword">out</span> List&lt;Customer&gt; customerList))<br>        &#123;<br>            customerList = <span class="hljs-keyword">await</span> context.Customers.ToListAsync();<br>            <span class="hljs-keyword">var</span> cacheExpiryOptions = <span class="hljs-keyword">new</span> MemoryCacheEntryOptions<br>            &#123;<br>                AbsoluteExpiration = DateTime.Now.AddMinutes(<span class="hljs-number">5</span>),<br>                Priority = CacheItemPriority.High,<br>                SlidingExpiration = TimeSpan.FromMinutes(<span class="hljs-number">2</span>)<br>            &#125;;<br>            memoryCache.Set(cacheKey, customerList, cacheExpiryOptions);<br>        &#125;<br>        <span class="hljs-keyword">return</span> Ok(customerList);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Distributed-Caching"><a href="#Distributed-Caching" class="headerlink" title="Distributed Caching"></a>Distributed Caching</h2><p>ASP.NET Core supports not only in-memory application based cache, but also supports <code>Distribited Caching</code>. A distributed cache is something external to the application. It does not live within the application and need not be present in the infrastructure of the server machine as well. Distributed cache is a cache that can be shared by one or more applications/servers.<br>Like in-memory cache, it can improve your application response time quite drastrically. However, the implementation of Distributed Cache is application specific. This means that there are multiple cache providers that support distributed caches.</p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Data is consistent throughout multiple servers.</li>
+<li>Multiple Applications / Servers can use one instance of Redis Server to cache data. This reduces the cost of maintanence in the longer run.</li>
+<li>Cache would not be lost on server restart and application deployment as the cache lives external to the application.</li>
+<li>It does not use local server’s resources.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Since it is kept external, the response time may be a bit slower depending on the connection strength to the redis server.</li>
+</ul>
+<h2 id="Distributed-memory-cache"><a href="#Distributed-memory-cache" class="headerlink" title="Distributed memory cache"></a>Distributed memory cache</h2><p>To keep in line with other distributed memory cache providers that follow <code>IDistributedCache</code> interface there is also implementation of memory cache that follows the same interface. <code>MemoryDistributedCache</code> class is wrapper around <code>IMemoryCache</code> and we can use it as any other distributed cache.</p>
+<p><strong>IDistributedCache interface</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method(s)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Get, GetAsync</td>
+<td>Accepts a string key and retrieves a cached item as a <code>byte[]</code> array if found in the cache.</td>
+</tr>
+<tr>
+<td>Set, SetAsync</td>
+<td>Adds an item (as <code>byte[]</code> array) to the cache using a string key.</td>
+</tr>
+<tr>
+<td>Refresh, RefreshAsync</td>
+<td>Refreshes an item in the cache based on its key, resetting its sliding expiration timeout (if any).</td>
+</tr>
+<tr>
+<td>Remove, RemoveAsync</td>
+<td>Removes a cache item based on its string key.</td>
+</tr>
+</tbody></table>
+<p><strong>How to add Distributed caching?</strong></p>
+<p>Add <code>AddDistributedMemoryCache</code> to your services as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddDistributedMemoryCache();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>For example</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// CacheRequest.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CacheRequest</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Key &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">byte</span>[] Value &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// CacheController.cs</span><br><br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/[controller]&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiController</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CacheController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IDistributedCache _distributedCache;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CacheController</span>(<span class="hljs-params">IDistributedCache distributedCache <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">this</span>._distributedCache = distributedCache;<br>    &#125;<br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;key&#125;&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">GetCache</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> key</span>)</span><br>    &#123;<br>       <span class="hljs-keyword">var</span> <span class="hljs-keyword">value</span> = _distributedCache.Get(key);<br>        <span class="hljs-comment">// ...</span><br>        <span class="hljs-keyword">return</span> Ok(<span class="hljs-comment">/* Your object */</span>);<br>    &#125;<br>    [<span class="hljs-meta">HttpPost</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">SetCache</span>(<span class="hljs-params">CacheRequest data</span>)</span><br>    &#123;<br>        _distributedCache.Set(data.Key, data.Value);<br>        <span class="hljs-comment">// ...</span><br>        <span class="hljs-keyword">return</span> Ok(<span class="hljs-comment">/* Your object */</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>There are some useful extension methods to convert your object to byte array and vice versa.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// ByteArrayExtensions.cs</span><br><br><span class="hljs-keyword">using</span> System.IO;<br><span class="hljs-keyword">using</span> System.Runtime.Serialization.Formatters.Binary;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ByteArrayExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">byte</span>[] <span class="hljs-title">ToByteArray</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> T obj</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (obj == <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        BinaryFormatter bf = <span class="hljs-keyword">new</span> BinaryFormatter();<br>        <span class="hljs-keyword">using</span> (MemoryStream ms = <span class="hljs-keyword">new</span> MemoryStream())<br>        &#123;<br>            bf.Serialize(ms, obj);<br>            <span class="hljs-keyword">return</span> ms.ToArray();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> T <span class="hljs-title">FromByteArray</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> <span class="hljs-built_in">byte</span>[] data</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (data == <span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">default</span>(T);<br>        BinaryFormatter bf = <span class="hljs-keyword">new</span> BinaryFormatter();<br>        <span class="hljs-keyword">using</span> (MemoryStream ms = <span class="hljs-keyword">new</span> MemoryStream(data))<br>        &#123;<br>            <span class="hljs-built_in">object</span> obj = bf.Deserialize(ms);<br>            <span class="hljs-keyword">return</span> (T)obj;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="In-Memory-cache-or-Distributed-memory-cache"><a href="#In-Memory-cache-or-Distributed-memory-cache" class="headerlink" title="In-Memory cache or Distributed memory cache?"></a>In-Memory cache or Distributed memory cache?</h2><p>Using <code>In-Memory</code> cache is the option for systems running on single box. Also in development environments we could prefer In-Memory based cache to keep external services away when building the system. I think that going with <code>IDistributedCache</code> is better idea as there is no need for changes in controllers and other parts of application when distributed cache provider is changed. In cloud and multi-box environments some implementation of distributed cache is a must as local caches on web server are not synchronized.</p>
+<p>So, The Distributed Memory Cache is a useful implementation:</p>
+<ul>
+<li>In development and testing scenarios.</li>
+<li>When a single server is used in production and memory consumption isn’t an issue. Implementing the Distributed Memory Cache abstracts cached data storage. It allows for implementing a true distributed caching solution in the future if multiple nodes or fault tolerance become necessary.</li>
+</ul>
+<h2 id="Distributed-SQL-Server-Cache"><a href="#Distributed-SQL-Server-Cache" class="headerlink" title="Distributed SQL Server Cache"></a>Distributed SQL Server Cache</h2><p>The Distributed SQL Server Cache implementation (<code>AddDistributedSqlServerCache</code>) allows the distributed cache to use a SQL Server database as its backing store. To create a SQL Server cached item table in a SQL Server instance, you can use the <code>sql-cache</code> tool. The tool creates a table with the name and schema that you specify.</p>
+<p>Create a table in SQL Server by running the <code>sql-cache create</code> command. Provide the SQL Server instance (<code>Server</code>), database (<code>Database</code>), schema (for example, <code>dbo</code>), and table name (for example, <code>TestCache</code>):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">dotnet tool install --global dotnet-sql-cache --version 3.1.8<br><br>dotnet sql-cache create <span class="hljs-string">&quot;Server=.;Database=DistCache;User Id=sa;Password=1234567;&quot;</span> dbo TestCache<br></code></pre></td></tr></table></figure>
+
+<p>A message is logged to indicate that the tool was successful:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Table and index were created successfully.<br></code></pre></td></tr></table></figure>
+
+<p>The sample app implements <code>SqlServerCache</code> in a non-Development environment in <code>Startup.ConfigureServices</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddDistributedSqlServerCache(options =&gt;<br>        &#123;<br>            options.ConnectionString = Configuration[<span class="hljs-string">&quot;DistCache_ConnectionString&quot;</span>];<br>            options.SchemaName = <span class="hljs-string">&quot;dbo&quot;</span>;<br>            options.TableName = <span class="hljs-string">&quot;TestCache&quot;</span>;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And inside <code>appsettings.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;DistCache_ConnectionString&quot;</span>: <span class="hljs-string">&quot;Server=.;Database=DistCache;User Id=sa;Password=1234567;&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Distributed-Redis-Cache"><a href="#Distributed-Redis-Cache" class="headerlink" title="Distributed Redis Cache"></a>Distributed Redis Cache</h2><p><code>Redis</code> is an open source data store that is used as a database, cache / messaging broker. It supports quite a lot of data structures like string, hashes, lists,, queries and much more. It’s a blazing fast key-value based database that is written in C. It’s a NoSQL Database as well, which is awesome. For these purposes, it is being used at techgiants like Stackoverflow, Flickr, Github and so on.</p>
+<p><code>Redis</code> is a great option for implementing highly available cache to reduce the data access latency and improve the application response time. As a result, we can reduce the load off our database to a very good extent.</p>
+<p>Install below package</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">Install-Package Microsoft.Extensions.Caching.StackExchangeRedis -Version <span class="hljs-number">3.1</span><span class="hljs-number">.8</span><br>dotnet <span class="hljs-keyword">add</span> package Microsoft.Extensions.Caching.StackExchangeRedis --version <span class="hljs-number">3.1</span><span class="hljs-number">.8</span><br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.Extensions.Caching.StackExchangeRedis&quot;</span> Version=<span class="hljs-string">&quot;3.1.8&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Register <code>Redis</code> as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddStackExchangeRedisCache(options =&gt;<br>        &#123;<br>            <span class="hljs-comment">// By default, Redis runs on the local 6379 port.</span><br>            options.Configuration = <span class="hljs-string">&quot;localhost:6379&quot;</span>;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>You can use it inside controller</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IDistributedCache _distributedCache;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IDistributedCache distributedCache</span>)</span><br>    &#123;<br>        _distributedCache = distributedCache;<br>        <span class="hljs-comment">// SET</span><br>        <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">new</span> DistributedCacheEntryOptions()<br>            .SetAbsoluteExpiration(DateTime.Now.AddMinutes(<span class="hljs-number">10</span>))<br>            .SetSlidingExpiration(TimeSpan.FromMinutes(<span class="hljs-number">2</span>));<br>        _distributedCache.Set(<span class="hljs-string">&quot;test&quot;</span>, <span class="hljs-string">&quot;Hello&quot;</span>.ToByteArray(), options);<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-comment">// GET</span><br>        <span class="hljs-keyword">var</span> <span class="hljs-keyword">value</span> = _distributedCache.Get(<span class="hljs-string">&quot;test&quot;</span>).FromByteArray&lt;<span class="hljs-built_in">string</span>&gt;();<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>DistributedCacheEntryOptions</strong></p>
+<ul>
+<li><code>SetAbsoluteExpiration</code>: You can set the expiration time of the cache object.</li>
+<li><code>SetSlidingExpiration</code>: This is similar to the <code>Absolute Expiration</code>. It expires a cache object if it not being requested for a defined amount of time period.</li>
+</ul>
+<p><strong>Note</strong>: The <code>Absolute Expiration</code> <em>should never be less</em> than the <code>Sliding Expiration</code>.</p>
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/in-memory-caching-in-aspnet-core/">https://www.codewithmukesh.com/blog/in-memory-caching-in-aspnet-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/redis-caching-in-aspnet-core/">https://www.codewithmukesh.com/blog/redis-caching-in-aspnet-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed">https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed</a></li>
+<li><a target="_blank" rel="noopener" href="https://gunnarpeipman.com/aspnet-core-memory-cache/">https://gunnarpeipman.com/aspnet-core-memory-cache/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/redis-caching-in-aspnet-core/">https://www.codewithmukesh.com/blog/redis-caching-in-aspnet-core/</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-caching/" data-id="cl5ph9ghn00028wpb1h8k9rzt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Caching",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi cache caching inmemory distributed redis sqlserver",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-10-08",
+        "dateCreated": "2020-10-08",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-caching/",
+        "description": "Caching is a technique of storing the frequently accessed/used data so that the future requests for those sets of data can be served much faster to the client.
+In other terms, you take the most frequently used data, which is also least-modified, and copy it temporary storage so that it can be accessed much faster for the future calls from the client. This awesome technique can boost the performance of your application drastically by removing unnecessary and frequent requests to the data source.
+It is important to note that applications should be designed in a way that they never depend directly on the cached memory. The Application should use the cache data only if it is available. If the cache data has expired or not available, the application would ideally request the original data source.",
+        "wordCount": 3351
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-model-binding/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core - Model Binding
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-feature-management/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - Feature Management</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-caching/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

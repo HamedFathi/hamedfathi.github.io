@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Feature Management | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,featuremanagement,feature,featureflag" />
+    
+    <meta name="description" content="The .NET Core Feature Management libraries provide idiomatic support for implementing feature flags in a .NET or ASP.NET Core application. These libraries allow you to declaratively add feature flags">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Feature Management">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-feature-management/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="The .NET Core Feature Management libraries provide idiomatic support for implementing feature flags in a .NET or ASP.NET Core application. These libraries allow you to declaratively add feature flags">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-06T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="featuremanagement">
+<meta property="article:tag" content="feature">
+<meta property="article:tag" content="featureflag">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-feature-management" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Feature Management
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-feature-management/" class="article-date">
+       <time datetime="2020-10-06T00:00:00.000Z" itemprop="datePublished">2020-10-06</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-feature-management/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/feature/" rel="tag">feature</a>, <a class="tag-link-link" href="/tags/featureflag/" rel="tag">featureflag</a>, <a class="tag-link-link" href="/tags/featuremanagement/" rel="tag">featuremanagement</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">3.5k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">21 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>The .NET Core <code>Feature Management</code> libraries provide idiomatic support for implementing feature flags in a .NET or ASP.NET Core application. These libraries allow you to declaratively add feature flags to your code so that you don’t have to write all the <code>if</code> statements for them manually.</p>
+<span id="more"></span>
+
+<p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Microsoft.FeatureManagement -Version 2.2.0<br>dotnet add package Microsoft.FeatureManagement --version 2.2.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.FeatureManagement&quot;</span> Version=<span class="hljs-string">&quot;2.2.0&quot;</span> /&gt;<br><br>Install-Package Microsoft.FeatureManagement.AspNetCore -Version 2.2.0<br>dotnet add package Microsoft.FeatureManagement.AspNetCore --version 2.2.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.FeatureManagement.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;2.2.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>The .NET Core feature manager <code>IFeatureManager</code> gets feature flags from the framework’s native configuration system. As a result, you can define your application’s feature flags by using any configuration source that .NET Core supports, including the local appsettings.json file or environment variables. <code>IFeatureManager</code> relies on .NET Core dependency injection. You can register the feature management services by using standard conventions:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddFeatureManagement();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>By default, the feature manager retrieves feature flags from the “FeatureManagement” section of the .NET Core configuration data (<code>appsettings.json</code>). </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;FeatureManagement&quot;</span>: &#123;<br>  <span class="hljs-attr">&quot;MoreResults&quot;</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The following example tells the feature manager to read from a different section called “MyFeatureFlags” instead:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddFeatureManagement(options =&gt;<br>        &#123;<br>                options.UseConfiguration(Configuration.GetSection(<span class="hljs-string">&quot;MyFeatureFlags&quot;</span>));<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;MyFeatureFlags&quot;</span>: &#123;<br>  <span class="hljs-attr">&quot;MoreResults&quot;</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Adding-simple-feature-flags"><a href="#Adding-simple-feature-flags" class="headerlink" title="Adding simple feature flags"></a>Adding simple feature flags</h2><p>The <code>IFeatureManager</code> service allows you to interrogate the feature management system to identify whether a feature flag is enabled or not. <code>IFeatureManager</code> exposes a single method, for checking whether a feature flag is enabled:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IFeatureManager _featureManager;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span>[] Summaries = <span class="hljs-keyword">new</span>[]<br>    &#123;<br>        <span class="hljs-string">&quot;Freezing&quot;</span>, <span class="hljs-string">&quot;Bracing&quot;</span>, <span class="hljs-string">&quot;Chilly&quot;</span>, <span class="hljs-string">&quot;Cool&quot;</span>, <span class="hljs-string">&quot;Mild&quot;</span>, <span class="hljs-string">&quot;Warm&quot;</span>, <span class="hljs-string">&quot;Balmy&quot;</span>, <span class="hljs-string">&quot;Hot&quot;</span>, <span class="hljs-string">&quot;Sweltering&quot;</span>, <span class="hljs-string">&quot;Scorching&quot;</span><br>    &#125;;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IFeatureManager featureManager <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        _featureManager = featureManager;<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IEnumerable&lt;WeatherForecast&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> rng = <span class="hljs-keyword">new</span> Random();<br>        IEnumerable&lt;<span class="hljs-built_in">int</span>&gt; range = <span class="hljs-literal">null</span>;<br>        <br>        <span class="hljs-comment">// HERE</span><br>        <span class="hljs-keyword">if</span> (_featureManager.IsEnabledAsync(<span class="hljs-string">&quot;MoreResults&quot;</span>).GetAwaiter().GetResult())<br>        &#123;<br>            range = Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">50</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            range = Enumerable.Range(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> range.Select(index =&gt; <span class="hljs-keyword">new</span> WeatherForecast<br>        &#123;<br>            Date = DateTime.Now.AddDays(index),<br>            TemperatureC = rng.Next(<span class="hljs-number">-20</span>, <span class="hljs-number">55</span>),<br>            Summary = Summaries[rng.Next(Summaries.Length)]<br>        &#125;)<br>        .ToArray();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Avoid-strings"><a href="#Avoid-strings" class="headerlink" title="Avoid strings"></a>Avoid strings</h2><p>Feature flags are identified in code using magic-strings: “MoreResults” in the previous example. Instead of scattering these around your code, the official docs recommend creating a <code>FeatureFlags</code> <code>enum</code>, and calling <code>nameof()</code> to reference the values, e.g:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Define your flags in an enum</span><br><span class="hljs-comment">// Be careful not to refactor/rename any typos, as that will break configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-built_in">enum</span> FeatureFlags<br>&#123;<br>    MoreResults<br>&#125;<br><br><span class="hljs-comment">// Reference the feature flags using nameof()</span><br><span class="hljs-keyword">var</span> isEnabled = <span class="hljs-keyword">await</span> _featureManager.IsEnabledAsync(<span class="hljs-keyword">nameof</span>(FeatureFlags.MoreResults));<br></code></pre></td></tr></table></figure>
+
+<p><strong>Static class</strong></p>
+<p>Using a static class and string constants, it reduces the verbosity at the call site.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Using a static class separates the &quot;name&quot; of the feature flag</span><br><span class="hljs-comment">// from its string value</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlags</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> MoreResults = <span class="hljs-string">&quot;MoreResults&quot;</span>;<br>&#125;<br><br><span class="hljs-comment">// No need for nameof() at the call site</span><br><span class="hljs-keyword">var</span> isEnabled = <span class="hljs-keyword">await</span> _featureManager.IsEnabledAsync(FeatureFlags.MoreResults);<br></code></pre></td></tr></table></figure>
+
+<h2 id="FeatureGate"><a href="#FeatureGate" class="headerlink" title="FeatureGate"></a>FeatureGate</h2><p>We can block access to entire controllers or action methods using the <code>FeatureGate</code> action filter.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// BetaController.cs</span><br><br><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;<br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement.Mvc;<br><br><span class="hljs-comment">// HERE</span><br>[<span class="hljs-meta">FeatureGate(<span class="hljs-meta-string">&quot;Beta&quot;</span>)</span>] <span class="hljs-comment">// Beta feature flag must be enabled</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BetaController</span> : <span class="hljs-title">Controller</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Index</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> View();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>If you try to navigate to this page (<code>/Beta</code>) when the feature is <code>enabled</code>, you’ll see the View rendered. However, if the Beta feature flag is <code>disabled</code>, you’ll get a <code>404</code> when trying to view the page:</p>
+<p>The <code>[FeatureGate]</code> attribute takes an array of feature flags, in its constructor. If <code>any</code> of those features are enabled, the controller is enabled.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">FeatureGate(<span class="hljs-meta-string">&quot;Beta&quot;</span>, <span class="hljs-meta-string">&quot;Alpha&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BetaController</span> : <span class="hljs-title">Controller</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Index</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> View();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Custom-handling-of-missing-actions"><a href="#Custom-handling-of-missing-actions" class="headerlink" title="Custom handling of missing actions"></a>Custom handling of missing actions</h2><p>If an action is removed due to a feature being disabled, the default is to generate a 404 response. That may be fine for some applications, especially if you’re using error handling middleware to customise error responses to avoid ugly “raw” 404.</p>
+<p>However, it’s also possible that you may want to generate a different response in this situation. Maybe you want to redirect users to a “stable” page, return a “join the waiting list” view, or simply return a different response, like a 403 Forbidden.</p>
+<p>You can achieve any of these approaches by creating a service that implements the <code>IDisabledFeaturesHandler</code> interface. Implementers are invoked as part of the action filter pipeline, when an action method is “removed” due to a feature being disabled. In the example below, I show how to generate a 403 Forbidden response, but you have access to the whole <code>ActionExecutingContext</code> in the method, so you can do anything you can in a standard action filter:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.FeatureManagement.Mvc;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RedirectDisabledFeatureHandler</span> : <span class="hljs-title">IDisabledFeaturesHandler</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">HandleDisabledFeatures</span>(<span class="hljs-params">IEnumerable&lt;<span class="hljs-built_in">string</span>&gt; features, ActionExecutingContext context</span>)</span><br>    &#123;<br>        context.Result = <span class="hljs-keyword">new</span> ForbidResult(); <span class="hljs-comment">// generate a 403</span><br>        <span class="hljs-keyword">return</span> Task.CompletedTask;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>To register the handler, update your call to <code>AddFeatureManagement()</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddFeatureManagement()<br>            .UseDisabledFeaturesHandler(<span class="hljs-keyword">new</span> RedirectDisabledFeatureHandler()); <span class="hljs-comment">/* HERE */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>With the handler registered, if you now try to access a disabled feature, a 403 response is generated, which is intercepted by the error handling middleware, and you’re redirected to the “Access Denied” page for the app:</p>
+<h2 id="Razor"><a href="#Razor" class="headerlink" title="Razor"></a>Razor</h2><p>You can use feature flags inside your Views.</p>
+<p><strong>Dependency injection</strong></p>
+<p> You can <code>inject</code> the <code>IFeatureManager</code> service into views using dependency injection. You could use the <code>@inject</code> directive, and check for the feature manually:</p>
+ <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml"> <span class="hljs-comment">&lt;!-- Inject the service using DI  --&gt;</span><br>@inject  Microsoft.FeatureManagement.IFeatureManager _featureManager; <br><br><span class="hljs-tag">&lt;<span class="hljs-name">nav</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- Check if the feature is enabled  --&gt;</span><br>        @if (await _featureManager.IsEnabledAsync(FeatureFlags.PromotionDiscounts))<br>        &#123;<br>            <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-item&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;nav-link text-dark&quot;</span> <span class="hljs-attr">asp-controller</span>=<span class="hljs-string">&quot;PromotionDiscount&quot;</span> <span class="hljs-attr">asp-action</span>=<span class="hljs-string">&quot;Index&quot;</span>&gt;</span>Discount<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        &#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">nav</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Using Tag Helper</strong></p>
+<p>If you have any UI elements you want to hide under feature flags you can use the tag helper provided in <code>Microsoft.FeatureManagement.AspNetCore</code> library to do that. </p>
+<p>First, you need to add the tag helper to the <code>_ViewImports.cshtml</code> so your views can access it.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs">@addTagHelper *, Microsoft.FeatureManagement.AspNetCore<br></code></pre></td></tr></table></figure>
+
+<p>Next, you can use <code>&lt;feature&gt;</code> tag helper to wrap the UI elements you want to put behind a feature flag.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs xml">@model HomeViewModel<br>@&#123;<br>    ViewData[&quot;Title&quot;] = &quot;Home Page&quot;;<br>&#125;<br><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;text-center&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feature</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;@Features.PromotionDiscounts&quot;</span> <span class="hljs-attr">negate</span>=<span class="hljs-string">&quot;true&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;display-4&quot;</span>&gt;</span>Enjoy the latest music from your favorite artist<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">feature</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">feature</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;@Features.PromotionDiscounts&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;display-4&quot;</span>&gt;</span>Enjoy 25% off for selected albums from your favorite artist<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">feature</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">feature</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;@Features.UserSuggestions&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">partial</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;_UserSuggestionsPartial&quot;</span> <span class="hljs-attr">model</span>=<span class="hljs-string">&quot;@Model.Suggestions&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">feature</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>We can use <code>negate</code> attribute and set it to true if you want to show the content between feature tag helper when the feature is disabled.</p>
+<h2 id="Dynamic-Features"><a href="#Dynamic-Features" class="headerlink" title="Dynamic Features"></a>Dynamic Features</h2><p>We introduce feature filters, which are a much more powerful way of working with feature flags. These let you enable a feature based on arbitrary data. For example, you could enable a feature based on headers in an incoming request, based on the current time, or based on the current user’s claims.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;FeatureManagement&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;Beta&quot;</span>: <span class="hljs-literal">false</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>With this configuration, the Beta feature flag is always false for all users (until configuration changes). While this will be useful in some cases, you may often want to enable features for only some of your users, or only some of the time.</p>
+<p><code>Microsoft.FeatureManagement</code> introduces an interface <code>IFeatureFilter</code> which can be used to decide whether a feature is enabled or not based on any logic you require.</p>
+<p><strong>Enabling a feature flag based on the current time with TimeWindowFilter</strong></p>
+<p>The <code>TimeWindowFilter</code> does as its name suggests - it enables a feature for a given time window. You provide the start and ending DateTime, and any calls to <code>IFeatureManager.IsEnabledAsync()</code> for the feature will be true only between those times.</p>
+<p>Add the feature management services in <code>Startup.ConfigureServices</code>, by calling <code>AddFeatureManagement()</code>, which returns an IFeatureManagementBuilder. You can enable the time window filter by calling <code>AddFeatureFilter&lt;&gt;()</code> on the builder:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement.FeatureFilters;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span> <br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddFeatureManagement()<br>            .AddFeatureFilter&lt;TimeWindowFilter&gt;(); <span class="hljs-comment">// HERE</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>This adds the <code>IFeatureFilter</code> to your app, but you need to configure it using the configuration system. Each <code>IFeatureFilter</code> can have an associated “settings” object, depending on the implementation. For the <code>TimeWindowFilter</code>, this looks like:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// TimeWindowSettings.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TimeWindowSettings</span><br>&#123;<br>    <span class="hljs-keyword">public</span> DateTimeOffset? Start &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> DateTimeOffset? End &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>So let’s consider a scenario: I want to enable a custom Christmas banner which goes live on boxing day at 2am UTC, and ends three days later at 1am UTC.</p>
+<p>We’ll start by creating a feature flag for it in code called <code>ChristmasBanner</code></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlags</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> ChristmasBanner = <span class="hljs-string">&quot;ChristmasBanner&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now we’ll add the configuration. As before, we nest the configuration under the <code>FeatureManagement</code> key and provide the name of the feature. However, instead of using a Boolean for the feature, we use <code>EnabledFor</code>, and specify an array of feature filters.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;FeatureManagement&quot;</span>: &#123;<br>  <span class="hljs-attr">&quot;ChristmasBanner&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;EnabledFor&quot;</span>: [<br>      &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Microsoft.TimeWindow&quot;</span>,<br>        <span class="hljs-attr">&quot;Parameters&quot;</span>: &#123;<br>          <span class="hljs-attr">&quot;Start&quot;</span>: <span class="hljs-string">&quot;26 Dec 2019 02:00:00 +00:00&quot;</span>,<br>          <span class="hljs-attr">&quot;End&quot;</span>: <span class="hljs-string">&quot;29 Dec 2019 01:00:00 +00:00&quot;</span><br>        &#125;<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>It’s important you get the configuration correct here. The general pattern is identical for all feature filters:</p>
+<ul>
+<li>The feature name (“ChristmasBanner”) should be the key of an object:</li>
+<li>This object should contains a single property, <code>EnabledFor</code>, which is an array of objects.</li>
+<li>Each of the objects in the array represents an <code>IFeatureFilter</code>. For each filter<ul>
+<li>Provide the <code>Name</code> of the filter (“Microsoft.TimeWindow” for the <code>TimeWindowFilter</code>)</li>
+<li>Optionally provide a <code>Parameters</code> object, which is bound to the settings object of the feature filter (<code>TimeWindowSettings</code> in this case).</li>
+</ul>
+</li>
+<li>If any of the feature filters in the array are satisfied for a given request, the feature is enabled. It is only disabled if all <code>IFeatureFilters</code> indicate it should be disabled.</li>
+</ul>
+<p>With this configuration, the <code>ChristmasBanner</code> feature flag will return false until <code>DateTime.UtcNow</code> falls between the provided dates:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// WeatherForecastController.cs</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><br>[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IFeatureManager _featureManager;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IFeatureManager featureManager</span>)</span><br>    &#123;<br>        _featureManager = featureManager;<br>        <span class="hljs-comment">// only returns true during provided time window</span><br>        <span class="hljs-keyword">var</span> showBanner = <span class="hljs-keyword">await</span>  _featureManager.IsEnabledAsync(FeatureFlags.ChristmasBanner);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The real benefit to using <code>IFeatureFilters</code> is that you get dynamic behaviour, but you can still control it from configuration.</p>
+<p><strong>Note</strong>: that TimeWindowSettings has nullable values for Start and End, to give you open-ended time windows e.g. always enable until a given date, or only enable from a given date.</p>
+<p><strong>Rolling features out slowly with PercentageFilter</strong></p>
+<p>The <code>PercentageFilter</code> also behaves as you might expect - it only enables a feature for x percent of requests, where x is controlled via settings. Enabling the <code>PercentageFilter</code> follows the same procedure as for <code>TimeWindowFilter</code>.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><span class="hljs-keyword">using</span> Microsoft.FeatureManagement.FeatureFilters;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span> <br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddFeatureManagement()<br>            .AddFeatureFilter&lt;PercentageFilter&gt;(); <span class="hljs-comment">// HERE</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Create a feature flag:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlags</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> FancyFonts = <span class="hljs-string">&quot;FancyFonts&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Configure the feature in configuration:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;FeatureManagement&quot;</span>: &#123;<br>  <span class="hljs-attr">&quot;FancyFonts&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;EnabledFor&quot;</span>: [<br>      &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Microsoft.Percentage&quot;</span>,<br>        <span class="hljs-attr">&quot;Parameters&quot;</span>: &#123;<br>          <span class="hljs-attr">&quot;Value&quot;</span>: <span class="hljs-number">10</span><br>        &#125;<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The <code>PercentageSettings</code> object consists of a single int, which is the percentage of the time the flag should be enabled. In the example above, the flag will be enabled for 10% of calls to <code>IFeatureManager.IsEnabledAsync(FeatureFlags.FancyFonts)</code>.</p>
+<h2 id="Creating-a-custom-IFeatureFilter"><a href="#Creating-a-custom-IFeatureFilter" class="headerlink" title="Creating a custom IFeatureFilter"></a>Creating a custom IFeatureFilter</h2><p>The example in this post looks for a Claim in the currently logged-in user’s <code>ClaimsPrincipal</code> and enables a feature flag if it’s present. You could use this filter to enable a feature for a subset of your users.</p>
+<p>Creating a custom feature filter requires two things:</p>
+<ul>
+<li>Create a class that derives from <code>IFeatureFilter</code>.</li>
+<li>Optionally create a settings class to control your feature filter.</li>
+</ul>
+<p><strong>Creating the filter settings class</strong></p>
+<p>For this example, we want to enable a feature for only those users that have a certain set of claims. For simplicity, I’m only going to require the presence of a claim type and ignore the claim’s value, but extending the example in this post should be simple enough. The settings object contains an array of claim types:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ClaimsFilterSettings</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span>[] RequiredClaims &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Implementing IFeatureFilter</strong></p>
+<p>To create a feature filter, you must implement the <code>IFeatureFilter</code> interface, which consists of a single method:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IFeatureFilter</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-built_in">bool</span> <span class="hljs-title">Evaluate</span>(<span class="hljs-params">FeatureFilterEvaluationContext context</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The <code>FeatureFilterEvaluationContext</code> argument passed in to the method contains the name of the feature requested, and an <code>IConfiguration</code> object that allows you to access the settings for the feature:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFilterEvaluationContext</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> FeatureName &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IConfiguration Parameters &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>It’s worth noting that there’s nothing specific to ASP.NET Core here - there’s no <code>HttpContext</code>, and no <code>IServiceProvider</code>. Luckily, your class is pulled from the DI container, so you should be able to get everything you need in your feature filter’s constructor.</p>
+<p><strong>Creating the custom feature filter</strong></p>
+<p>In order to implement our custom feature filter, we need to know who the current user is for the request. To do so, we need to access the <code>HttpContext</code>. The correct way to do that (when you don’t have direct access to it as you do in MVC controllers etc) is to use the <code>IHttpContextAccessor</code>.</p>
+<p>The <code>ClaimsFeatureFilter</code> below takes an <code>IHttpContextAccessor</code> in its constructor and uses the exposed <code>HttpContext</code> to retrieve the current user from the request.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">FilterAlias(<span class="hljs-meta-string">&quot;Claims&quot;</span>)</span>] <span class="hljs-comment">// How we will refer to the filter in configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ClaimsFeatureFilter</span> : <span class="hljs-title">IFeatureFilter</span><br>&#123;<br>    <span class="hljs-comment">// Used to access HttpContext</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IHttpContextAccessor _httpContextAccessor;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ClaimsFeatureFilter</span>(<span class="hljs-params">IHttpContextAccessor httpContextAccessor</span>)</span><br>    &#123;<br>        _httpContextAccessor = httpContextAccessor;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> <span class="hljs-title">Evaluate</span>(<span class="hljs-params">FeatureFilterEvaluationContext context</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// Get the ClaimsFilterSettings from configuration</span><br>        <span class="hljs-keyword">var</span> settings = context.Parameters.Get&lt;ClaimsFilterSettings&gt;();<br><br>        <span class="hljs-comment">// Retrieve the current user (ClaimsPrincipal)</span><br>        <span class="hljs-keyword">var</span> user = _httpContextAccessor.HttpContext.User;<br><br>        <span class="hljs-comment">// Only enable the feature if the user has ALL the required claims</span><br>        <span class="hljs-keyword">var</span> isEnabled = settings.RequiredClaims<br>            .All(claimType =&gt; user.HasClaim(claim =&gt; claim.Type == claimType));<br><br>        <span class="hljs-keyword">return</span> isEnabled;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>I named this feature filter “Claims” using the <code>[FilterAlias]</code> attribute. This is the string you need to add in configuration to enable the filter, as you’ll see shortly. You can retrieve the <code>ClaimsFilterSettings</code> associated with a given instance of the custom feature filter by calling <code>context.Parameters.Get&lt;&gt;()</code>.</p>
+<p>The logic of the filter is relatively straightforward - if the <code>ClaimsPrincipal</code> for the request has all of the required claims, the associated feature is enabled, otherwise the feature is disabled.</p>
+<p><strong>Using the custom feature filter</strong></p>
+<p>To use the custom feature filter, you must explicitly register it with the feature management system in <code>Startup.ConfigureServices()</code>. We also need to make sure the <code>IHttpContextAccessor</code> is available in DI:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.FeatureManagement;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span> <br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// Add IHttpContextAccessor if it&#x27;s not yet added</span><br>        services.AddHttpContextAccessor();<br><br>        services.AddFeatureManagement()<br>            <span class="hljs-comment">// HERE</span><br>            .AddFeatureFilter&lt;ClaimsFeatureFilter&gt;(); <span class="hljs-comment">// add our custom filter</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>That’s all the custom configuration needed to enable our <code>ClaimsFeatureFilter</code>. To actually use it in an app, we’ll add a feature flag called “Beta”:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlags</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> Beta = <span class="hljs-string">&quot;Beta&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>and enable the filter in configuration using the format:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;FeatureManagement&quot;</span>: &#123;<br>  <span class="hljs-attr">&quot;Beta&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;EnabledFor&quot;</span>: [<br>      &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Claims&quot;</span>,<br>        <span class="hljs-attr">&quot;Parameters&quot;</span>: &#123;<br>          <span class="hljs-attr">&quot;RequiredClaims&quot;</span>: [ <span class="hljs-string">&quot;Internal&quot;</span> ]<br>        &#125;<br>      &#125;<br>    ]<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Notice that I’ve used the <code>[FilterAlias]</code> value of “Claims” as the filter’s <code>Name</code>. The <code>Parameters</code> object corresponds to the <code>ClaimsFilterSettings</code> settings object. With this configuration, user’s who have the “Internal” claim will have the Beta feature flag enabled - other user’s will find it’s disabled.</p>
+<p><strong>Testing the ClaimsFeatureFilter</strong></p>
+<p>To test out the feature filter, it’s easiest to start with an ASP.NET Core app that has individual authentication enabled. For demonstration purposes, I updated the home page Index.cshtml to show a banner when the <code>Beta</code> feature flag is enabled using the FeatureTagHelper:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs xml">@page<br>@model IndexModel<br>@&#123;<br>    ViewData[&quot;Title&quot;] = &quot;Home page&quot;;<br>&#125;<br><br><span class="hljs-comment">&lt;!-- Only visible when Beta feature flag is enabled --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">feature</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;@FeatureFlags.Beta&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;alert alert-primary&quot;</span> <span class="hljs-attr">role</span>=<span class="hljs-string">&quot;alert&quot;</span>&gt;</span><br>        Congratulations - You&#x27;re in the Beta test!<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">feature</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- ... --&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Limitations-with-the-ClaimsFeatureFilter"><a href="#Limitations-with-the-ClaimsFeatureFilter" class="headerlink" title="Limitations with the ClaimsFeatureFilter"></a>Limitations with the ClaimsFeatureFilter</h2><p>The custom feature filter <code>ClaimsFeatureFilter</code> described in this post is only intended as an example of a filter you could use. The reliance on <code>HttpContext</code> gives it a specific limitation: it can’t be used outside the context of an HTTP request.</p>
+<p>Attempting to access HttpContext outside of an HTTP request can result in a NullReferenceException. You also need to be careful about using it in a background thread, as HttpContext is not thread safe.</p>
+<p>One of the slightly dangerous implications of this is that consumers of the feature flags don’t necessarily know which features are safe to interrogate in which context. There’s nothing in the following code that suggests it could throw when used on a background thread, or in a hosted service.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">var</span> isEnabled = <span class="hljs-keyword">await</span> _featureManager.IsEnabledAsync(FeatureFlags.Beta); <span class="hljs-comment">// may throw!</span><br></code></pre></td></tr></table></figure>
+
+<p>One basic option to avoid this situation is to use naming conventions for your feature flags. For example, you could use a convention where feature flags prefixed with “UI_” are only considered “safe” to access when withan an HTTP request context.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">FeatureFlags</span><br>&#123;<br>    <span class="hljs-comment">// These flags are safe to access in any context</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> NewBranding = <span class="hljs-string">&quot;NewBranding&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> AlternativeColours = <span class="hljs-string">&quot;AlternativeColours&quot;</span>;<br><br>    <span class="hljs-comment">// These flags are only safe to access from an HttpContext-safe request</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Ui</span><br>    &#123;<br>      <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> _prefix = <span class="hljs-string">&quot;UI_&quot;</span>;<br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> Beta = _prefix + <span class="hljs-string">&quot;Beta&quot;</span>;<br>      <span class="hljs-keyword">public</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span> NewOnboardingExperiences = _prefix + <span class="hljs-string">&quot;NewOnboardingExperiences&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>This at least gives an indication to the caller when the flag is used. Obviously it requires you configure the flags correctly, but it’s a step in the right direction!</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Flags on the main FeatureFlags class are safe to use everywhere</span><br><span class="hljs-keyword">var</span> isEnabled = <span class="hljs-keyword">await</span> _featureManager.IsEnabledAsync(FeatureFlags.NewBranding); <br><br><span class="hljs-comment">// Flags on the nested Ui class are only safe when HttpContext is available</span><br><span class="hljs-keyword">var</span> isEnabled = <span class="hljs-keyword">await</span> _featureManager.IsEnabledAsync(FeatureFlags.Ui.Beta); <br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/use-feature-flags-dotnet-core">https://docs.microsoft.com/en-us/azure/azure-app-configuration/use-feature-flags-dotnet-core</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-feature-flag-aspnet-core">https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-feature-flag-aspnet-core</a></li>
+<li><a target="_blank" rel="noopener" href="http://dontcodetired.com/blog/post/Using-the-Microsoft-Feature-Toggle-Library-in-ASPNET-Core-(MicrosoftFeatureManagement)">http://dontcodetired.com/blog/post/Using-the-Microsoft-Feature-Toggle-Library-in-ASPNET-Core-(MicrosoftFeatureManagement)</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/introducing-the-microsoft-featuremanagement-library-adding-feature-flags-to-an-asp-net-core-app-part-1/">https://andrewlock.net/introducing-the-microsoft-featuremanagement-library-adding-feature-flags-to-an-asp-net-core-app-part-1/</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/filtering-action-methods-with-feature-flags-adding-feature-flags-to-an-asp-net-core-app-part-2/">https://andrewlock.net/filtering-action-methods-with-feature-flags-adding-feature-flags-to-an-asp-net-core-app-part-2/</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/creating-dynamic-feature-flags-with-feature-filters-adding-feature-flags-to-an-asp-net-core-app-part-3/">https://andrewlock.net/creating-dynamic-feature-flags-with-feature-filters-adding-feature-flags-to-an-asp-net-core-app-part-3/</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/creating-a-custom-feature-filter-adding-feature-flags-to-an-asp-net-core-app-part-4/">https://andrewlock.net/creating-a-custom-feature-filter-adding-feature-flags-to-an-asp-net-core-app-part-4/</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/keeping-consistent-feature-flags-across-requests-adding-feature-flags-to-an-asp-net-core-app-part-5/">https://andrewlock.net/keeping-consistent-feature-flags-across-requests-adding-feature-flags-to-an-asp-net-core-app-part-5/</a></li>
+<li><a target="_blank" rel="noopener" href="https://kasunkodagoda.com/2020/01/16/implementing-feature-flags-for-asp-net-core-applications-using-microsoft-featuremanagement-library/">https://kasunkodagoda.com/2020/01/16/implementing-feature-flags-for-asp-net-core-applications-using-microsoft-featuremanagement-library/</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-feature-management/" data-id="cl5ph9ghu000a8wpb8x6u01gu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Feature Management",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi featuremanagement feature featureflag",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-10-06",
+        "dateCreated": "2020-10-06",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-feature-management/",
+        "description": "The .NET Core Feature Management libraries provide idiomatic support for implementing feature flags in a .NET or ASP.NET Core application. These libraries allow you to declaratively add feature flags to your code so that you don’t have to write all the if statements for them manually.",
+        "wordCount": 4696
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-caching/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Caching
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-health-check/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - HealthCheck</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-feature-management/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

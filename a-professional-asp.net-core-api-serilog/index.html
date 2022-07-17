@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Serilog | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,log" />
+    
+    <meta name="description" content="Serilog is an alternative logging implementation that plugs into ASP.NET Core. It supports the same structured logging APIs, and receives log events from the ASP.NET Core framework class libraries, bu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Serilog">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-serilog/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="Serilog is an alternative logging implementation that plugs into ASP.NET Core. It supports the same structured logging APIs, and receives log events from the ASP.NET Core framework class libraries, bu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-28T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="log">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-serilog" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Serilog
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-serilog/" class="article-date">
+       <time datetime="2020-09-28T00:00:00.000Z" itemprop="datePublished">2020-09-28</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-serilog/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/log/" rel="tag">log</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">2.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">14 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p><code>Serilog</code> is an alternative logging implementation that plugs into ASP.NET Core. It supports the same structured logging APIs, and receives log events from the ASP.NET Core framework class libraries, but adds a stack of features that make it a more appealing choice for some kinds of apps and environments.</p>
+<span id="more"></span>
+
+<p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Serilog.AspNetCore -Version 3.4.0<br>dotnet add package Serilog.AspNetCore --version 3.4.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;3.4.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Serilog-Enrichers"><a href="#Serilog-Enrichers" class="headerlink" title="Serilog Enrichers"></a>Serilog Enrichers</h2><p>To enable Structured Logging and to unleash the full potential of <code>Serilog</code>, we use <code>enrichers</code>. These enrichers give you additional details like Machine Name, ProcessId, Thread Id when the log event had occurred for better diagnostics. It makes a developer’s life quite simpler..</p>
+<h2 id="Serilog-Sinks"><a href="#Serilog-Sinks" class="headerlink" title="Serilog Sinks"></a>Serilog Sinks</h2><p>Serilog <code>Sinks</code> in simpler words relate to destinations for logging the data. In the packages that we are going to install to our ASP.NET Core application, Sinks for <code>Console</code> and <code>File</code> are included out of the box. That means we can write logs to Console and File System without adding any extra packages. Serilog supports various other destinations like <code>MSSQL</code>, <code>SQLite</code>, <code>SEQ</code> and more.</p>
+<h2 id="Logger-Initialization"><a href="#Logger-Initialization" class="headerlink" title="Logger Initialization"></a>Logger Initialization</h2><p>Exceptions thrown during start-up are some of the most disruptive errors your application might face, and so the very first line of code in our Serilog-enabled app will set up logging and make sure any nasties are caught and recorded.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        Log.Logger = <span class="hljs-keyword">new</span> LoggerConfiguration()<br>            .Enrich.FromLogContext() <span class="hljs-comment">/*Enricher*/</span><br>            .WriteTo.Console() <span class="hljs-comment">/*Sink*/</span><br>            .CreateLogger();<br>        <span class="hljs-keyword">try</span><br>        &#123;<br>            Log.Information(<span class="hljs-string">&quot;Starting up&quot;</span>);<br>            CreateHostBuilder(args).Build().Run();<br>        &#125;<br>        catch (Exception ex)<br>        &#123;<br>            Log.Fatal(ex, <span class="hljs-string">&quot;Application start-up failed&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">finally</span><br>        &#123;<br>            Log.CloseAndFlush();<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IHostBuilder <span class="hljs-title">CreateHostBuilder</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span> =&gt;<br>        Host.CreateDefaultBuilder(args)<br><br>            <span class="hljs-comment">// HERE</span><br>            <span class="hljs-comment">//Uses Serilog instead of default .NET Logger</span><br>            .UseSerilog()<br>            .ConfigureWebHostDefaults(webBuilder =&gt;<br>            &#123;<br>                webBuilder.UseStartup&lt;Startup&gt;();<br>            &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Cleaning the default logger</strong></p>
+<p>The “Logging” section that you’ll find in <code>appsettings.json</code> isn’t used by <code>Serilog</code>, and can be removed:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;Logging&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;LogLevel&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;Default&quot;</span>: <span class="hljs-string">&quot;Information&quot;</span>,<br>      <span class="hljs-attr">&quot;Microsoft&quot;</span>: <span class="hljs-string">&quot;Warning&quot;</span>,<br>      <span class="hljs-attr">&quot;Microsoft.Hosting.Lifetime&quot;</span>: <span class="hljs-string">&quot;Information&quot;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">&quot;AllowedHosts&quot;</span>: <span class="hljs-string">&quot;*&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>After cleaning up here, the configuration looks like this:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;AllowedHosts&quot;</span>: <span class="hljs-string">&quot;*&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Writing-your-own-log-events"><a href="#Writing-your-own-log-events" class="headerlink" title="Writing your own log events"></a>Writing your own log events</h2><p>You should use <code>ILogger&lt;T&gt;</code> to log your own events as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HomeController</span> : <span class="hljs-title">Controller</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;HomeController&gt; _logger;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HomeController</span>(<span class="hljs-params">ILogger&lt;HomeController&gt; logger</span>)</span><br>    &#123;<br>        _logger = logger;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Index</span>(<span class="hljs-params">[FromQuery] <span class="hljs-built_in">string</span> name</span>)</span><br>    &#123;<br>        _logger.LogInformation(<span class="hljs-string">&quot;Hello, &#123;Name&#125;!&quot;</span>, name);<br>        <span class="hljs-keyword">return</span> View();<br>    &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Log-Levels"><a href="#Log-Levels" class="headerlink" title="Log Levels"></a>Log Levels</h2><p>I also wanted you to know about the various Logging Levels. This is the fundamental concept of logging. When we wrote <code>_logger.LogInformation(&quot;Hello, &#123;Name&#125;!&quot;, name);</code>, we mentioned to the application that this is a log with the log-level set to <code>Information</code>. Log levels make sense because it allows you to define the type of log. Is it a critical log? just a debug message? a warning message?</p>
+<p>There are 7 log-levels included :</p>
+<ul>
+<li><code>Trace</code>: Detailed messages with sensitive app data.</li>
+<li><code>Debug</code>: Useful for the development environment.</li>
+<li><code>Information</code>: General messages, like the way we mentioned earlier.</li>
+<li><code>Warning</code>: For unexpected events.</li>
+<li><code>Error</code>: For exceptions and errors.</li>
+<li><code>Critical</code>: For failures that may need immediate attention.</li>
+</ul>
+<h2 id="Streamlined-request-logging"><a href="#Streamlined-request-logging" class="headerlink" title="Streamlined request logging"></a>Streamlined request logging</h2><p>Our log output will now be rather quiet. We didn’t want a dozen log events per request, but chances are, we’ll need to know what requests the app is handling in order to do most diagnostic analysis.</p>
+<p>To switch request logging back on, we’ll add <code>Serilog</code> to the app’s middleware pipeline over in <code>Startup.cs</code>. You’ll find a <code>Configure()</code> method in there like the following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>    &#123;<br>        app.UseDeveloperExceptionPage();<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        app.UseExceptionHandler(<span class="hljs-string">&quot;/Home/Error&quot;</span>);<br>        app.UseHsts();<br>    &#125;<br>    app.UseHttpsRedirection();<br>    app.UseStaticFiles();<br><br>    <span class="hljs-comment">// HERE</span><br>    app.UseSerilogRequestLogging();<br><br>    app.UseRouting();<br>    app.UseAuthorization();<br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllerRoute(<br>            name: <span class="hljs-string">&quot;default&quot;</span>,<br>            pattern: <span class="hljs-string">&quot;&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;&quot;</span>);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>We’ll be a bit tactical about where we add <code>Serilog</code> into the pipeline. I tend not to want request logging for static files, so I add <code>UseSerilogRequestLogging()</code> <strong>later</strong> in the pipeline, as shown above.</p>
+<h2 id="Read-from-configuration"><a href="#Read-from-configuration" class="headerlink" title="Read from configuration"></a>Read from configuration</h2><p>Change <code>Program.Main()</code> as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Program.cs</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span><br>&#123;<br>    <span class="hljs-comment">// HERE</span><br>    <span class="hljs-comment">//Read Configuration from appSettings</span><br>    <span class="hljs-keyword">var</span> config = <span class="hljs-keyword">new</span> ConfigurationBuilder()<br>        .SetBasePath(Directory.GetCurrentDirectory())<br>        .AddJsonFile(<span class="hljs-string">&quot;appsettings.json&quot;</span>)<br>        .Build();<br><br>    Log.Logger = <span class="hljs-keyword">new</span> LoggerConfiguration()<br>        .MinimumLevel.Debug() <span class="hljs-comment">// &lt;- Set the minimum level</span><br>        .Enrich.FromLogContext()<br>        .Enrich.WithMachineName()<br>        .Enrich.WithProcessId()<br>        .Enrich.WithThreadId()<br>        .Enrich.WithCorrelationId()<br>        .WriteTo.Console()<br>        <span class="hljs-comment">/*HERE*/</span><br>        .ReadFrom.Configuration(config)<br>        .CreateLogger();<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        Log.Information(<span class="hljs-string">&quot;Starting up&quot;</span>);<br>        CreateHostBuilder(args).Build().Run();<br>    &#125;<br>    catch (Exception ex)<br>    &#123;<br>        Log.Fatal(ex, <span class="hljs-string">&quot;Application start-up failed&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">finally</span><br>    &#123;<br>        Log.CloseAndFlush();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Setting up Serilog</strong></p>
+<p>Add <code>Serilog</code> section to <code>appsettings.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;AllowedHosts&quot;</span>: <span class="hljs-string">&quot;*&quot;</span>,<br>  <span class="hljs-attr">&quot;Serilog&quot;</span>: <br>  &#123;<br>    <span class="hljs-attr">&quot;Using&quot;</span>:  [ <span class="hljs-string">&quot;Serilog.Sinks.Console&quot;</span>, <span class="hljs-string">&quot;Serilog.Sinks.File&quot;</span> ],<br>    <span class="hljs-attr">&quot;MinimumLevel&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;Default&quot;</span>: <span class="hljs-string">&quot;Debug&quot;</span>,<br>      <span class="hljs-attr">&quot;Override&quot;</span>: <br>      &#123;<br>        <span class="hljs-attr">&quot;Microsoft&quot;</span>: <span class="hljs-string">&quot;Warning&quot;</span>,<br>        <span class="hljs-attr">&quot;System&quot;</span>: <span class="hljs-string">&quot;Warning&quot;</span><br>      &#125;<br>    &#125;,<br>    <span class="hljs-attr">&quot;WriteTo&quot;</span>: [<br>      &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;Console&quot;</span><br>      &#125;,<br>      &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;File&quot;</span>,<br>        <span class="hljs-attr">&quot;Args&quot;</span>: &#123;<br>          <span class="hljs-attr">&quot;path&quot;</span>: <span class="hljs-string">&quot;D:\\Logs\\log.txt&quot;</span>,<br>          <span class="hljs-attr">&quot;outputTemplate&quot;</span>: <span class="hljs-string">&quot;&#123;Timestamp&#125; &#123;Message&#125;&#123;NewLine:1&#125;&#123;Exception:1&#125;&quot;</span><br>        &#125;<br>      &#125;<br>    ],<br>    <span class="hljs-attr">&quot;Destructure&quot;</span>: [<br>      &#123; <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;With&quot;</span>, <span class="hljs-attr">&quot;Args&quot;</span>: &#123; <span class="hljs-attr">&quot;policy&quot;</span>: <span class="hljs-string">&quot;Sample.CustomPolicy, Sample&quot;</span> &#125; &#125;,<br>      &#123; <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;ToMaximumDepth&quot;</span>, <span class="hljs-attr">&quot;Args&quot;</span>: &#123; <span class="hljs-attr">&quot;maximumDestructuringDepth&quot;</span>: <span class="hljs-number">4</span> &#125; &#125;,<br>      &#123; <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;ToMaximumStringLength&quot;</span>, <span class="hljs-attr">&quot;Args&quot;</span>: &#123; <span class="hljs-attr">&quot;maximumStringLength&quot;</span>: <span class="hljs-number">100</span> &#125; &#125;,<br>      &#123; <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;ToMaximumCollectionCount&quot;</span>, <span class="hljs-attr">&quot;Args&quot;</span>: &#123; <span class="hljs-attr">&quot;maximumCollectionCount&quot;</span>: <span class="hljs-number">10</span> &#125; &#125;<br>    ],<br>    <span class="hljs-attr">&quot;Enrich&quot;</span>: [<br>      <span class="hljs-string">&quot;FromLogContext&quot;</span>,<br>      <span class="hljs-string">&quot;WithMachineName&quot;</span>,<br>      <span class="hljs-string">&quot;WithProcessId&quot;</span>,<br>      <span class="hljs-string">&quot;WithThreadId&quot;</span><br>    ],<br>    <span class="hljs-attr">&quot;Properties&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;ApplicationName&quot;</span>: <span class="hljs-string">&quot;Serilog.WebApplication&quot;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Useful-Enrichers"><a href="#Useful-Enrichers" class="headerlink" title="Useful Enrichers"></a>Useful Enrichers</h2><p>Here’s how to add some of the most useful enrichers.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Serilog.Enrichers.Environment -Version 2.1.3<br>dotnet add package Serilog.Enrichers.Environment --version 2.1.3<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.Enrichers.Environment&quot;</span> Version=<span class="hljs-string">&quot;2.1.3&quot;</span> /&gt;<br><br>Install-Package Serilog.Enrichers.Process -Version 2.0.2-dev-00731<br>dotnet add package Serilog.Enrichers.Process --version 2.0.2-dev-00731<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.Enrichers.Process&quot;</span> Version=<span class="hljs-string">&quot;2.0.2-dev-00731&quot;</span> /&gt;<br><br>Install-Package Serilog.Enrichers.Thread -Version 3.2.0-dev-00747<br>dotnet add package Serilog.Enrichers.Thread --version 3.2.0-dev-00747<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.Enrichers.Thread&quot;</span> Version=<span class="hljs-string">&quot;3.2.0-dev-00747&quot;</span> /&gt;<br><br>Install-Package Serilog.Enrichers.CorrelationId -Version 3.0.1<br>dotnet add package Serilog.Enrichers.CorrelationId --version 3.0.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.Enrichers.CorrelationId&quot;</span> Version=<span class="hljs-string">&quot;3.0.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Change your <code>Program.Main()</code> as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// HERE</span><br><span class="hljs-keyword">var</span> config = <span class="hljs-keyword">new</span> ConfigurationBuilder()<br>    .AddJsonFile(<span class="hljs-string">&quot;appsettings.json&quot;</span>)<br>    .Build();<br>Log.Logger = <span class="hljs-keyword">new</span> LoggerConfiguration()<br>    .MinimumLevel.Verbose()<br>    .Enrich.FromLogContext()<br>    <span class="hljs-comment">// Serilog.Enrichers.Environment</span><br>    .Enrich.WithMachineName()<br>    .Enrich.WithEnvironmentUserName()<br>    <span class="hljs-comment">// Serilog.Enrichers.Process</span><br>    .Enrich.WithProcessId()<br>    .Enrich.WithProcessName()<br>    <span class="hljs-comment">// Serilog.Enrichers.Thread</span><br>    .Enrich.WithThreadId()<br>    .Enrich.WithThreadName()<br>    <span class="hljs-comment">// The &#123;ThreadName&#125; property will only be attached when it is not null. Otherwise it will be omitted. If you want to get this property always attached you can use the following:</span><br>    .Enrich.WithProperty(ThreadNameEnricher.ThreadNamePropertyName, <span class="hljs-string">&quot;MyDefault&quot;</span>)<br>    <span class="hljs-comment">// Serilog.Enrichers.CorrelationId</span><br>    .Enrich.WithCorrelationId()<br>    <span class="hljs-comment">// Change the output template to as following, &#123;Properties&#125; placeholder Collects and displays all of the above enrichers.</span><br>    .WriteTo.Console(outputTemplate: <span class="hljs-string">&quot;&#123;Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz&#125; [&#123;Level:u3&#125;] &#123;Message:lj&#125; &#123;Properties&#125;&#123;NewLine&#125;&#123;Exception&#125;&quot;</span>)<br>    .ReadFrom.Configuration(config)<br>    .CreateLogger();<br></code></pre></td></tr></table></figure>
+
+<p>For <code>Serilog.Enrichers.CorrelationId</code>, you need to add <code>AddHttpContextAccessor</code> too.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <span class="hljs-comment">// HERE</span><br>    services.AddHttpContextAccessor();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Enrich-from-global-properties"><a href="#Enrich-from-global-properties" class="headerlink" title="Enrich from global properties"></a>Enrich from global properties</h2><p>You can also specify properties globally. In some cases, we need to calculate properties on startup, which can be done using the Fluent API:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs">Log.Logger = <span class="hljs-keyword">new</span> LoggerConfiguration()<br>    .Enrich.FromLogContext()<br>    <span class="hljs-comment">// HERE</span><br>    .Enrich.WithProperty(<span class="hljs-string">&quot;Version&quot;</span>, <span class="hljs-keyword">typeof</span>(Program).Assembly.GetName().Version)<br>    <span class="hljs-comment">// &#x27;Version&#x27; is accessible via &#123;Properties&#125;</span><br>    .WriteTo.Console(outputTemplate: <span class="hljs-string">&quot;&#123;Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz&#125; [&#123;Level:u3&#125;] &#123;Message:lj&#125; &#123;Properties&#125;&#123;NewLine&#125;&#123;Exception&#125;&quot;</span>)<br>    .CreateLogger();<br></code></pre></td></tr></table></figure>
+
+<h2 id="Timings"><a href="#Timings" class="headerlink" title="Timings"></a>Timings</h2><p>Serilog’s support for structured data makes it a great way to collect timing information. It’s easy to get started with in development, because the timings are printed to the same output as other log messages (the console, files, etc.) so a metrics server doesn’t have to be available all the time.</p>
+<p><code>Serilog Timings</code> is built with some specific requirements in mind:</p>
+<p>One operation produces exactly one log event (events are raised at the completion of an operation)<br>Natural and fully-templated messages<br>Events for a single operation have a single event type, across both success and failure cases (only the logging level and Outcome properties change)<br>This keeps noise in the log to a minimum, and makes it easy to extract and manipulate timing information on a per-operation basis.</p>
+<p>Install below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package SerilogTimings -Version 2.3.0<br>dotnet add package SerilogTimings --version 2.3.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;SerilogTimings&quot;</span> Version=<span class="hljs-string">&quot;2.3.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>The simplest use case is to time an operation, without explicitly recording success/failure:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> (Operation.Time(<span class="hljs-string">&quot;Submitting payment for &#123;OrderId&#125;&quot;</span>, order.Id))<br>&#123;<br>    <span class="hljs-comment">// Timed block of code goes here</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>At the completion of the using block, a message will be written to the log like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[INF] Submitting payment for order-12345 completed in 456.7 ms<br></code></pre></td></tr></table></figure>
+
+<p>Operations that can either <code>succeed</code> or <code>fail</code>, or that produce a result, can be created with <code>Operation.Begin()</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> op = Operation.Begin(<span class="hljs-string">&quot;Retrieving orders for &#123;CustomerId&#125;&quot;</span>, customer.Id))<br>&#123;<br>	<span class="hljs-comment">// Timed block of code goes here</span><br><br>	op.Complete();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Using <code>op.Complete()</code> will produce the same kind of result as in the first example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[INF] Retrieving orders for customer-67890 completed in 7.8 ms<br></code></pre></td></tr></table></figure>
+
+<p>If the operation is not completed by calling <code>Complete()</code>, it is assumed to have failed and a warning-level event will be written to the log instead:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[WRN] Retrieving orders for customer-67890 abandoned in 1234.5 ms<br></code></pre></td></tr></table></figure>
+
+<p>In this case the Outcome property will be “abandoned”.<br>To suppress this message, for example when an operation turns out to be inapplicable, use <code>op.Cancel()</code>. Once <code>Cancel()</code> has been called, no event will be written by the operation on either <code>completion</code> or <code>abandonment</code>.</p>
+<p><strong>Levelling</strong></p>
+<p>Timings are most useful in production, so timing events are recorded at the Information level and higher, which should generally be collected all the time.</p>
+<p>If you truly need <code>Verbose</code> - or <code>Debug</code>-level timings, you can trigger them with <code>Operation.At()</code> or the <code>OperationAt()</code> extension method on <code>ILogger</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> (Operation.At(LogEventLevel.Debug).Time(<span class="hljs-string">&quot;Preparing zip archive&quot;</span>))<br>&#123;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>When a level is specified, both completion and abandonment events will use it. To configure a different abandonment level, pass the second optional parameter to the <code>At()</code> method.</p>
+<h2 id="Serilog-amp-Kibana"><a href="#Serilog-amp-Kibana" class="headerlink" title="Serilog &amp; Kibana"></a>Serilog &amp; Kibana</h2><p><code>Kibana</code> is an open source data visualization user interface for ElasticSearch. Think of ElasticSearch as the database and Kibana as the web user interface which you can use to build graphs and query data in ElasticSearch.</p>
+<p><strong>Installation</strong></p>
+<ol>
+<li>Get Elasticsearch</li>
+<li>Get Kibana</li>
+<li>Start Elasticsearch: <code>bin/elasticsearch</code></li>
+<li>Start Kibana: <code>bin/kibana</code></li>
+<li>Open Kibana: <code>http://localhost:5601</code></li>
+</ol>
+<p><strong>ElasticSearch Sink</strong></p>
+<p>Install below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Serilog.Sinks.ElasticSearch -Version 8.4.1<br>dotnet add package Serilog.Sinks.ElasticSearch --version 8.4.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Serilog.Sinks.ElasticSearch&quot;</span> Version=<span class="hljs-string">&quot;8.4.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>After installation, add the following code:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Program.cs</span><br><br><span class="hljs-keyword">using</span> Serilog.Formatting.Elasticsearch;<br><span class="hljs-keyword">using</span> Serilog.Sinks.Elasticsearch;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span><br>&#123;<br>    <span class="hljs-keyword">var</span> environment = Environment.GetEnvironmentVariable(<span class="hljs-string">&quot;ASPNETCORE_ENVIRONMENT&quot;</span>);<br>    <span class="hljs-keyword">var</span> config = BuildConfigurationRoot();<br>    Log.Logger = <span class="hljs-keyword">new</span> LoggerConfiguration()<br>    <br>        <span class="hljs-comment">// HERE     </span><br>        .WriteTo.Elasticsearch(ConfigureElasticSink(config, environment))<br>        <br>        .CreateLogger();<br>    <span class="hljs-keyword">try</span><br>    &#123;<br>        Log.Information(<span class="hljs-string">&quot;Starting up&quot;</span>);<br>        CreateHostBuilder(args).Build().Run();<br>    &#125;<br>    catch (Exception ex)<br>    &#123;<br>        Log.Fatal(ex, <span class="hljs-string">&quot;Application start-up failed&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">finally</span><br>    &#123;<br>        Log.CloseAndFlush();<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// HERE</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ElasticsearchSinkOptions <span class="hljs-title">ConfigureElasticSink</span>(<span class="hljs-params">IConfigurationRoot configuration, <span class="hljs-built_in">string</span> environment</span>)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ElasticsearchSinkOptions(<span class="hljs-keyword">new</span> Uri(configuration[<span class="hljs-string">&quot;ElasticConfiguration:Uri&quot;</span>]))<br>    &#123;<br>        AutoRegisterTemplate = <span class="hljs-literal">true</span>,<br>        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7,<br>        CustomFormatter = <span class="hljs-keyword">new</span> ExceptionAsObjectJsonFormatter(renderMessage: <span class="hljs-literal">true</span>),<br>        <span class="hljs-comment">// Our ElasticSearch index: ASSEMBLYNAME-ENVIROMENT-YEAR-MONTH </span><br>        <span class="hljs-comment">// This index must introduce to ElasticSearch/Kibana</span><br>        IndexFormat = <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;Assembly.GetExecutingAssembly().GetName().Name.ToLower().Replace(<span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>)&#125;</span>-<span class="hljs-subst">&#123;environment?.ToLower().Replace(<span class="hljs-string">&quot;.&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>)&#125;</span>-<span class="hljs-subst">&#123;DateTime.UtcNow:yyyy-MM&#125;</span>&quot;</span><br>    &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And also in <code>appsettings.json</code></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-string">&quot;ElasticConfiguration&quot;</span>: &#123;<br>  <span class="hljs-string">&quot;Uri&quot;</span>: <span class="hljs-string">&quot;http://localhost:9200&quot;</span><br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<p><strong>Define index to Kibana</strong></p>
+<p>If this is your first run you will see <code>Create index pattern</code> page so go to step 3 but if you had any index before, start form beggining:</p>
+<ol>
+<li>Run your application, Then browse the <code>Kibana</code> via <code>http://localhost:5601/app/home/</code>.</li>
+<li>Find <code>Connect to your Elasticsearch index</code> link and click on it.</li>
+<li>After that, Click on <code>Create index pattern</code> and introduce our index format like below<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs txt">ASSEMBLYNAME-ENVIROMENT-* =&gt; myapp-development-*<br></code></pre></td></tr></table></figure></li>
+<li>Click on <code>Next step</code></li>
+<li>Choose <code>@timestamp</code>, then click on <code>Create index pattern</code></li>
+<li>Now, You can go to <code>Discover</code> page and find your logs!</li>
+</ol>
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://nblumhardt.com/2019/10/serilog-in-aspnetcore-3/">https://nblumhardt.com/2019/10/serilog-in-aspnetcore-3/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/serilog-in-aspnet-core-3-1/">https://www.codewithmukesh.com/blog/serilog-in-aspnet-core-3-1/</a></li>
+<li><a target="_blank" rel="noopener" href="https://dejanstojanovic.net/aspnet/2018/october/extending-serilog-with-additional-values-to-log/">https://dejanstojanovic.net/aspnet/2018/october/extending-serilog-with-additional-values-to-log/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nblumhardt/serilog-timings">https://github.com/nblumhardt/serilog-timings</a></li>
+<li><a target="_blank" rel="noopener" href="https://benfoster.io/blog/serilog-best-practices/">https://benfoster.io/blog/serilog-best-practices/</a></li>
+<li><a target="_blank" rel="noopener" href="https://esg.dev/posts/serilog-dos-and-donts/">https://esg.dev/posts/serilog-dos-and-donts/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.humankode.com/asp-net-core/logging-with-elasticsearch-kibana-asp-net-core-and-docker">https://www.humankode.com/asp-net-core/logging-with-elasticsearch-kibana-asp-net-core-and-docker</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-serilog/" data-id="cl5ph9gic00108wpb28rna5s9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Serilog",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi log",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-09-28",
+        "dateCreated": "2020-09-28",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-serilog/",
+        "description": "Serilog is an alternative logging implementation that plugs into ASP.NET Core. It supports the same structured logging APIs, and receives log events from the ASP.NET Core framework class libraries, but adds a stack of features that make it a more appealing choice for some kinds of apps and environments.",
+        "wordCount": 3339
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-fluent-validation/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - FluentValidation
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-localization/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - Localization</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-serilog/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

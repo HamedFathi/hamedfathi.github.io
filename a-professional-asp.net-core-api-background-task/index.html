@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Background Task | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,backgroundtask,hostedservices" />
+    
+    <meta name="description" content="In ASP.NET Core, background tasks can be implemented as hosted services. A hosted service is a class with background task logic that implements the IHostedService interface. This topic provides three">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Background Task">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-background-task/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="In ASP.NET Core, background tasks can be implemented as hosted services. A hosted service is a class with background task logic that implements the IHostedService interface. This topic provides three">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-15T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="backgroundtask">
+<meta property="article:tag" content="hostedservices">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-background-task" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Background Task
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-background-task/" class="article-date">
+       <time datetime="2020-09-15T00:00:00.000Z" itemprop="datePublished">2020-09-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-background-task/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/backgroundtask/" rel="tag">backgroundtask</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/hostedservices/" rel="tag">hostedservices</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">2.2k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">13 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>In <code>ASP.NET Core</code>, background tasks can be implemented as <code>hosted services</code>. A hosted service is a class with background task logic that implements the <code>IHostedService</code> interface. This topic provides three hosted service examples:</p>
+<ul>
+<li>Background task that runs on a timer.</li>
+<li>Hosted service that activates a scoped service. The scoped service can use dependency injection (DI).</li>
+<li>Queued background tasks that run sequentially.</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="IHostedService-interface"><a href="#IHostedService-interface" class="headerlink" title="IHostedService interface"></a>IHostedService interface</h2><p>The <code>IHostedService</code> interface defines two methods for objects that are managed by the host:</p>
+<p><strong>StartAsync(CancellationToken)</strong>: <code>StartAsync</code> contains the logic to start the background task. <code>StartAsync</code> is called before:</p>
+<ul>
+<li>The app’s request processing pipeline is configured (Startup.Configure).</li>
+<li>The server is started and <code>IApplicationLifetime.ApplicationStarted</code> is triggered.<br>The default behavior can be changed so that the hosted service’s <code>StartAsync</code> runs after the app’s pipeline has been configured and ApplicationStarted is called.</li>
+</ul>
+<p><strong>StopAsync(CancellationToken)</strong>: Triggered when the host is performing a graceful shutdown. <code>StopAsync</code> contains the logic to end the background task. Implement IDisposable and finalizers (destructors) to dispose of any unmanaged resources.</p>
+<p>The cancellation token has a default five second timeout to indicate that the shutdown process should no longer be graceful. When cancellation is requested on the token:</p>
+<ul>
+<li>Any remaining background operations that the app is performing should be aborted.</li>
+<li>Any methods called in <code>StopAsync</code> should return promptly.</li>
+</ul>
+<p>However, tasks aren’t abandoned after cancellation is requested—the caller awaits all tasks to complete.</p>
+<p>If the app shuts down unexpectedly, <code>StopAsync</code> might not be called. Therefore, any methods called or operations conducted in <code>StopAsync</code> might not occur.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.Extensions.Hosting;<br><span class="hljs-keyword">using</span> System.Threading;<br><span class="hljs-keyword">using</span> System.Threading.Tasks;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SampleHostedService</span> : <span class="hljs-title">IHostedService</span><br>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">StartAsync</span>(<span class="hljs-params">CancellationToken cancellationToken</span>)</span><br>	&#123;<br>	&#125;<br>	<br>	<span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">StopAsync</span>(<span class="hljs-params">CancellationToken cancellationToken</span>)</span><br>	&#123;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="BackgroundService-base-class"><a href="#BackgroundService-base-class" class="headerlink" title="BackgroundService base class"></a>BackgroundService base class</h2><p><code>BackgroundService</code> is a base class for implementing a long running <code>IHostedService</code>.</p>
+<p><code>ExecuteAsync(CancellationToken)</code> is called to run the background service. The implementation returns a Task that represents the entire lifetime of the background service. No further services are started until <code>ExecuteAsync</code> becomes asynchronous, such as by calling await. Avoid performing long, blocking initialization work in <code>ExecuteAsync</code>. The host blocks in StopAsync(CancellationToken) waiting for <code>ExecuteAsync</code> to complete.</p>
+<p>The cancellation token is triggered when IHostedService.StopAsync is called. Your implementation of <code>ExecuteAsync</code> should finish promptly when the cancellation token is fired in order to gracefully shut down the service. Otherwise, the service ungracefully shuts down at the shutdown timeout. For more information, see the IHostedService interface section.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.Extensions.Hosting;<br><span class="hljs-keyword">using</span> System.Threading;<br><span class="hljs-keyword">using</span> System.Threading.Tasks;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SampleBackgroundService</span> : <span class="hljs-title">BackgroundService</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken cancellationToken</span>)</span><br>    &#123;<br>       <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Background-task-that-runs-on-a-timer"><a href="#Background-task-that-runs-on-a-timer" class="headerlink" title="Background task that runs on a timer"></a>Background task that runs on a timer</h2><p>A timed background task makes use of the <code>System.Threading.Timer</code> class. The timer triggers the task’s <code>DoWork</code> method. The timer is disabled on <code>StopAsync</code> and disposed when the service container is disposed on <code>Dispose</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.Extensions.Hosting;<br><span class="hljs-keyword">using</span> Microsoft.Extensions.Logging;<br><span class="hljs-keyword">using</span> System;<br><span class="hljs-keyword">using</span> System.Threading;<br><span class="hljs-keyword">using</span> System.Threading.Tasks;<br><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">TaskBg.Controllers</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TimedHostedService</span> : <span class="hljs-title">IHostedService</span>, <span class="hljs-title">IDisposable</span><br>    &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> executionCount = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;TimedHostedService&gt; _logger;<br>        <span class="hljs-keyword">private</span> Timer _timer;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TimedHostedService</span>(<span class="hljs-params">ILogger&lt;TimedHostedService&gt; logger</span>)</span><br>        &#123;<br>            _logger = logger;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">StartAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>        &#123;<br>            _logger.LogInformation(<span class="hljs-string">&quot;Timed Hosted Service running.&quot;</span>);<br><br>            _timer = <span class="hljs-keyword">new</span> Timer(DoWork, <span class="hljs-literal">null</span>, TimeSpan.Zero,<br>                TimeSpan.FromSeconds(<span class="hljs-number">5</span>));<br><br>            <span class="hljs-keyword">return</span> Task.CompletedTask;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">DoWork</span>(<span class="hljs-params"><span class="hljs-built_in">object</span> state</span>)</span><br>        &#123;<br>            <span class="hljs-keyword">var</span> count = Interlocked.Increment(<span class="hljs-keyword">ref</span> executionCount);<br><br>            _logger.LogInformation(<br>                <span class="hljs-string">&quot;Timed Hosted Service is working. Count: &#123;Count&#125;&quot;</span>, count);<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">StopAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>        &#123;<br>            _logger.LogInformation(<span class="hljs-string">&quot;Timed Hosted Service is stopping.&quot;</span>);<br><br>            _timer?.Change(Timeout.Infinite, <span class="hljs-number">0</span>);<br><br>            <span class="hljs-keyword">return</span> Task.CompletedTask;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Dispose</span>(<span class="hljs-params"></span>)</span><br>        &#123;<br>            _timer?.Dispose();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The <code>Timer</code> doesn’t wait for previous executions of <code>DoWork</code> to finish, so the approach shown might not be suitable for every scenario. <code>Interlocked.Increment</code> is used to increment the execution counter as <strong>an atomic operation</strong>, which ensures that multiple threads <strong>don’t</strong> update <code>executionCount</code> concurrently.</p>
+<p>The service is registered in:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <br>    <span class="hljs-comment">// HERE</span><br>    services.AddHostedService&lt;TimedHostedService&gt;();<br>&#125;<br><br><span class="hljs-comment">// OR</span><br><span class="hljs-comment">// Program.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span><br>    &#123;<br>        CreateHostBuilder(args).Build().Run();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IHostBuilder <span class="hljs-title">CreateHostBuilder</span>(<span class="hljs-params"><span class="hljs-built_in">string</span>[] args</span>)</span> =&gt;<br>        Host.CreateDefaultBuilder(args)<br>            .ConfigureWebHostDefaults(webBuilder =&gt;<br>            &#123;<br>                webBuilder.UseStartup&lt;Startup&gt;();<br>            &#125;)<br>            .ConfigureServices(services =&gt;<br>            &#123;<br>                <span class="hljs-comment">// HERE</span><br>                services.AddHostedService&lt;VideosWatcher&gt;();<br>            &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Consuming-a-scoped-service-in-a-background-task"><a href="#Consuming-a-scoped-service-in-a-background-task" class="headerlink" title="Consuming a scoped service in a background task"></a>Consuming a scoped service in a background task</h2><p>To use <code>scoped services</code> within a <code>BackgroundService</code>, create a scope. No scope is created for a hosted service by default.</p>
+<p>The scoped background task service contains the background task’s logic. In the following example:</p>
+<p>The service is asynchronous. The <code>DoWork</code> method returns a <code>Task</code>. For demonstration purposes, a delay of ten seconds is awaited in the <code>DoWork</code> method.<br>An <code>ILogger</code> is injected into the service.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">internal</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IScopedProcessingService</span><br>&#123;<br>    <span class="hljs-function">Task <span class="hljs-title">DoWork</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span>;<br>&#125;<br><br><span class="hljs-keyword">internal</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ScopedProcessingService</span> : <span class="hljs-title">IScopedProcessingService</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-built_in">int</span> executionCount = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger _logger;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ScopedProcessingService</span>(<span class="hljs-params">ILogger&lt;ScopedProcessingService&gt; logger</span>)</span><br>    &#123;<br>        _logger = logger;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoWork</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">while</span> (!stoppingToken.IsCancellationRequested)<br>        &#123;<br>            executionCount++;<br><br>            _logger.LogInformation(<br>                <span class="hljs-string">&quot;Scoped Processing Service is working. Count: &#123;Count&#125;&quot;</span>, executionCount);<br><br>            <span class="hljs-keyword">await</span> Task.Delay(<span class="hljs-number">10000</span>, stoppingToken);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The hosted service creates a scope to resolve the scoped background task service to call its <code>DoWork</code> method. <code>DoWork</code> returns a <code>Task</code>, which is awaited in <code>ExecuteAsync</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ConsumeScopedServiceHostedService</span> : <span class="hljs-title">BackgroundService</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;ConsumeScopedServiceHostedService&gt; _logger;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ConsumeScopedServiceHostedService</span>(<span class="hljs-params">IServiceProvider services, </span></span><br><span class="hljs-params"><span class="hljs-function">        ILogger&lt;ConsumeScopedServiceHostedService&gt; logger</span>)</span><br>    &#123;<br>        Services = services;<br>        _logger = logger;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> IServiceProvider Services &#123; <span class="hljs-keyword">get</span>; &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        _logger.LogInformation(<br>            <span class="hljs-string">&quot;Consume Scoped Service Hosted Service running.&quot;</span>);<br><br>        <span class="hljs-keyword">await</span> DoWork(stoppingToken);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">DoWork</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        _logger.LogInformation(<br>            <span class="hljs-string">&quot;Consume Scoped Service Hosted Service is working.&quot;</span>);<br><br>        <span class="hljs-keyword">using</span> (<span class="hljs-keyword">var</span> scope = Services.CreateScope())<br>        &#123;<br>            <span class="hljs-keyword">var</span> scopedProcessingService = <br>                scope.ServiceProvider<br>                    .GetRequiredService&lt;IScopedProcessingService&gt;();<br><br>            <span class="hljs-keyword">await</span> scopedProcessingService.DoWork(stoppingToken);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">StopAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        _logger.LogInformation(<br>            <span class="hljs-string">&quot;Consume Scoped Service Hosted Service is stopping.&quot;</span>);<br><br>        <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.StopAsync(stoppingToken);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The services are registered in <code>IHostBuilder.ConfigureServices</code> (Program.cs). The hosted service is registered with the <code>AddHostedService</code> extension method:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Program.IHostBuilder.ConfigureServices</span><br><span class="hljs-comment">// Or</span><br><span class="hljs-comment">// // Startup.ConfigureServices</span><br><br>services.AddHostedService&lt;ConsumeScopedServiceHostedService&gt;();<br>services.AddScoped&lt;IScopedProcessingService, ScopedProcessingService&gt;();<br></code></pre></td></tr></table></figure>
+
+<h2 id="Queued-background-tasks"><a href="#Queued-background-tasks" class="headerlink" title="Queued background tasks"></a>Queued background tasks</h2><p>A background task queue is based on the .NET 4.x <code>QueueBackgroundWorkItem</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IBackgroundTaskQueue</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">QueueBackgroundWorkItem</span>(<span class="hljs-params">Func&lt;CancellationToken, Task&gt; workItem</span>)</span>;<br><br>    Task&lt;Func&lt;CancellationToken, Task&gt;&gt; DequeueAsync(<br>        CancellationToken cancellationToken);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BackgroundTaskQueue</span> : <span class="hljs-title">IBackgroundTaskQueue</span><br>&#123;<br>    <span class="hljs-keyword">private</span> ConcurrentQueue&lt;Func&lt;CancellationToken, Task&gt;&gt; _workItems = <br>        <span class="hljs-keyword">new</span> ConcurrentQueue&lt;Func&lt;CancellationToken, Task&gt;&gt;();<br>    <span class="hljs-keyword">private</span> SemaphoreSlim _signal = <span class="hljs-keyword">new</span> SemaphoreSlim(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">QueueBackgroundWorkItem</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">        Func&lt;CancellationToken, Task&gt; workItem</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (workItem == <span class="hljs-literal">null</span>)<br>        &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentNullException(<span class="hljs-keyword">nameof</span>(workItem));<br>        &#125;<br><br>        _workItems.Enqueue(workItem);<br>        _signal.Release();<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task&lt;Func&lt;CancellationToken, Task&gt;&gt; DequeueAsync(<br>        CancellationToken cancellationToken)<br>    &#123;<br>        <span class="hljs-keyword">await</span> _signal.WaitAsync(cancellationToken);<br>        _workItems.TryDequeue(<span class="hljs-keyword">out</span> <span class="hljs-keyword">var</span> workItem);<br><br>        <span class="hljs-keyword">return</span> workItem;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>In the following <code>QueueHostedService</code> example:</p>
+<p>The <code>BackgroundProcessing</code> method returns a <code>Task</code>, which is awaited in <code>ExecuteAsync</code>.<br>Background tasks in the queue are dequeued and executed in <code>BackgroundProcessing</code>.<br>Work items are awaited before the service stops in <code>StopAsync</code>.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">QueuedHostedService</span> : <span class="hljs-title">BackgroundService</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger&lt;QueuedHostedService&gt; _logger;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">QueuedHostedService</span>(<span class="hljs-params">IBackgroundTaskQueue taskQueue, </span></span><br><span class="hljs-params"><span class="hljs-function">        ILogger&lt;QueuedHostedService&gt; logger</span>)</span><br>    &#123;<br>        TaskQueue = taskQueue;<br>        _logger = logger;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> IBackgroundTaskQueue TaskQueue &#123; <span class="hljs-keyword">get</span>; &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">ExecuteAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        _logger.LogInformation(<br>            <span class="hljs-string">$&quot;Queued Hosted Service is running.<span class="hljs-subst">&#123;Environment.NewLine&#125;</span>&quot;</span> +<br>            <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;Environment.NewLine&#125;</span>Tap W to add a work item to the &quot;</span> +<br>            <span class="hljs-string">$&quot;background queue.<span class="hljs-subst">&#123;Environment.NewLine&#125;</span>&quot;</span>);<br><br>        <span class="hljs-keyword">await</span> BackgroundProcessing(stoppingToken);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">BackgroundProcessing</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">while</span> (!stoppingToken.IsCancellationRequested)<br>        &#123;<br>            <span class="hljs-keyword">var</span> workItem = <br>                <span class="hljs-keyword">await</span> TaskQueue.DequeueAsync(stoppingToken);<br><br>            <span class="hljs-keyword">try</span><br>            &#123;<br>                <span class="hljs-keyword">await</span> workItem(stoppingToken);<br>            &#125;<br>            catch (Exception ex)<br>            &#123;<br>                _logger.LogError(ex, <br>                    <span class="hljs-string">&quot;Error occurred executing &#123;WorkItem&#125;.&quot;</span>, <span class="hljs-keyword">nameof</span>(workItem));<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">StopAsync</span>(<span class="hljs-params">CancellationToken stoppingToken</span>)</span><br>    &#123;<br>        _logger.LogInformation(<span class="hljs-string">&quot;Queued Hosted Service is stopping.&quot;</span>);<br><br>        <span class="hljs-keyword">await</span> <span class="hljs-keyword">base</span>.StopAsync(stoppingToken);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>A <code>MonitorLoop</code> service handles enqueuing tasks for the hosted service whenever the <code>w</code> key is selected on an input device:</p>
+<ul>
+<li>The <code>IBackgroundTaskQueue</code> is injected into the <code>MonitorLoop</code> service.</li>
+<li><code>IBackgroundTaskQueue.QueueBackgroundWorkItem</code> is called to enqueue a work item.</li>
+<li>The work item simulates a long-running background task:<ul>
+<li>Three 5-second delays are executed (<code>Task.Delay</code>).</li>
+<li>A try-catch statement traps <code>OperationCanceledException</code> if the task is cancelled.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">MonitorLoop</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IBackgroundTaskQueue _taskQueue;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> ILogger _logger;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> CancellationToken _cancellationToken;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">MonitorLoop</span>(<span class="hljs-params">IBackgroundTaskQueue taskQueue, </span></span><br><span class="hljs-params"><span class="hljs-function">        ILogger&lt;MonitorLoop&gt; logger, </span></span><br><span class="hljs-params"><span class="hljs-function">        IHostApplicationLifetime applicationLifetime</span>)</span><br>    &#123;<br>        _taskQueue = taskQueue;<br>        _logger = logger;<br>        _cancellationToken = applicationLifetime.ApplicationStopping;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">StartMonitorLoop</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        _logger.LogInformation(<span class="hljs-string">&quot;Monitor Loop is starting.&quot;</span>);<br><br>        <span class="hljs-comment">// Run a console user input loop in a background thread</span><br>        Task.Run(() =&gt; Monitor());<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Monitor</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">while</span> (!_cancellationToken.IsCancellationRequested)<br>        &#123;<br>            <span class="hljs-keyword">var</span> keyStroke = Console.ReadKey();<br><br>            <span class="hljs-keyword">if</span> (keyStroke.Key == ConsoleKey.W)<br>            &#123;<br>                <span class="hljs-comment">// Enqueue a background work item</span><br>                _taskQueue.QueueBackgroundWorkItem(<span class="hljs-keyword">async</span> token =&gt;<br>                &#123;<br>                    <span class="hljs-comment">// Simulate three 5-second tasks to complete</span><br>                    <span class="hljs-comment">// for each enqueued work item</span><br><br>                    <span class="hljs-built_in">int</span> delayLoop = <span class="hljs-number">0</span>;<br>                    <span class="hljs-keyword">var</span> guid = Guid.NewGuid().ToString();<br><br>                    _logger.LogInformation(<br>                        <span class="hljs-string">&quot;Queued Background Task &#123;Guid&#125; is starting.&quot;</span>, guid);<br><br>                    <span class="hljs-keyword">while</span> (!token.IsCancellationRequested &amp;&amp; delayLoop &lt; <span class="hljs-number">3</span>)<br>                    &#123;<br>                        <span class="hljs-keyword">try</span><br>                        &#123;<br>                            <span class="hljs-keyword">await</span> Task.Delay(TimeSpan.FromSeconds(<span class="hljs-number">5</span>), token);<br>                        &#125;<br>                        catch (OperationCanceledException)<br>                        &#123;<br>                            <span class="hljs-comment">// Prevent throwing if the Delay is cancelled</span><br>                        &#125;<br><br>                        delayLoop++;<br><br>                        _logger.LogInformation(<br>                            <span class="hljs-string">&quot;Queued Background Task &#123;Guid&#125; is running. &quot;</span> +<br>                            <span class="hljs-string">&quot;&#123;DelayLoop&#125;/3&quot;</span>, guid, delayLoop);<br>                    &#125;<br><br>                    <span class="hljs-keyword">if</span> (delayLoop == <span class="hljs-number">3</span>)<br>                    &#123;<br>                        _logger.LogInformation(<br>                            <span class="hljs-string">&quot;Queued Background Task &#123;Guid&#125; is complete.&quot;</span>, guid);<br>                    &#125;<br>                    <span class="hljs-keyword">else</span><br>                    &#123;<br>                        _logger.LogInformation(<br>                            <span class="hljs-string">&quot;Queued Background Task &#123;Guid&#125; was cancelled.&quot;</span>, guid);<br>                    &#125;<br>                &#125;);<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The services are registered in <code>IHostBuilder.ConfigureServices</code> (Program.cs). The hosted service is registered with the <code>AddHostedService</code> extension method:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Program.IHostBuilder.ConfigureServices</span><br><span class="hljs-comment">// Or</span><br><span class="hljs-comment">// // Startup.ConfigureServices</span><br><br>services.AddSingleton&lt;MonitorLoop&gt;();<br>services.AddHostedService&lt;QueuedHostedService&gt;();<br>services.AddSingleton&lt;IBackgroundTaskQueue, BackgroundTaskQueue&gt;();<br></code></pre></td></tr></table></figure>
+
+<p><code>MonitorLoop</code> is started in <code>Program.Main</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">var</span> monitorLoop = host.Services.GetRequiredService&lt;MonitorLoop&gt;();<br>monitorLoop.StartMonitorLoop();<br></code></pre></td></tr></table></figure>
+
+<h2 id="Quartz-net-scheduler"><a href="#Quartz-net-scheduler" class="headerlink" title="Quartz.net scheduler"></a>Quartz.net scheduler</h2><p>You are able to write any background services with the above approach but there are another options to do your background jobs via a scheduler.</p>
+<p><code>Quartz.net</code> is an open-source job scheduling system for .NET and you can integrate as following:</p>
+<p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Quartz -Version 3.1.0<br>dotnet add package Quartz --version 3.1.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Quartz&quot;</span> Version=<span class="hljs-string">&quot;3.1.0&quot;</span> /&gt;<br><br>Install-Package Quartz.AspNetCore -Version 3.1.0<br>dotnet add package Quartz.AspNetCore --version 3.1.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Quartz.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;3.1.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// ExampleJob.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ExampleJob</span> : <span class="hljs-title">IJob</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Execute</span>(<span class="hljs-params">IJobExecutionContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">await</span> Console.Out.WriteLineAsync(<span class="hljs-string">&quot;Greetings from HelloJob!&quot;</span>).ConfigureAwait(<span class="hljs-literal">false</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br><br>    <span class="hljs-comment">// base configuration for DI</span><br>    services.AddQuartz(q =&gt;<br>    &#123;<br>        <span class="hljs-comment">// handy when part of cluster or you want to otherwise identify multiple schedulers</span><br>        q.SchedulerId = <span class="hljs-string">&quot;Scheduler-Core&quot;</span>;<br><br>        <span class="hljs-comment">// we take this from appsettings.json, just show it&#x27;s possible</span><br>        <span class="hljs-comment">// q.SchedulerName = &quot;Quartz ASP.NET Core Sample Scheduler&quot;;</span><br><br>        <span class="hljs-comment">// we could leave DI configuration intact and then jobs need to have public no-arg constructor</span><br>        <span class="hljs-comment">// the MS DI is expected to produce transient job instances </span><br>        q.UseMicrosoftDependencyInjectionJobFactory(options =&gt;<br>        &#123;<br>            <span class="hljs-comment">// if we don&#x27;t have the job in DI, allow fallback to configure via default constructor</span><br>            options.AllowDefaultConstructor = <span class="hljs-literal">true</span>;<br>        &#125;);<br><br>        <span class="hljs-comment">// or </span><br>        <span class="hljs-comment">// q.UseMicrosoftDependencyInjectionScopedJobFactory();</span><br><br>        <span class="hljs-comment">// these are the defaults</span><br>        q.UseSimpleTypeLoader();<br>        q.UseInMemoryStore();<br>        q.UseDefaultThreadPool(tp =&gt;<br>        &#123;<br>            tp.MaxConcurrency = <span class="hljs-number">10</span>;<br>        &#125;);<br><br>        <span class="hljs-comment">// configure jobs with code</span><br>        <span class="hljs-keyword">var</span> jobKey = <span class="hljs-keyword">new</span> JobKey(<span class="hljs-string">&quot;awesome job&quot;</span>, <span class="hljs-string">&quot;awesome group&quot;</span>);<br>        q.AddJob&lt;ExampleJob&gt;(j =&gt; j<br>            .StoreDurably()<br>            .WithIdentity(jobKey)<br>            .WithDescription(<span class="hljs-string">&quot;my awesome job&quot;</span>)<br>        );<br><br>        q.AddTrigger(t =&gt; t<br>            .WithIdentity(<span class="hljs-string">&quot;Simple Trigger&quot;</span>)<br>            .ForJob(jobKey)<br>            .StartNow()<br>            .WithSimpleSchedule(x =&gt; x.WithInterval(TimeSpan.FromSeconds(<span class="hljs-number">1</span>)).RepeatForever())<br>            .WithDescription(<span class="hljs-string">&quot;my awesome simple trigger&quot;</span>)<br>        );<br><br>    &#125;);<br><br>    services.AddQuartzServer(options =&gt;<br>    &#123;<br>        <span class="hljs-comment">// when shutting down we want jobs to complete gracefully</span><br>        options.WaitForJobsToComplete = <span class="hljs-literal">true</span>;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Quartz-net-Admin-UI"><a href="#Quartz-net-Admin-UI" class="headerlink" title="Quartz.net Admin UI"></a>Quartz.net Admin UI</h2><p><strong>Quartzmin</strong></p>
+<p>Site: <a target="_blank" rel="noopener" href="https://github.com/jlucansky/Quartzmin">https://github.com/jlucansky/Quartzmin</a></p>
+<p><strong>CrystalQuartz</strong></p>
+<p>Site: <a target="_blank" rel="noopener" href="https://github.com/guryanovev/CrystalQuartz">https://github.com/guryanovev/CrystalQuartz</a></p>
+<h2 id="Quartz-alternative"><a href="#Quartz-alternative" class="headerlink" title="Quartz alternative"></a>Quartz alternative</h2><p><strong>FluentScheduler</strong></p>
+<p>Automated job scheduler with fluent interface for the .NET platform.</p>
+<p>Site: <a target="_blank" rel="noopener" href="https://github.com/fluentscheduler/FluentScheduler">https://github.com/fluentscheduler/FluentScheduler</a></p>
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services</a></li>
+<li><a target="_blank" rel="noopener" href="https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/">https://andrewlock.net/creating-a-quartz-net-hosted-service-with-asp-net-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.infoworld.com/article/3529418/how-to-schedule-jobs-using-quartznet-in-aspnet-core.html">https://www.infoworld.com/article/3529418/how-to-schedule-jobs-using-quartznet-in-aspnet-core.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://thinkrethink.net/2018/05/31/run-scheduled-background-tasks-in-asp-net-core/">https://thinkrethink.net/2018/05/31/run-scheduled-background-tasks-in-asp-net-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.stevejgordon.co.uk/asp-net-core-2-ihostedservice">https://www.stevejgordon.co.uk/asp-net-core-2-ihostedservice</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@nickfane/introduction-to-worker-services-in-net-core-3-0-4bb3fc631225">https://medium.com/@nickfane/introduction-to-worker-services-in-net-core-3-0-4bb3fc631225</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.quartz-scheduler.net/">https://www.quartz-scheduler.net/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/quartznet/quartznet/tree/master/src/Quartz.Examples.AspNetCore">https://github.com/quartznet/quartznet/tree/master/src/Quartz.Examples.AspNetCore</a></li>
+<li><a target="_blank" rel="noopener" href="https://girishgodage.in/blog/customize-hostedservices">https://girishgodage.in/blog/customize-hostedservices</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-background-task/" data-id="cl5ph9ghk00018wpba9a31jke" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Background Task",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi backgroundtask hostedservices",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-09-15",
+        "dateCreated": "2020-09-15",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-background-task/",
+        "description": "In ASP.NET Core, background tasks can be implemented as hosted services. A hosted service is a class with background task logic that implements the IHostedService interface. This topic provides three hosted service examples:
+
+Background task that runs on a timer.
+Hosted service that activates a scoped service. The scoped service can use dependency injection (DI).
+Queued background tasks that run sequentially.
+",
+        "wordCount": 4954
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-global-exception/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Global Exception Handling
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-external-apis/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - External APIs</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-background-task/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

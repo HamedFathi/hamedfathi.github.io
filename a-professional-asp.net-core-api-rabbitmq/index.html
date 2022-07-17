@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - RabbitMQ | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,masstransit,rabbitmq,easynetq,amqp,queue,messagebroker" />
+    
+    <meta name="description" content="RabbitMQ is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - RabbitMQ">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="RabbitMQ is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hamedfathi.me/images/a-professional-asp.net-core-api-rabbitmq/1.png">
+<meta property="article:published_time" content="2020-10-23T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="masstransit">
+<meta property="article:tag" content="rabbitmq">
+<meta property="article:tag" content="easynetq">
+<meta property="article:tag" content="amqp">
+<meta property="article:tag" content="queue">
+<meta property="article:tag" content="messagebroker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hamedfathi.me/images/a-professional-asp.net-core-api-rabbitmq/1.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-rabbitmq" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - RabbitMQ
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-rabbitmq/" class="article-date">
+       <time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-rabbitmq/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/amqp/" rel="tag">amqp</a>, <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/easynetq/" rel="tag">easynetq</a>, <a class="tag-link-link" href="/tags/masstransit/" rel="tag">masstransit</a>, <a class="tag-link-link" href="/tags/messagebroker/" rel="tag">messagebroker</a>, <a class="tag-link-link" href="/tags/queue/" rel="tag">queue</a>, <a class="tag-link-link" href="/tags/rabbitmq/" rel="tag">rabbitmq</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">4.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">27 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p><code>RabbitMQ</code> is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming Text Oriented Messaging Protocol, MQ Telemetry Transport, and other protocols.</p>
+<p>A <code>message broker</code> acts as a <code>middleman</code> for various services (e.g. a web application, as in this example). They can be used to reduce loads and delivery times of web application servers by delegating tasks that would normally take up a lot of time or resources to a third party that has no other job.</p>
+<span id="more"></span>
+
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/1.png"></p>
+<p>A <code>message</code> can include any kind of information. It could, for example, have information about a process or task that should start on another application (which could even be on another server), or it could be just a simple text message. The queue-manager software stores the messages until a receiving application connects and takes a message off the queue. The receiving application then processes the message.</p>
+<p>When the user has entered user information into the web interface, the web application will create a “PDF processing” message that includes all of the important information the user needs into a message and place it onto a queue defined in <code>RabbitMQ</code>.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/2.png"></p>
+<p>The basic architecture of a message queue is simple - there are client applications called <code>producers</code> that create messages and deliver them to the broker (the message queue). Other applications, called <code>consumers</code>, connect to the queue and <code>subscribe</code> to the messages to be processed. Software may act as a producer, or consumer, or both a consumer and a producer of messages. Messages placed onto the queue are stored until the consumer retrieves them.</p>
+<h2 id="When-and-why-should-you-use-RabbitMQ"><a href="#When-and-why-should-you-use-RabbitMQ" class="headerlink" title="When and why should you use RabbitMQ?"></a>When and why should you use RabbitMQ?</h2><p>Message queueing allows web servers to respond to requests quickly instead of being forced to perform resource-heavy procedures on the spot that may delay response time. Message queueing is also good when you want to distribute a message to multiple consumers or to balance loads between workers.</p>
+<p>The consumer takes a message off the queue and starts processing the PDF. At the same time, the producer is queueing up new messages. The consumer can be on a totally different server than the producer or they can be located on the same server. The request can be created in one programming language and handled in another programming language. The point is, the two applications will only communicate through the messages they are sending to each other, which means the sender and receiver have <code>low coupling</code>.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/3.png"></p>
+<ol>
+<li>The user sends a PDF creation request to the web application.</li>
+<li>The web application (the producer) sends a message to RabbitMQ that includes data from the request such as name and email.</li>
+<li>An exchange accepts the messages from the producer and routes them to correct message queues for PDF creation.</li>
+<li>The PDF processing worker (the consumer) receives the task message and starts processing the PDF.</li>
+</ol>
+<h2 id="Exchanges"><a href="#Exchanges" class="headerlink" title="Exchanges"></a>Exchanges</h2><p>Messages are not published directly to a queue; instead, the producer sends messages to an exchange. An exchange is responsible for <code>routing</code> the messages to different queues with the help of bindings and routing keys.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/4.png"></p>
+<ul>
+<li><strong>Binding</strong> is a <code>link</code> that you set up to bind a queue to an exchange (A link between a queue and an exchange).</li>
+<li><strong>Routing key</strong> is a message attribute the exchange looks at when deciding how to route the message to queues (depending on exchange type).</li>
+</ul>
+<p>Exchanges, connections, and queues can be configured with parameters such as durable, temporary, and auto delete upon creation. Durable exchanges survive server restarts and last until they are explicitly deleted. Temporary exchanges exist until RabbitMQ is shut down. Auto-deleted exchanges are removed once the last bound object is unbound from the exchange.</p>
+<p>In RabbitMQ, there are four different types of exchanges that route the message differently using different parameters and bindings setups. Clients can create their own exchanges or use the predefined default exchanges which are created when the server starts for the first time.</p>
+<p><strong>Message flow in RabbitMQ</strong></p>
+<ol>
+<li>The producer publishes a message to an exchange. When creating an exchange, the type must be specified. This topic will be covered later on.</li>
+<li>The exchange receives the message and is now responsible for routing the message. The exchange takes different message attributes into account, such as the routing key, depending on the exchange type.</li>
+<li>Bindings must be created from the exchange to queues. In this case, there are two bindings to two different queues from the exchange. The exchange routes the message into the queues depending on message attributes.</li>
+<li>The messages stay in the queue until they are handled by a consumer</li>
+<li>The consumer handles the message.</li>
+</ol>
+<p><strong>Types of exchanges</strong></p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/5.png"></p>
+<ul>
+<li><p><strong>Direct</strong>: The message is routed to the queues whose binding key exactly matches the routing key of the message. For example, if the queue is bound to the exchange with the binding key pdfprocess, a message published to the exchange with a routing key pdfprocess is routed to that queue.</p>
+</li>
+<li><p><strong>Fanout</strong>: A fanout exchange routes messages to all of the queues bound to it.</p>
+</li>
+<li><p><strong>Topic</strong>: The topic exchange does a wildcard match between the routing key and the routing pattern specified in the binding.</p>
+</li>
+<li><p><strong>Headers</strong>: Headers exchanges use the message header attributes for routing.</p>
+</li>
+</ul>
+<h2 id="Direct-Exchange"><a href="#Direct-Exchange" class="headerlink" title="Direct Exchange"></a>Direct Exchange</h2><p>A direct exchange delivers messages to queues based on a message routing key. The routing key is a message attribute added to the message header by the producer. Think of the routing key as an “address” that the exchange is using to decide how to route the message. <code>A message goes to the queue(s) with the binding key that exactly matches the routing key of the message</code>.</p>
+<p>The direct exchange type is useful to distinguish messages published to the same exchange using a simple string identifier.</p>
+<p>The default exchange AMQP brokers must provide for the direct exchange is “amq.direct”.</p>
+<p>Imagine that queue A (create_pdf_queue) in the image below (Direct Exchange Figure) is bound to a direct exchange (pdf_events) with the binding key pdf_create. When a new message with routing key pdf_create arrives at the direct exchange, the exchange routes it to the queue where the binding_key = routing_key, in the case to queue A (create_pdf_queue).</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/direct-exchange.png"></p>
+<p><strong>Scenario 1</strong></p>
+<ul>
+<li>Exchange: pdf_events</li>
+<li>Queue A: create_pdf_queue</li>
+<li>Binding key between exchange (pdf_events) and Queue A (create_pdf_queue): pdf_create</li>
+</ul>
+<p><strong>Scenario 2</strong></p>
+<ul>
+<li>Exchange: pdf_events</li>
+<li>Queue B: pdf_log_queue</li>
+<li>Binding key between exchange (pdf_events) and Queue B (pdf_log_queue): pdf_log</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>A message with routing key pdf_log is sent to the exchange pdf_events. The messages is routed to pdf_log_queue because the routing key (pdf_log) matches the binding key (pdf_log).</p>
+<p>If the message routing key does not match any binding key, the message is discarded.</p>
+<p><strong>Default Exchange</strong></p>
+<p>The default exchange is a pre-declared <code>direct exchange with no name</code>, usually referred by an empty string. When you use default exchange, your message is delivered to the queue with a name equal to the routing key of the message. Every queue is automatically bound to the default exchange with a routing key which is the same as the queue name.</p>
+<h2 id="Topic-Exchange"><a href="#Topic-Exchange" class="headerlink" title="Topic Exchange"></a>Topic Exchange</h2><p>Topic exchanges route messages to queues based on wildcard matches between the routing key and the routing pattern, which is specified by the queue binding. Messages are routed to one or many queues based on a matching between a message routing key and this pattern.</p>
+<p>The routing key must be a list of words, delimited by a period (.). Examples are agreements.us and agreements.eu.stockholm which in this case identifies agreements that are set up for a company with offices in lots of different locations. The routing patterns may contain an asterisk (“<em>”) to match a word in a specific position of the routing key (e.g., a routing pattern of “agreements.</em>.<em>.b.</em>“ only match routing keys where the first word is “agreements” and the fourth word is “b”). A pound symbol (“#”) indicates a match of zero or more words (e.g., a routing pattern of “agreements.eu.berlin.#” matches any routing keys beginning with “agreements.eu.berlin”).</p>
+<p>The consumers indicate which topics they are interested in (like subscribing to a feed for an individual tag). The consumer creates a queue and sets up a binding with a given routing pattern to the exchange. All messages with a routing key that match the routing pattern are routed to the queue and stay there until the consumer consumes the message.</p>
+<p>The default exchange AMQP brokers must provide for the topic exchange is “amq.topic”.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/topic-exchange.png"></p>
+<p><strong>Scenario 1</strong></p>
+<p>The image to the right shows an example where consumer A is interested in all the agreements in Berlin.</p>
+<ul>
+<li>Exchange: agreements</li>
+<li>Queue A: berlin_agreements</li>
+<li>Routing pattern between exchange (agreements) and Queue A (berlin_agreements): agreements.eu.berlin.#</li>
+<li>Example of message routing key that matches: agreements.eu.berlin and agreements.eu.berlin.headstore</li>
+</ul>
+<p><strong>Scenario 2</strong></p>
+<p>Consumer B is interested in all the agreements.</p>
+<ul>
+<li>Exchange: agreements</li>
+<li>Queue B: all_agreements</li>
+<li>Routing pattern between exchange (agreements) and Queue B (all_agreements): agreements.#</li>
+<li>Example of message routing key that matches: agreements.eu.berlin and agreements.us</li>
+</ul>
+<p><strong>Scenario 3</strong></p>
+<p>Consumer C is interested in all agreements for European head stores.</p>
+<ul>
+<li>Exchange: agreements</li>
+<li>Queue C: headstore_agreements</li>
+<li>Routing pattern between exchange (agreements) and Queue C (headstore_agreements): agreements.eu.*.headstore</li>
+<li>Example of message routing keys that will match: agreements.eu.berlin.headstore and agreements.eu.stockholm.headstore</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>A message with routing key agreements.eu.berlin is sent to the exchange agreements. The messages are routed to the queue berlin_agreements because the routing pattern of “agreements.eu.berlin.#” matches the routing keys beginning with “agreements.eu.berlin”. The message is also routed to the queue all_agreements because the routing key (agreements.eu.berlin) matches the routing pattern (agreements.#).</p>
+<h2 id="Fanout-Exchange"><a href="#Fanout-Exchange" class="headerlink" title="Fanout Exchange"></a>Fanout Exchange</h2><p>A fanout exchange copies and routes a received message to all queues that are bound to it regardless of routing keys or pattern matching as with direct and topic exchanges. The keys provided will simply be ignored.</p>
+<p>Fanout exchanges can be useful when the same message needs to be sent to one or more queues with consumers who may process the same message in different ways.</p>
+<p>The image to the right (Fanout Exchange) shows an example where a message received by the exchange is copied and routed to all three queues bound to the exchange. It could be sport or weather updates that should be sent out to each connected mobile device when something happens, for instance.</p>
+<p>The default exchange AMQP brokers must provide for the topic exchange is “amq.fanout”.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/fanout-exchange.png"></p>
+<p><strong>Scenario 1</strong></p>
+<ul>
+<li>Exchange: sport_news</li>
+<li>Queue A: Mobile client queue A</li>
+<li>Binding: Binding between the exchange (sport_news) and Queue A (Mobile cli<br>ent queue A)</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>A message is sent to the exchange sport_news. The message is routed to all queues (Queue A, Queue B, Queue C) because all queues are bound to the exchange. Provided routing keys are ignored.</p>
+<h2 id="Headers-Exchange"><a href="#Headers-Exchange" class="headerlink" title="Headers Exchange"></a>Headers Exchange</h2><p>A headers exchange routes messages based on arguments containing headers and optional values. Headers exchanges are very similar to topic exchanges, but route messages based on header values instead of routing keys. A message matches if the value of the header equals the value specified upon binding.</p>
+<p>A special argument named “x-match”, added in the binding between exchange and queue, specifies if all headers must match or just one. Either any common header between the message and the binding count as a match, or all the headers referenced in the binding need to be present in the message for it to match. The “x-match” property can have two different values: “any” or “all”, where “all” is the default value. A value of “all” means all header pairs (key, value) must match, while value of “any” means at least one of the header pairs must match. Headers can be constructed using a wider range of data types, integer or hash for example, instead of a string. The headers exchange type (used with the binding argument “any”) is useful for directing messages which contain a subset of known (unordered) criteria.</p>
+<p>The default exchange AMQP brokers must provide for the topic exchange is “amq.headers”.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/headers-exchange.png"></p>
+<p><strong>Example</strong></p>
+<ul>
+<li>Exchange: Binding to Queue A with arguments (key = value): format = pdf, type = report, x-match = all</li>
+<li>Exchange: Binding to Queue B with arguments (key = value): format = pdf, type = log, x-match = any</li>
+<li>Exchange: Binding to Queue C with arguments (key = value): format = zip, type = report, x-match = all</li>
+</ul>
+<p><strong>Scenario 1</strong></p>
+<p>Message 1 is published to the exchange with header arguments (key = value): “format = pdf”, “type = report”.</p>
+<p>Message 1 is delivered to Queue A because all key/value pairs match, and Queue B since “format = pdf” is a match (binding rule set to “x-match =any”).</p>
+<p><strong>Scenario 2</strong></p>
+<p>Message 2 is published to the exchange with header arguments of (key = value): “format = pdf”.</p>
+<p>Message 2 is only delivered to Queue B. Because the binding of Queue A requires both “format = pdf” and “type = report” while Queue B is configured to match any key-value pair (x-match = any) as long as either “format = pdf” or “type = log” is present.</p>
+<p><strong>Scenario 3</strong></p>
+<p>Message 3 is published to the exchange with header arguments of (key = value): “format = zip”, “type = log”.</p>
+<p>Message 3 is delivered to Queue B since its binding indicates that it accepts messages with the key-value pair “type = log”, it doesn’t mind that “format = zip” since “x-match = any”.</p>
+<p>Queue C doesn’t receive any of the messages since its binding is configured to match all of the headers (“x-match = all”) with “format = zip”, “type = pdf”. No message in this example lives up to these criterias.</p>
+<p>It’s worth noting that in a header exchange, the actual order of the key-value pairs in the message is irrelevant.</p>
+<h2 id="Dead-Letter-Exchange"><a href="#Dead-Letter-Exchange" class="headerlink" title="Dead Letter Exchange"></a>Dead Letter Exchange</h2><p>If no matching queue can be found for the message, the message is silently dropped. RabbitMQ provides an AMQP extension known as the “Dead Letter Exchange”, which provides the functionality to capture messages that are not deliverable.</p>
+<h2 id="RabbitMQ-concepts-at-a-glance"><a href="#RabbitMQ-concepts-at-a-glance" class="headerlink" title="RabbitMQ concepts at a glance"></a>RabbitMQ concepts at a glance</h2><table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Producer</td>
+<td>Application that sends the messages.</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td>Application that receives the messages.</td>
+</tr>
+<tr>
+<td>Queue</td>
+<td>Buffer that stores messages.</td>
+</tr>
+<tr>
+<td>Message</td>
+<td>Information that is sent from the producer to a consumer through RabbitMQ.</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>A TCP connection between your application and the RabbitMQ broker.</td>
+</tr>
+<tr>
+<td>Channel</td>
+<td>A virtual connection inside a connection. When publishing or consuming messages from a queue - it’s all done over a channel.</td>
+</tr>
+<tr>
+<td>Exchange</td>
+<td>Receives messages from producers and pushes them to queues depending on rules defined by the exchange type. To receive messages, a queue needs to be bound to at least one exchange.</td>
+</tr>
+<tr>
+<td>Binding</td>
+<td>A binding is a link between a queue and an exchange.</td>
+</tr>
+<tr>
+<td>Routing key</td>
+<td>A key that the exchange looks at to decide how to route the message to queues. Think of the routing key like an address for the message.</td>
+</tr>
+<tr>
+<td>AMQP</td>
+<td>Advanced Message Queuing Protocol is the protocol used by RabbitMQ for messaging.</td>
+</tr>
+<tr>
+<td>Users</td>
+<td>Users can be added from the management interface and every user can be assigned permissions such as rights to read, write and configure privileges. Users can also be assigned permissions to specific virtual hosts.</td>
+</tr>
+<tr>
+<td>Vhost, virtual host</td>
+<td>Virtual hosts provide a way to segregate applications using the same RabbitMQ instance. Different users can have different access privileges to different vhost and queues and exchanges can be created so they only exist in one vhost.</td>
+</tr>
+<tr>
+<td>Cluster</td>
+<td>A cluster consists of a set of connected computers that work together. If the RabbitMQ instance consisting of more than one node - it is called a RabbitMQ cluster. A cluster is a group of nodes i.e., a group of computers.</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>A node is a single computer in the RabbitMQ cluster.</td>
+</tr>
+</tbody></table>
+<h2 id="RabbitMQ-installation-Windows"><a href="#RabbitMQ-installation-Windows" class="headerlink" title="RabbitMQ installation (Windows)"></a>RabbitMQ installation (Windows)</h2><p><strong>Install Erlang/OTP</strong></p>
+<p><code>RabbitMQ</code> requires a 64-bit supported version of <a target="_blank" rel="noopener" href="https://www.erlang.org/downloads">Erlang</a> for Windows to be installed. </p>
+<p>Set <code>ERLANG_HOME</code> to where you actually put your Erlang installation, e.g. <code>C:\Program Files\erl&#123;version&#125;</code> (full path). The RabbitMQ batch files expect to execute <code>%ERLANG_HOME%\bin\erl.exe</code>.</p>
+<p>Go to <code>Start &gt; Settings &gt; Control Panel &gt; System &gt; Advanced &gt; Environment Variables</code>. Create the system environment variable <code>ERLANG_HOME</code> and set it to the full path of the directory which contains <code>bin\erl.exe</code>.</p>
+<p><strong>Install RabbitMQ Server</strong></p>
+<p>After making sure a supported Erlang version is installed, download <a target="_blank" rel="noopener" href="https://github.com/rabbitmq/rabbitmq-server/releases">RabbitMQ server</a>.</p>
+<p><strong>Enable RabbitMQ Management Plugin</strong></p>
+<p>Go to the directory where the <code>RabbitMQ</code> is installed.</p>
+<p>Now, enable the <code>rabbitmq_management</code> plugin using the <code>rabbitmq-plugins</code> command as shown below.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sbin/rabbitmq-plugins <span class="hljs-built_in">enable</span> rabbitmq_management<br></code></pre></td></tr></table></figure>
+
+<p>The <code>rabbitmq_management</code> plugin is a combination of the following plugins. All of the following plugins will be enabled when you execute the above command:</p>
+<ul>
+<li>mochiweb</li>
+<li>webmachine</li>
+<li>rabbitmq_web_dispatch</li>
+<li>amqp_client</li>
+<li>rabbitmq_management_agent</li>
+<li>rabbitmq_management</li>
+</ul>
+<p>After enabling the <code>rabbitmq_management</code> plugin you should restart the RabbitMQ server as shown below.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sbin/rabbitmqctl stop<br><br>sbin/rabbitmq-server -detached<br></code></pre></td></tr></table></figure>
+
+<p>And we’ll get an output like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Warning: PID file not written; -detached was passed.<br></code></pre></td></tr></table></figure>
+
+<p><strong>Login to RabbitMQ Management Dashboard</strong></p>
+<p>RabbitMQ Management is a plugin that we enabled for RabbitMQ in previous section. It gives a single static HTML page that makes background queries to the HTTP API for RabbitMQ. Information from the management interface can be useful when you are debugging your applications or when you need an overview of the whole system. If you see that the number of unacked messages starts to get high, it could mean that your consumers are getting slow. If you need to check if an exchange is working, you can try to send a test message.</p>
+<p>By default the management plugin runs on <code>15672</code> HTTP port.</p>
+<p>From your browser go to <code>http://localhost:15672</code></p>
+<p>The default username and password for RabbitMQ management plugin is: <code>guest</code></p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/dashboard.png"></p>
+<h2 id="RabbitMQ-Management-Dashboard"><a href="#RabbitMQ-Management-Dashboard" class="headerlink" title="RabbitMQ Management Dashboard"></a>RabbitMQ Management Dashboard</h2><p>The RabbitMQ Management is a user-friendly interface that let you monitor and handle your RabbitMQ server from a web browser. Among other things queues, connections, channels, exchanges, users and user permissions can be handled - created, deleted and listed in the browser. You can monitor message rates and send/receive messages manually.</p>
+<h2 id="Overview-tab"><a href="#Overview-tab" class="headerlink" title="Overview tab"></a>Overview tab</h2><p>The overview shows two charts, one for queued messages and one with the message rate. You can change the time interval shown in the chart by pressing the text (chart: last minute) above the charts. Information about all different statuses for messages can be found by pressing (?).</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/rabbitmq-mngmt-overview.png"></p>
+<p><strong>Queued messages</strong></p>
+<p>A chart of the total number of queued messages for all your queues. Ready show the number of messages that are available to be delivered. Unacked are the number of messages for which the server is waiting for acknowledgment.</p>
+<p><strong>Messages rate</strong></p>
+<p>A chart with the rate of how the messages are handled. Publish show the rate at which messages are entering the server and Confirm show a rate at which the server is confirming.</p>
+<p><strong>Global Count</strong></p>
+<p>The total number of connections, channels, exchanges, queues and consumers for ALL virtual hosts the current user has access to.</p>
+<p><strong>Nodes</strong></p>
+<p>Nodes show information about the different nodes in the RabbitMQ cluster (a cluster is a group of nodes i.e, a group of computers), or information about one single node if just one node is used. Here can information about server memory, number of erlang processes per node and other node-specific information be found. Info show i.e. further information about the node and enabled plugins.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/management-node.png"></p>
+<p><strong>Port and contexts</strong></p>
+<p>Listening ports for different protocols can be found here. More information about the protocols will be found in a later part of RabbitMQ for beginners.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/port-and-contexts.png"></p>
+<p><strong>Import export definitions</strong></p>
+<p>It is possible to import and export configuration definitions. When you download the definitions, you get a JSON representation of your broker (your RabbitMQ settings). This can be used to restore exchanges, queues, virtual hosts, policies, and users. This feature can be used as a backup. Every time you make a change in the config, you can keep the old settings just in case.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/import-export-definitions.png"></p>
+<h2 id="Connections-and-Channels-tabs"><a href="#Connections-and-Channels-tabs" class="headerlink" title="Connections and Channels tabs"></a>Connections and Channels tabs</h2><p>A connection is a TCP connection between your application and the RabbitMQ broker. A channel is a virtual connection inside a connection.</p>
+<p>RabbitMQ connections and channels can be in different <strong>states</strong>; starting, tuning, opening, running, flow, blocking, blocked, closing, closed. If a connection enters flow-control this often means that the client is being rate-limited in some way.</p>
+<p><strong>Connections</strong></p>
+<p>The connection tab shows the connections established to the RabbitMQ server. <strong>vhost</strong> shows in which vhost the connection operates, the <strong>username</strong> the user associated with the connection. <strong>Channels</strong> tell the number of channels using the connection. <strong>SSL/TLS</strong> indicate whether the connection is secured with SSL.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/connections.png"></p>
+<p>If you click on one of the connections, you get an overview of that specific connection. You can view channels in the connection and data rates. You can see client properties and you can close the connection.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/connection-info.png"></p>
+<p><strong>Channels</strong></p>
+<p>The channel tab show information about all current channels. The <strong>vhost</strong> shows in which vhost the channel operates, the <strong>username</strong> the user associated with the channel. The <strong>mode</strong> tells the channel guarantee mode. It can be in confirm or transactional mode. When a channel is in confirm mode, both the broker and the client count messages. The broker then confirms messages as it handles them. Confirm mode is activated once the confirm.select method is used on a channel.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/channels.png"></p>
+<p>If you click on one of the channels, you get a detailed overview of that specific channel. From here you can see the message rate on the number of logical consumers retrieving messages via the channel.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/channel-info.png"></p>
+<h2 id="Exchanges-tab"><a href="#Exchanges-tab" class="headerlink" title="Exchanges tab"></a>Exchanges tab</h2><p>An exchange receives messages from producers and pushes them to queues. The exchange must know exactly what to do with a message it receives. All exchanges can be listed from the exchange tab. <strong>Virtual host</strong> shows the vhost for the exchange, <strong>type</strong> is the exchange type such as direct, topic, headers, fanout. <strong>Features</strong> show the parameters for the exchange (e.g. D stand for durable, and AD for auto-delete). Features and types can be specified when the exchange is created. In this list there are some amq.* exchanges and the default (unnamed) exchange. These are created by default.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/exchanges.png"></p>
+<p>By clicking on the exchange name, a detailed page about the exchange are shown. You can see and add bindings to the exchange. You can also publish a message to the exchange or delete the exchange.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/exchange-info.png"></p>
+<h2 id="Queues-tab"><a href="#Queues-tab" class="headerlink" title="Queues tab"></a>Queues tab</h2><p>The queue tab show the queues for all or one selected vhost.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues.png"></p>
+<p>Queues have different parameters and arguments depending on how they were created. The features column show the parameters that belong to the queue. It could be features like Durable queue (which ensure that RabbitMQ will never lose the queue), Message TTL (which tells how long a message published to a queue can live before it is discarded), Auto expire (which tells how long a queue can be unused for before it is automatically deleted), Max length (which tells how many (ready) messages a queue can contain before it starts to drop them) and Max length bytes (which tells the total body size for ready messages a queue can contain before it starts to drop them).</p>
+<p>You can also create a queue from this view.</p>
+<p>If you press on any chosen queue from the list of queues, all information about the queue are shown like in the pictures that follow below.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-2.png"></p>
+<p>The first two charts include the same information as the overview, but it just shows the number of queued messages and the message rates for that specific queue.</p>
+<p><strong>Consumers</strong></p>
+<p>Consumers show the consumers/channels that are connected to the queue.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-7.png"></p>
+<p><strong>Bindings</strong></p>
+<p>A binding can be created between an exchange and a queue. All active bindings to the queue are shown under bindings. You can also create a new binding to a queue from here or unbind a queue from an exchange.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-5.png"></p>
+<p><strong>Publish message</strong></p>
+<p>It is possible to manually publish a message to the queue from “publish message”. The message will be published to the default exchange with the queue name as given routing key - meaning that the message will be sent to the queue. It is also possible to publish a message to an exchange from the exchange view.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-4.png"></p>
+<p><strong>Get message</strong></p>
+<p>It is possible to manually inspect the message in the queue. “Get message” get the message to you and if you mark it as “requeue”, RabbitMQ puts it back to the queue in the same order.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-6.png"></p>
+<p><strong>Delete or Purge queue</strong></p>
+<p>A queue can be deleted by the delete button, and you can empty the queue by pressing purge.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/queues-3.png"></p>
+<h2 id="Admin-tab"><a href="#Admin-tab" class="headerlink" title="Admin tab"></a>Admin tab</h2><p>From the Admin view, it is possible to add users and change user permissions. You can set up vhosts, policies, federation, and shovels.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/admin-add-user.png"></p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/admin-add-vhost.png"></p>
+<h2 id="UI-Example"><a href="#UI-Example" class="headerlink" title="UI Example"></a>UI Example</h2><p>This example shows how you can create a queue “example-queue” and an exchange called example.exchange.</p>
+<p>Queue view: Add queue</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/add-queue.png"></p>
+<p>Exchange view: Add exchange</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/add-exchange.png"></p>
+<p>The exchange and the queue are connected by a binding called “pdfprocess”. Messages published to the exchange with the routing key “pdfprocess” will end up in the queue.</p>
+<p>Press on the exchange or on the queue go to “Add binding from this exchange” or “Add binding to this queue”.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/add-binding.png"></p>
+<p>Publish a message to the exchange with the routing key “pdfprocess”</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/publish-message.png"></p>
+<p>Queue overview for example-queue when a message is published.</p>
+<p><img src="/images/a-professional-asp.net-core-api-rabbitmq/publish.png"></p>
+<p>A lot of things can be viewed and handled from the management interface and it will give you a good overview of your system. By looking into the management interface, you will get a good understanding about RabbitMQ and how everything is related.</p>
+<h2 id="EasyNetQ"><a href="#EasyNetQ" class="headerlink" title="EasyNetQ"></a>EasyNetQ</h2><h2 id="MassTransit"><a href="#MassTransit" class="headerlink" title="MassTransit"></a>MassTransit</h2><p>A free, open-source distributed application framework for .NET.</p>
+<p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package MassTransit -Version 7.0.6<br>dotnet add package MassTransit --version 7.0.6<br>&lt;PackageReference Include=<span class="hljs-string">&quot;MassTransit&quot;</span> Version=<span class="hljs-string">&quot;7.0.6&quot;</span> /&gt;<br><br>Install-Package MassTransit.AspNetCore -Version 7.0.6<br>dotnet add package MassTransit.AspNetCore --version 7.0.6<br>&lt;PackageReference Include=<span class="hljs-string">&quot;MassTransit.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;7.0.6&quot;</span> /&gt;<br><br>Install-Package MassTransit.RabbitMQ -Version 7.0.6<br>dotnet add package MassTransit.RabbitMQ --version 7.0.6<br>&lt;PackageReference Include=<span class="hljs-string">&quot;MassTransit.RabbitMQ&quot;</span> Version=<span class="hljs-string">&quot;7.0.6&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cloudamqp.com/blog/2015-05-18-part1-rabbitmq-for-beginners-what-is-rabbitmq.html">https://www.cloudamqp.com/blog/2015-05-18-part1-rabbitmq-for-beginners-what-is-rabbitmq.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cloudamqp.com/blog/2015-05-27-part3-rabbitmq-for-beginners_the-management-interface.html">https://www.cloudamqp.com/blog/2015-05-27-part3-rabbitmq-for-beginners_the-management-interface.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html">https://www.cloudamqp.com/blog/2015-09-03-part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/rabbitmq-with-aspnet-core-microservice/">https://www.codewithmukesh.com/blog/rabbitmq-with-aspnet-core-microservice/</a></li>
+<li><a target="_blank" rel="noopener" href="https://alvinvafana.blogspot.com/2019/10/messaging-through-service-bus-using.html">https://alvinvafana.blogspot.com/2019/10/messaging-through-service-bus-using.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.rabbitmq.com/install-windows-manual.html">https://www.rabbitmq.com/install-windows-manual.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2013/10/enable-rabbitmq-management-plugin/">https://www.thegeekstuff.com/2013/10/enable-rabbitmq-management-plugin/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codementor.io/@bosunbolawa/how-to-enable-rabbitmq-management-interface-owc5lzg7f">https://www.codementor.io/@bosunbolawa/how-to-enable-rabbitmq-management-interface-owc5lzg7f</a></li>
+<li><a target="_blank" rel="noopener" href="https://doumer.me/micro-services-communication-rabbitmq-and-asp-net-core/">https://doumer.me/micro-services-communication-rabbitmq-and-asp-net-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tutlane.com/tutorial/rabbitmq">https://www.tutlane.com/tutorial/rabbitmq</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/" data-id="cl5ph9gia000r8wpb0lzw0zde" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - RabbitMQ",
+        "image": "https://hamedfathi.me/images/a-professional-asp.net-core-api-rabbitmq/1.png",
+        "keywords": "dotnet aspnetcore webapi masstransit rabbitmq easynetq amqp queue messagebroker",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-10-23",
+        "dateCreated": "2020-10-23",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/",
+        "description": "RabbitMQ is an open-source message-broker software that originally implemented the Advanced Message Queuing Protocol (AMQP) and has since been extended with a plug-in architecture to support Streaming Text Oriented Messaging Protocol, MQ Telemetry Transport, and other protocols.
+A message broker acts as a middleman for various services (e.g. a web application, as in this example). They can be used to reduce loads and delivery times of web application servers by delegating tasks that would normally take up a lot of time or resources to a third party that has no other job.",
+        "wordCount": 4193
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Write a custom plugin with Aurelia 2 and Lerna
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-rss/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core - RSS</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-rabbitmq/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

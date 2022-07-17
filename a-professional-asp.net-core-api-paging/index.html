@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Paging | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,paging,pagination,fakedata,bogus,testdata" />
+    
+    <meta name="description" content="Paging refers to getting partial results from an API. Imagine having millions of results in the database and having your application try to return all of them at once. Not only that would be an extrem">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Paging">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-paging/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="Paging refers to getting partial results from an API. Imagine having millions of results in the database and having your application try to return all of them at once. Not only that would be an extrem">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-04T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="paging">
+<meta property="article:tag" content="pagination">
+<meta property="article:tag" content="fakedata">
+<meta property="article:tag" content="bogus">
+<meta property="article:tag" content="testdata">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-paging" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Paging
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-paging/" class="article-date">
+       <time datetime="2020-10-04T00:00:00.000Z" itemprop="datePublished">2020-10-04</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-paging/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/bogus/" rel="tag">bogus</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/fakedata/" rel="tag">fakedata</a>, <a class="tag-link-link" href="/tags/pagination/" rel="tag">pagination</a>, <a class="tag-link-link" href="/tags/paging/" rel="tag">paging</a>, <a class="tag-link-link" href="/tags/testdata/" rel="tag">testdata</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">3.3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">20 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Paging refers to <strong>getting partial results from an API</strong>. Imagine having millions of results in the database and having your application try to return all of them at once.</p>
+<p>Not only that would be an extremely ineffective way of returning the results, but it could also possibly have devastating effects on the application itself or the hardware it runs on. Moreover, every client has limited memory resources and it needs to restrict the number of shown results.</p>
+<p>Thus, we need a way to return a set number of results to the client in order to avoid these consequences.</p>
+<span id="more"></span>
+
+<h2 id="Fake-data-generator"><a href="#Fake-data-generator" class="headerlink" title="Fake data generator"></a>Fake data generator</h2><p>To work with a big list for paging we need a library to generate fake data. We use <code>Bogus</code> for this goal.</p>
+<p>Install below package</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">Install-Package Bogus -Version <span class="hljs-number">31.0</span><span class="hljs-number">.2</span><br>dotnet <span class="hljs-keyword">add</span> package Bogus --version <span class="hljs-number">31.0</span><span class="hljs-number">.2</span><br>&lt;PackageReference Include=<span class="hljs-string">&quot;Bogus&quot;</span> Version=<span class="hljs-string">&quot;31.0.2&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Our Models</strong></p>
+<p>We want to return list of people so I should write the following classes</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Person.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span><br>&#123;<br>    <span class="hljs-keyword">public</span> Guid Id &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> FamilyName &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">float</span> Age &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> DateTimeOffset BithDate &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;Phone&gt; Phones &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;Address&gt; Addresses &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        Phones = <span class="hljs-keyword">new</span> List&lt;Phone&gt;();<br>        Addresses = <span class="hljs-keyword">new</span> List&lt;Address&gt;();<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Address.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Address</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Country &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> City &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> MainStreet &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Info &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> No &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// Phone.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Phone</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Code &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Number &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Generator</strong></p>
+<p>To generate fake data we should do like below</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// PeopleDataGenerator.cs</span><br><span class="hljs-keyword">using</span> Bogus;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PeopleDataGenerator</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IEnumerable&lt;Person&gt; <span class="hljs-title">GetPeople</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> count = <span class="hljs-number">200</span></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> testPhone = <span class="hljs-keyword">new</span> Faker&lt;Phone&gt;()<br>                .StrictMode(<span class="hljs-literal">true</span>)<br>                .RuleFor(p =&gt; p.Code, f =&gt; f.Address.CountryCode())<br>                .RuleFor(p =&gt; p.Number, f =&gt; f.Phone.PhoneNumber())<br>                ;<br>        <span class="hljs-keyword">var</span> testAddress = <span class="hljs-keyword">new</span> Faker&lt;Address&gt;()<br>                .StrictMode(<span class="hljs-literal">true</span>)<br>                .RuleFor(a =&gt; a.Country, f =&gt; f.Address.Country())<br>                .RuleFor(a =&gt; a.City, f =&gt; f.Address.City())<br>                .RuleFor(a =&gt; a.No, f =&gt; f.Address.BuildingNumber())<br>                .RuleFor(a =&gt; a.Info, f =&gt; f.Address.FullAddress())<br>                .RuleFor(a =&gt; a.MainStreet, f =&gt; f.Address.StreetAddress())<br>                ;<br>        <span class="hljs-keyword">var</span> testPerson = <span class="hljs-keyword">new</span> Faker&lt;Person&gt;()<br>                .StrictMode(<span class="hljs-literal">true</span>)<br>                .RuleFor(p =&gt; p.Id, f =&gt; Guid.NewGuid())<br>                .RuleFor(p =&gt; p.Name, f =&gt; f.Name.FirstName())<br>                .RuleFor(p =&gt; p.FamilyName, f =&gt; f.Name.LastName())<br>                .RuleFor(p =&gt; p.Age, f =&gt; f.Random.Float(<span class="hljs-number">1</span>, <span class="hljs-number">120</span>))<br>                .RuleFor(p =&gt; p.BithDate, f =&gt; f.Person.DateOfBirth)<br>                .RuleFor(p =&gt; p.Phones, f =&gt; testPhone.Generate(<span class="hljs-number">15</span>))<br>                .RuleFor(p =&gt; p.Addresses, f =&gt; testAddress.Generate(<span class="hljs-number">10</span>))<br>                ;<br>        <span class="hljs-keyword">return</span> testPerson.Generate(count);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>GetPeople()</code> will generate 200 people in default mode.</p>
+<p><strong>Goal</strong></p>
+<p>Our goal is make pagination for <code>Get()</code> action method:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IEnumerable&lt;Person&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-comment">// OUR GOAL</span><br>        <span class="hljs-keyword">var</span> data = PeopleDataGenerator.GetPeople();<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="New-paging-result"><a href="#New-paging-result" class="headerlink" title="New paging result"></a>New paging result</h2><p>It’s always a good practice to add wrappers to your API response. What is a wrapper? Instead of just returning the data in the response, you have a possibility to return other parameters like error messages, response status, page number, data, page size, and so on.</p>
+<p>So, write the following classes</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Response.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Response</span>&lt;<span class="hljs-title">T</span>&gt;<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Response</span>(<span class="hljs-params">T data</span>)</span><br>    &#123;<br>        Succeeded = <span class="hljs-literal">true</span>;<br>        Message = <span class="hljs-built_in">string</span>.Empty;<br>        Errors = <span class="hljs-literal">null</span>;<br>        Data = data;<br>    &#125;<br>    <span class="hljs-keyword">public</span> T Data &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> Succeeded &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span>[] Errors &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// PagedResponse.cs</span><br><span class="hljs-keyword">using</span> System;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">T</span>&gt; : <span class="hljs-title">Response</span>&lt;<span class="hljs-title">T</span>&gt;<br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> PageNumber &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> PageSize &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> Uri FirstPage &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> Uri LastPage &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TotalPages &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> TotalRecords &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> Uri NextPage &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> Uri PreviousPage &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PagedResponse</span>(<span class="hljs-params">T data, <span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">data</span>)</span><br>    &#123;<br>        PageNumber = pageNumber;<br>        PageSize = pageSize;<br>        Data = data;<br>        Message = <span class="hljs-literal">null</span>;<br>        Succeeded = <span class="hljs-literal">true</span>;<br>        Errors = <span class="hljs-literal">null</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PagedResponse</span>(<span class="hljs-params">T data, PaginationFilter paginationFilter</span>) : <span class="hljs-title">this</span>(<span class="hljs-params">data, paginationFilter.PageNumber, paginationFilter.PageSize</span>)</span><br>    &#123;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>To send our filtering config we need another class</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PaginationFilter</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> PageNumber &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> PageSize &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PaginationFilter</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        PageNumber = <span class="hljs-number">1</span>;<br>        PageSize = <span class="hljs-number">10</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PaginationFilter</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize</span>)</span><br>    &#123;<br>        PageNumber = pageNumber &lt; <span class="hljs-number">1</span> ? <span class="hljs-number">1</span> : pageNumber;<br>        PageSize = pageSize &lt; <span class="hljs-number">1</span> ? <span class="hljs-number">1</span> : pageSize;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now, we are able to do something like this:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// http://localhost:PORT/weatherforecast?pageNumber=2&amp;pageSize=10</span><br><br>[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IEnumerable&lt;Person&gt; <span class="hljs-title">Get</span>(<span class="hljs-params">[FromQuery] PaginationFilter filter</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> data = PeopleDataGenerator.GetPeople()<br>                .Skip((filter.PageNumber - <span class="hljs-number">1</span>) * filter.PageSize)<br>                .Take(filter.PageSize);<br>        <span class="hljs-keyword">return</span> data;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>[FromQuery]</code> is necessary because we will send our parameters via query strings.</p>
+<h2 id="Generating-Pagination-URLs"><a href="#Generating-Pagination-URLs" class="headerlink" title="Generating Pagination URLs"></a>Generating Pagination URLs</h2><p>One of the most challenging sections is building URIs. For this purpose we need to define a <code>PagedUriService</code> to generate the URI:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// IPagedUriService.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IPagedUriService</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Uri <span class="hljs-title">GetPageUri</span>(<span class="hljs-params">PaginationFilter filter, <span class="hljs-built_in">string</span> route</span>)</span>;<br>&#125;<br><br><span class="hljs-comment">// PagedUriService.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PagedUriService</span> : <span class="hljs-title">IPagedUriService</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span> _baseUri;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PagedUriService</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> baseUri</span>)</span><br>    &#123;<br>        _baseUri = baseUri;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Uri <span class="hljs-title">GetPageUri</span>(<span class="hljs-params">PaginationFilter filter, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> _enpointUri = <span class="hljs-keyword">new</span> Uri(<span class="hljs-built_in">string</span>.Concat(_baseUri, route));<br>        <span class="hljs-keyword">var</span> modifiedUri = QueryHelpers.AddQueryString(_enpointUri.ToString(), <span class="hljs-string">&quot;pageNumber&quot;</span>, filter.PageNumber.ToString());<br>        modifiedUri = QueryHelpers.AddQueryString(modifiedUri, <span class="hljs-string">&quot;pageSize&quot;</span>, filter.PageSize.ToString());<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Uri(modifiedUri);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>We should register <code>PagedUriService</code> into the DI.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// PagingServiceExtension.cs</span><br><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Http;<br><span class="hljs-keyword">using</span> Microsoft.Extensions.DependencyInjection;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PagingServiceExtension</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddPaging</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddHttpContextAccessor();<br>        services.AddSingleton&lt;IPagedUriService&gt;(o =&gt;<br>        &#123;<br>            <span class="hljs-keyword">var</span> accessor = o.GetRequiredService&lt;IHttpContextAccessor&gt;();<br>            <span class="hljs-keyword">var</span> request = accessor.HttpContext.Request;<br>            <span class="hljs-keyword">var</span> uri = <span class="hljs-built_in">string</span>.Concat(request.Scheme, <span class="hljs-string">&quot;://&quot;</span>, request.Host.ToUriComponent());<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> PagedUriService(uri);<br>        &#125;);<br>        <span class="hljs-keyword">return</span> services;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Finally, we need some functionalities to convert our raw list to paged result:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// PagingExtensions.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PagingExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IEnumerable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToPagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, PaginationFilter validFilter, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> respose = <span class="hljs-keyword">new</span> PagedResponse&lt;IEnumerable&lt;T&gt;&gt;(pagedData, validFilter.PageNumber, validFilter.PageSize);<br>        <span class="hljs-keyword">var</span> totalPages = totalRecords / (<span class="hljs-built_in">double</span>)validFilter.PageSize;<br>        <span class="hljs-built_in">int</span> roundedTotalPages = Convert.ToInt32(Math.Ceiling(totalPages));<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">string</span>.IsNullOrEmpty(route) || uriService == <span class="hljs-literal">null</span>)<br>        &#123;<br>            respose.FirstPage = <span class="hljs-literal">null</span>;<br>            respose.PreviousPage = <span class="hljs-literal">null</span>;<br>            respose.NextPage = <span class="hljs-literal">null</span>;<br>            respose.LastPage = <span class="hljs-literal">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            respose.NextPage =<br>                validFilter.PageNumber &gt;= <span class="hljs-number">1</span> &amp;&amp; validFilter.PageNumber &lt; roundedTotalPages<br>                ? uriService.GetPageUri(<span class="hljs-keyword">new</span> PaginationFilter(validFilter.PageNumber + <span class="hljs-number">1</span>, validFilter.PageSize), route)<br>                : <span class="hljs-literal">null</span>;<br>            respose.PreviousPage =<br>                validFilter.PageNumber - <span class="hljs-number">1</span> &gt;= <span class="hljs-number">1</span> &amp;&amp; validFilter.PageNumber &lt;= roundedTotalPages<br>                ? uriService.GetPageUri(<span class="hljs-keyword">new</span> PaginationFilter(validFilter.PageNumber - <span class="hljs-number">1</span>, validFilter.PageSize), route)<br>                : <span class="hljs-literal">null</span>;<br>            respose.FirstPage = uriService.GetPageUri(<span class="hljs-keyword">new</span> PaginationFilter(<span class="hljs-number">1</span>, validFilter.PageSize), route);<br>            respose.LastPage = uriService.GetPageUri(<span class="hljs-keyword">new</span> PaginationFilter(roundedTotalPages, validFilter.PageSize), route);<br>        &#125;<br>        respose.TotalPages = roundedTotalPages;<br>        respose.TotalRecords = totalRecords;<br>        <span class="hljs-keyword">return</span> respose;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IEnumerable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToPagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedReponse(<span class="hljs-keyword">new</span> PaginationFilter(pageNumber, pageSize), totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToPagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OkObjectResult(pagedData.ToPagedReponse(<span class="hljs-keyword">new</span> PaginationFilter(pageNumber, pageSize), totalRecords, uriService, route));<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToPagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, PaginationFilter validFilter, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OkObjectResult(pagedData.ToPagedReponse(validFilter, totalRecords, uriService, route));<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IQueryable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToPagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, PaginationFilter validFilter, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedReponse(validFilter, totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IQueryable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToPagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedReponse(<span class="hljs-keyword">new</span> PaginationFilter(pageNumber, pageSize), totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToPagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> pageNumber, <span class="hljs-built_in">int</span> pageSize, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OkObjectResult(pagedData.ToPagedReponse(<span class="hljs-keyword">new</span> PaginationFilter(pageNumber, pageSize), totalRecords, uriService, route));<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToPagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, PaginationFilter validFilter, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OkObjectResult(pagedData.ToPagedReponse(validFilter, totalRecords, uriService, route));<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToOnePagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedResult(<span class="hljs-number">1</span>, totalRecords, totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActionResult <span class="hljs-title">ToOnePagedResult</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedResult(<span class="hljs-number">1</span>, totalRecords, totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IEnumerable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToOnePagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IEnumerable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedReponse(<span class="hljs-number">1</span>, totalRecords, totalRecords, uriService, route);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">PagedResponse</span>&lt;<span class="hljs-title">IQueryable</span>&lt;<span class="hljs-title">T</span>&gt;&gt; <span class="hljs-title">ToOnePagedReponse</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"><span class="hljs-keyword">this</span> IQueryable&lt;T&gt; pagedData, <span class="hljs-built_in">int</span> totalRecords, IPagedUriService uriService, <span class="hljs-built_in">string</span> route</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pagedData.ToPagedReponse(<span class="hljs-number">1</span>, totalRecords, totalRecords, uriService, route);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="How-to-use"><a href="#How-to-use" class="headerlink" title="How to use?"></a>How to use?</h2><p>Using a new paging functionality is so easy, Just follow bellow steps:</p>
+<p>First, Register <code>AddPaging</code> service.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <span class="hljs-comment">// HERE</span><br>    services.AddPaging();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Second, Pass <code>IPagedUriService</code> to the constructor of controller.<br>Third, Use <code>Request.Path.Value</code> to get the route data.<br>Fourth, Use <code>ToPagedResult</code> to convert the list to a paged result as an <code>IActionResult</code>.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IPagedUriService _uriService;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IPagedUriService uriService <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        _uriService = uriService;<br>    &#125;<br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Get</span>(<span class="hljs-params">[FromQuery] PaginationFilter filter</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> route = Request.Path.Value;<br>        <span class="hljs-keyword">var</span> data = PeopleDataGenerator.GetPeople();<br>        <span class="hljs-keyword">var</span> count = data.Count();<br>        <span class="hljs-keyword">var</span> pagedData = data.ToPagedResult(filter, count, _uriService, route);<br>        <span class="hljs-keyword">return</span> pagedData;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>You result will be like below</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// https://localhost:5001/weatherforecast?pageNumber=2&amp;pageSize=10</span><br>&#123;<br>  <span class="hljs-attr">&quot;pageNumber&quot;</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">&quot;pageSize&quot;</span>: <span class="hljs-number">10</span>,<br>  <span class="hljs-attr">&quot;firstPage&quot;</span>: <span class="hljs-string">&quot;https://localhost:5001/weatherforecast?pageNumber=1&amp;pageSize=10&quot;</span>,<br>  <span class="hljs-attr">&quot;lastPage&quot;</span>: <span class="hljs-string">&quot;https://localhost:5001/weatherforecast?pageNumber=20&amp;pageSize=10&quot;</span>,<br>  <span class="hljs-attr">&quot;totalPages&quot;</span>: <span class="hljs-number">20</span>,<br>  <span class="hljs-attr">&quot;totalRecords&quot;</span>: <span class="hljs-number">200</span>,<br>  <span class="hljs-attr">&quot;nextPage&quot;</span>: <span class="hljs-string">&quot;https://localhost:5001/weatherforecast?pageNumber=3&amp;pageSize=10&quot;</span>,<br>  <span class="hljs-attr">&quot;previousPage&quot;</span>: <span class="hljs-string">&quot;https://localhost:5001/weatherforecast?pageNumber=1&amp;pageSize=10&quot;</span>,<br>  <span class="hljs-attr">&quot;data&quot;</span>: [    <br>    &#123;<br>      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;20f216f8-1c28-40e3-8687-30414e0b1e43&quot;</span>,<br>      <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;Norris&quot;</span>,<br>      <span class="hljs-attr">&quot;familyName&quot;</span>: <span class="hljs-string">&quot;Gaylord&quot;</span>,<br>      <span class="hljs-attr">&quot;age&quot;</span>: <span class="hljs-number">93.91649</span>,<br>      <span class="hljs-attr">&quot;bithDate&quot;</span>: <span class="hljs-string">&quot;1983-08-19T20:29:12.2566788+04:30&quot;</span>,<br>      <span class="hljs-attr">&quot;phones&quot;</span>: [<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;CG&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-990-301-7170&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;GF&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;435-648-1211 x2527&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;EE&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;452-350-1534 x565&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;HU&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;454-359-3006&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;UG&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;848.828.2965&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;AR&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(481) 493-4770&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;WS&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;764.491.4668&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;FK&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(927) 724-4714 x1111&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;AW&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;348.380.0028 x0504&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;KE&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(222) 317-4262 x221&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;LA&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(864) 234-4896&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;CY&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-596-579-7108 x764&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;RU&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;378.786.5243&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;ZM&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(233) 668-1087&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;LK&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;442.582.0962 x311&quot;</span><br>        &#125;<br>      ],<br>      <span class="hljs-attr">&quot;addresses&quot;</span>: [<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;San Marino&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Lake Shaniya&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;4821 Federico Burg&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;2724 Brakus Spurs, East Kenyattaport, French Guiana&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;43796&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Cuba&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Lubowitzborough&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;396 Murazik Roads&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;268 Heathcote Extension, Toytown, Uruguay&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;72283&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Lao People&#x27;s Democratic Republic&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Dickinsonview&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;7750 Dimitri Rapids&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;360 David Run, Boyleborough, Marshall Islands&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;22955&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Vietnam&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;East Rosemary&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;055 Paolo Glen&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;71691 Hammes Locks, Port Mackenzieborough, Swaziland&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;710&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;China&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;South Casandrafurt&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;894 Stiedemann Via&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;60676 Fay Isle, Juvenalbury, Namibia&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;38640&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Lebanon&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Dorcasshire&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;49750 Flatley Groves&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;7761 Howell Springs, West Quintonside, Mexico&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;4452&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Libyan Arab Jamahiriya&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Amiyashire&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;112 Baumbach Field&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;61227 Nils Flat, Lafayettefurt, Mexico&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;0611&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Rwanda&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;McCulloughhaven&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;503 Anthony Extensions&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;336 Kling Mission, East Parisshire, Uganda&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;67206&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Zimbabwe&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;North Garrisonton&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;56022 Cecile Place&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;52476 Wyman Branch, Sporerview, Sao Tome and Principe&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;34449&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Nigeria&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;North Isadore&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;2893 Alvera Greens&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;590 Rupert Avenue, Lake Alexys, China&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;91788&quot;</span><br>        &#125;<br>      ]<br>    &#125;,<br>    &#123;<br>      <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;da39bc7a-cdfa-49a6-8eda-2d8578a10a95&quot;</span>,<br>      <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;Loyal&quot;</span>,<br>      <span class="hljs-attr">&quot;familyName&quot;</span>: <span class="hljs-string">&quot;Simonis&quot;</span>,<br>      <span class="hljs-attr">&quot;age&quot;</span>: <span class="hljs-number">13.926475</span>,<br>      <span class="hljs-attr">&quot;bithDate&quot;</span>: <span class="hljs-string">&quot;1999-04-08T18:35:10.3663495+04:30&quot;</span>,<br>      <span class="hljs-attr">&quot;phones&quot;</span>: [<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;CL&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;611-390-0679&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;JM&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;333-284-4157 x15776&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;BH&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(775) 257-6981 x8944&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;SA&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(925) 759-5904 x70541&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;IN&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-287-226-3739 x26113&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;IN&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-835-217-5850 x0543&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;ZM&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;239-517-9971 x933&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;UG&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;587.700.3823&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;TM&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-729-462-2169 x5501&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;HN&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;925.856.6956 x9365&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;BO&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;436.252.3008 x641&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;GB&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(969) 740-3197 x2393&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;SV&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;(392) 998-7274 x247&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;AI&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;899.370.6658&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;UM&quot;</span>,<br>          <span class="hljs-attr">&quot;number&quot;</span>: <span class="hljs-string">&quot;1-983-472-3551&quot;</span><br>        &#125;<br>      ],<br>      <span class="hljs-attr">&quot;addresses&quot;</span>: [<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Anguilla&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Bradleyside&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;81514 Nicklaus View&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;031 Kohler Dam, South Dave, Heard Island and McDonald Islands&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;2989&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Lesotho&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Lindaberg&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;143 O&#x27;Connell Points&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;862 Hoeger Lodge, North Sid, Algeria&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;87646&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Singapore&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Lake Stephon&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;85625 Kub Isle&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;6441 Bruen Parkways, North Crystal, Togo&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;8897&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Cayman Islands&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Lake Ethelland&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;40312 Herzog Walks&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;8711 Roberts Center, South Sophiaborough, Bosnia and Herzegovina&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;969&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Singapore&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Alfordchester&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;391 Corkery Junction&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;4566 Erwin Greens, West Marshall, Pakistan&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;3716&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;United States of America&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;West Kadin&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;1807 Reinger Place&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;265 Evalyn Flats, Klinghaven, Honduras&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;389&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Cote d&#x27;Ivoire&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Kesslerberg&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;6985 Lenore Isle&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;50346 Parisian Viaduct, West Efrain, Ukraine&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;1107&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Serbia&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;South Velvashire&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;573 Pfeffer Courts&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;472 Brekke Knolls, Darronchester, Hong Kong&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;70450&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Taiwan&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;Kaleside&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;94647 Murphy Vista&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;8682 Stoltenberg Flats, Port Tianafurt, Bouvet Island (Bouvetoya)&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;3502&quot;</span><br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">&quot;country&quot;</span>: <span class="hljs-string">&quot;Cayman Islands&quot;</span>,<br>          <span class="hljs-attr">&quot;city&quot;</span>: <span class="hljs-string">&quot;South Demetrischester&quot;</span>,<br>          <span class="hljs-attr">&quot;mainStreet&quot;</span>: <span class="hljs-string">&quot;50811 Orn Shore&quot;</span>,<br>          <span class="hljs-attr">&quot;info&quot;</span>: <span class="hljs-string">&quot;1378 Lehner Rest, Lake Irma, Cook Islands&quot;</span>,<br>          <span class="hljs-attr">&quot;no&quot;</span>: <span class="hljs-string">&quot;0960&quot;</span><br>        &#125;<br>      ]<br>    &#125;,<br>	...<br>  ],<br>  <span class="hljs-attr">&quot;succeeded&quot;</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">&quot;errors&quot;</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-literal">null</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/pagination-in-aspnet-core-webapi/">https://www.codewithmukesh.com/blog/pagination-in-aspnet-core-webapi/</a></li>
+<li><a target="_blank" rel="noopener" href="https://code-maze.com/paging-aspnet-core-webapi/">https://code-maze.com/paging-aspnet-core-webapi/</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@zarkopafilis/asp-net-core-2-2-3-rest-api-26-pagination-650d0363ccf6">https://medium.com/@zarkopafilis/asp-net-core-2-2-3-rest-api-26-pagination-650d0363ccf6</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.carlrippon.com/scalable-and-performant-asp-net-core-web-apis-paging/">https://www.carlrippon.com/scalable-and-performant-asp-net-core-web-apis-paging/</a></li>
+<li><a target="_blank" rel="noopener" href="https://schneids.net/paging-in-asp-net-web-api">https://schneids.net/paging-in-asp-net-web-api</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-paging/" data-id="cl5ph9gi9000p8wpbagxk5h9y" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Paging",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi paging pagination fakedata bogus testdata",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-10-04",
+        "dateCreated": "2020-10-04",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-paging/",
+        "description": "Paging refers to getting partial results from an API. Imagine having millions of results in the database and having your application try to return all of them at once.
+Not only that would be an extremely ineffective way of returning the results, but it could also possibly have devastating effects on the application itself or the hardware it runs on. Moreover, every client has limited memory resources and it needs to restrict the number of shown results.
+Thus, we need a way to return a set number of results to the client in order to avoid these consequences.",
+        "wordCount": 7219
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-health-check/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - HealthCheck
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/the-dotnet-world-guard/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">The .NET World - Guard</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-paging/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

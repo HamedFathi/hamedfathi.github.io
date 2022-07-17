@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Swagger | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,api,openapi,swagger" />
+    
+    <meta name="description" content="When consuming a web API, understanding its various methods can be challenging for a developer. Swagger, also known as OpenAPI, solves the problem of generating useful documentation and help pages for">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Swagger">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-swagger/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="When consuming a web API, understanding its various methods can be challenging for a developer. Swagger, also known as OpenAPI, solves the problem of generating useful documentation and help pages for">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-19T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="api">
+<meta property="article:tag" content="openapi">
+<meta property="article:tag" content="swagger">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-swagger" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Swagger
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-swagger/" class="article-date">
+       <time datetime="2020-09-19T00:00:00.000Z" itemprop="datePublished">2020-09-19</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-swagger/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/api/" rel="tag">api</a>, <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/openapi/" rel="tag">openapi</a>, <a class="tag-link-link" href="/tags/swagger/" rel="tag">swagger</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">1.6k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">9 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>When consuming a web API, understanding its various methods can be challenging for a developer. Swagger, also known as OpenAPI, solves the problem of generating useful documentation and help pages for web APIs. It provides benefits such as interactive documentation, client SDK generation, and API discoverability.</p>
+<span id="more"></span>
+
+<p><code>Swashbuckle</code> can be added with the following approaches:</p>
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Swashbuckle.AspNetCore -Version 5.6.1<br>dotnet add package Swashbuckle.AspNetCore --version 5.6.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Swashbuckle.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;5.6.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Add the following code </p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <br>    <span class="hljs-comment">// Register the Swagger generator, defining 1 or more Swagger documents</span><br>    services.AddSwaggerGen();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Enable the middleware for serving the generated JSON document and the Swagger UI</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.Configure</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    <span class="hljs-comment">// Enable middleware to serve generated Swagger as a JSON endpoint.</span><br>    app.UseSwagger();<br><br>    <span class="hljs-comment">// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),</span><br>    <span class="hljs-comment">// specifying the Swagger JSON endpoint.</span><br>    app.UseSwaggerUI(c =&gt;<br>    &#123;<br>        c.SwaggerEndpoint(<span class="hljs-string">&quot;/swagger/v1/swagger.json&quot;</span>, <span class="hljs-string">&quot;My API V1&quot;</span>);<br>    &#125;);<br><br>    app.UseRouting();<br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllers();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Browse Swagger doc via below URL</p>
+<p><code>http[s]://localhost:port/swagger</code></p>
+<h2 id="How-to-use-Newtonsoft-Json"><a href="#How-to-use-Newtonsoft-Json" class="headerlink" title="How to use Newtonsoft.Json?"></a>How to use Newtonsoft.Json?</h2><p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Swashbuckle.AspNetCore.Newtonsoft -Version 5.6.1<br>dotnet add package Swashbuckle.AspNetCore.Newtonsoft --version 5.6.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Swashbuckle.AspNetCore.Newtonsoft&quot;</span> Version=<span class="hljs-string">&quot;5.6.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Then</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// explicit opt-in - needs to be placed after AddSwaggerGen()</span><br><br>services.AddSwaggerGenNewtonsoftSupport();<br></code></pre></td></tr></table></figure>
+
+<h2 id="How-to-set-swagger-on-default-URL"><a href="#How-to-set-swagger-on-default-URL" class="headerlink" title="How to set swagger on default URL?"></a>How to set swagger on default URL?</h2><p>Update the above code with the following change</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseSwaggerUI(c =&gt;<br>&#123;<br>    c.SwaggerEndpoint(<span class="hljs-string">&quot;swagger/v1/swagger.json&quot;</span>, <span class="hljs-string">&quot;My API V1&quot;</span>);<br>    c.RoutePrefix = <span class="hljs-built_in">string</span>.Empty; <span class="hljs-comment">// HERE</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>Now you can browse the swagger doc url via <code>http[s]://localhost:port</code></p>
+<h2 id="How-to-integrate-it-with-ReDoc"><a href="#How-to-integrate-it-with-ReDoc" class="headerlink" title="How to integrate it with ReDoc?"></a>How to integrate it with ReDoc?</h2><p><a target="_blank" rel="noopener" href="https://github.com/Redocly/redoc">ReDoc</a> is just another implementation of Swagger UI.</p>
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Swashbuckle.AspNetCore.ReDoc -Version 5.6.1<br>dotnet add package Swashbuckle.AspNetCore.ReDoc --version 5.6.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Swashbuckle.AspNetCore.ReDoc&quot;</span> Version=<span class="hljs-string">&quot;5.6.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Update your codes</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    services.AddSwaggerGen();<br>&#125;<br> <br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>&#123;<br>    app.UseSwagger();<br><br>    app.UseReDoc(c =&gt;<br>    &#123;<br>        c.SpecUrl(<span class="hljs-string">&quot;../swagger/v1/swagger.json&quot;</span>);<br>    &#125;);<br><br>    app.UseSwaggerUI(c =&gt;<br>    &#123;<br>        c.SwaggerEndpoint(<span class="hljs-string">&quot;v1/swagger.json&quot;</span>, <span class="hljs-string">&quot;My API V1&quot;</span>);<br>    &#125;);<br><br>    app.UseRouting();<br><br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllers();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now you are able to browse them via below urls</p>
+<p>Swagger: <code>http[s]://localhost:port/swagger</code></p>
+<p>ReDoc: <code>http[s]://localhost:port/api-docs</code></p>
+<h2 id="How-to-use-XML-comments-with-Swagger"><a href="#How-to-use-XML-comments-with-Swagger" class="headerlink" title="How to use XML comments with Swagger?"></a>How to use XML comments with Swagger?</h2><p>Right-click the project in Solution Explorer and select Edit <code>&lt;project_name&gt;.csproj</code>.</p>
+<p>Manually add the following lines to the <code>.csproj</code> file:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">PropertyGroup</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">GenerateDocumentationFile</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">GenerateDocumentationFile</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">NoWarn</span>&gt;</span>$(NoWarn);1591<span class="hljs-tag">&lt;/<span class="hljs-name">NoWarn</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">PropertyGroup</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>Then add the below code too</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    services.AddSwaggerGen(c =&gt;<br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        <span class="hljs-comment">// Set the comments path for the Swagger JSON and UI.</span><br>        <span class="hljs-keyword">var</span> xmlFile = <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;Assembly.GetExecutingAssembly().GetName().Name&#125;</span>.xml&quot;</span>;<br>        <span class="hljs-keyword">var</span> xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);<br>        c.IncludeXmlComments(xmlPath);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now you can use it like the following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Creates a TodoItem.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;remarks&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> Sample request:</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     POST /Todo</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     &#123;</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>        &quot;id&quot;: 1,</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>        &quot;name&quot;: &quot;Item1&quot;,</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>        &quot;isComplete&quot;: true</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     &#125;</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/remarks&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;item&quot;&gt;</span><span class="hljs-doctag">&lt;/param&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;returns&gt;</span>A newly created TodoItem<span class="hljs-doctag">&lt;/returns&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;response code=&quot;201&quot;&gt;</span>Returns the newly created item<span class="hljs-doctag">&lt;/response&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;response code=&quot;400&quot;&gt;</span>If the item is null<span class="hljs-doctag">&lt;/response&gt;</span>            </span><br>[<span class="hljs-meta">HttpPost</span>]<br>[<span class="hljs-meta">ProducesResponseType(StatusCodes.Status201Created)</span>]<br>[<span class="hljs-meta">ProducesResponseType(StatusCodes.Status400BadRequest)</span>]<br><span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;TodoItem&gt; <span class="hljs-title">Create</span>(<span class="hljs-params">TodoItem item</span>)</span><br>&#123;<br>    _context.TodoItems.Add(item);<br>    _context.SaveChanges();<br><br>    <span class="hljs-keyword">return</span> CreatedAtRoute(<span class="hljs-string">&quot;GetTodo&quot;</span>, <span class="hljs-keyword">new</span> &#123; id = item.Id &#125;, item);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Annotations"><a href="#Annotations" class="headerlink" title="Annotations"></a>Annotations</h2><p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Swashbuckle.AspNetCore.Annotations -Version 5.6.1<br>dotnet add package Swashbuckle.AspNetCore.Annotations --version 5.6.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Swashbuckle.AspNetCore.Annotations&quot;</span> Version=<span class="hljs-string">&quot;5.6.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Enable it</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br>services.AddSwaggerGen(config =&gt;<br>&#123;<br>   config.EnableAnnotations();<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich Operation Metadata</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">HttpPost</span>]<br>[<span class="hljs-meta">SwaggerOperation(</span><br><span class="hljs-meta">    Summary = <span class="hljs-meta-string">&quot;Creates a new product&quot;</span>,</span><br><span class="hljs-meta">    Description = <span class="hljs-meta-string">&quot;Requires admin privileges&quot;</span>,</span><br><span class="hljs-meta">    OperationId = <span class="hljs-meta-string">&quot;CreateProduct&quot;</span>,</span><br><span class="hljs-meta">    Tags = new[</span>] &#123; <span class="hljs-string">&quot;Purchase&quot;</span>, <span class="hljs-string">&quot;Products&quot;</span> &#125;<br>)]<br><span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Create</span>(<span class="hljs-params">[FromBody]Product product</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich Response Metadata</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">HttpPost</span>]<br>[<span class="hljs-meta">SwaggerResponse(201, <span class="hljs-meta-string">&quot;The product was created&quot;</span>, typeof(Product))</span>]<br>[<span class="hljs-meta">SwaggerResponse(400, <span class="hljs-meta-string">&quot;The product data is invalid&quot;</span>)</span>]<br><span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Create</span>(<span class="hljs-params">[FromBody]Product product</span>)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich Parameter Metadata</strong></p>
+<p>You can annotate “path”, “query” or “header” bound parameters or properties (i.e. decorated with <code>[FromRoute]</code>, <code>[FromQuery]</code> or <code>[FromHeader]</code>) with a <code>SwaggerParameterAttribute</code> to enrich the corresponding Parameter metadata that’s generated by Swashbuckle:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">HttpGet</span>]<br><span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">GetProducts</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">    [FromQuery, SwaggerParameter(<span class="hljs-string">&quot;Search keywords&quot;</span>, Required = <span class="hljs-literal">true</span></span>)]<span class="hljs-built_in">string</span> keywords)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich RequestBody Metadata</strong></p>
+<p>You can annotate “body” bound parameters or properties (i.e. decorated with <code>[FromBody]</code>) with a <code>SwaggerRequestBodyAttribute</code> to enrich the corresponding <code>RequestBody</code> metadata that’s generated by Swashbuckle:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">HttpPost</span>]<br><span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">CreateProduct</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">    [FromBody, SwaggerRequestBody(<span class="hljs-string">&quot;The product payload&quot;</span>, Required = <span class="hljs-literal">true</span></span>)]Product product)</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich Schema Metadata</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">SwaggerSchema(Required = new[</span>] &#123; <span class="hljs-string">&quot;Description&quot;</span> &#125;)]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Product</span><br>&#123;<br>	[<span class="hljs-meta">SwaggerSchema(<span class="hljs-meta-string">&quot;The product identifier&quot;</span>, ReadOnly = true)</span>]<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Id &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br><br>	[<span class="hljs-meta">SwaggerSchema(<span class="hljs-meta-string">&quot;The product description&quot;</span>)</span>]<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Description &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br><br>	[<span class="hljs-meta">SwaggerSchema(<span class="hljs-meta-string">&quot;The date it was created&quot;</span>, Format = <span class="hljs-meta-string">&quot;date&quot;</span>)</span>]<br>	<span class="hljs-keyword">public</span> DateTime DateCreated &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Add Tag Metadata</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">SwaggerTag(<span class="hljs-meta-string">&quot;Create, read, update and delete Products&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ProductsController</span><br>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>List Known Subtypes for Inheritance and Polymorphism</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br>services.AddSwaggerGen(config =&gt;<br>&#123;<br>   config.EnableAnnotations(enableAnnotationsForInheritance: <span class="hljs-literal">true</span>, enableAnnotationsForPolymorphism: <span class="hljs-literal">true</span>);<br>&#125;);<br><br><br><span class="hljs-comment">// Shape.cs</span><br>[<span class="hljs-meta">SwaggerSubType(typeof(Rectangle))</span>]<br>[<span class="hljs-meta">SwaggerSubType(typeof(Circle))</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span><br>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Enrich Polymorphic Base Classes with Discriminator Metadata</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br>services.AddSwaggerGen(config =&gt;<br>&#123;<br>    config.EnableAnnotations(enableAnnotationsForInheritance: <span class="hljs-literal">true</span>, enableAnnotationsForPolymorphism: <span class="hljs-literal">true</span>);<br>&#125;);<br><br><span class="hljs-comment">// Shape.cs</span><br>[<span class="hljs-meta">SwaggerDiscriminator(<span class="hljs-meta-string">&quot;shapeType&quot;</span>)</span>]<br>[<span class="hljs-meta">SwaggerSubType(typeof(Rectangle), DiscriminatorValue = <span class="hljs-meta-string">&quot;rectangle&quot;</span>)</span>]<br>[<span class="hljs-meta">SwaggerSubType(typeof(Circle), DiscriminatorValue = <span class="hljs-meta-string">&quot;circle&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span><br>&#123;<br>    <span class="hljs-keyword">public</span> ShapeType &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Ready-to-use-plugins"><a href="#Ready-to-use-plugins" class="headerlink" title="Ready to use plugins"></a>Ready to use plugins</h2><p><strong>Swashbuckle.AspNetCore.Filters</strong></p>
+<p>Some useful Swashbuckle filters which add additional documentation, e.g. request and response examples, a file upload button, etc. See its Readme for more details</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Swashbuckle.AspNetCore.Filters -Version 5.1.2<br>dotnet add package Swashbuckle.AspNetCore.Filters --version 5.1.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Swashbuckle.AspNetCore.Filters&quot;</span> Version=<span class="hljs-string">&quot;5.1.2&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Unchase.Swashbuckle.AspNetCore.Extensions</strong></p>
+<p>Some useful extensions (filters), which add additional documentation, e.g. hide PathItems for unaccepted roles, fix enums for client code generation, etc. See its Readme for more details</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">Install-Package Unchase.Swashbuckle.AspNetCore.Extensions -Version <span class="hljs-number">2.3</span><span class="hljs-number">.12</span><br>dotnet <span class="hljs-keyword">add</span> package Unchase.Swashbuckle.AspNetCore.Extensions --version <span class="hljs-number">2.3</span><span class="hljs-number">.12</span><br>&lt;PackageReference Include=<span class="hljs-string">&quot;Unchase.Swashbuckle.AspNetCore.Extensions&quot;</span> Version=<span class="hljs-string">&quot;2.3.12&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p><strong>MicroElements.Swashbuckle.FluentValidation</strong></p>
+<p>Use FluentValidation rules instead of ComponentModel attributes to augment generated Swagger Schemas</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs">Install-Package MicroElements.Swashbuckle.FluentValidation -Version <span class="hljs-number">4.0</span><span class="hljs-number">.0</span><br>dotnet <span class="hljs-keyword">add</span> package MicroElements.Swashbuckle.FluentValidation --version <span class="hljs-number">4.0</span><span class="hljs-number">.0</span><br>&lt;PackageReference Include=<span class="hljs-string">&quot;MicroElements.Swashbuckle.FluentValidation&quot;</span> Version=<span class="hljs-string">&quot;4.0.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Swagger-amp-Authorization"><a href="#Swagger-amp-Authorization" class="headerlink" title="Swagger &amp; Authorization"></a>Swagger &amp; Authorization</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// SwaggerBasicAuthMiddleware.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SwaggerBasicAuthMiddleware</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> RequestDelegate _next;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> SwaggerAuthorizationOptions _options;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SwaggerBasicAuthMiddleware</span>(<span class="hljs-params">RequestDelegate next, IOptions&lt;SwaggerAuthorizationOptions&gt; options</span>)</span><br>    &#123;<br>        _next = next;<br>        _options = options.Value;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">Invoke</span>(<span class="hljs-params">HttpContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> segment = <span class="hljs-built_in">string</span>.IsNullOrEmpty(_options.UrlSegment) ? <span class="hljs-string">&quot;/swagger&quot;</span> : _options.UrlSegment;<br>        <span class="hljs-keyword">var</span> redirect = <span class="hljs-built_in">string</span>.IsNullOrEmpty(_options.RedirectUrl) ? <span class="hljs-string">&quot;/Login&quot;</span> : _options.RedirectUrl;<br>        <span class="hljs-keyword">if</span> (context.Request.Path.StartsWithSegments(segment)<br>            &amp;&amp; !context.User.Identity.IsAuthenticated)<br>        &#123;<br>            context.Response.StatusCode = StatusCodes.Status401Unauthorized;<br>            context.Response.Redirect(redirect);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">await</span> _next.Invoke(context);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// SwaggerAuthorizationOptions.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SwaggerAuthorizationOptions</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> RedirectUrl &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> UrlSegment &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// SwaggerAuthorizeExtensions.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SwaggerAuthorizeExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddSwaggerAuthorization</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection service, Action&lt;SwaggerAuthorizationOptions&gt; options = <span class="hljs-literal">default</span></span>)</span><br>    &#123;<br>        options = options ?? (opts =&gt; &#123; &#125;);<br>        service.Configure(options);<br>        <span class="hljs-keyword">return</span> service;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IApplicationBuilder <span class="hljs-title">UseSwaggerAuthorization</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IApplicationBuilder builder</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> builder.UseMiddleware&lt;SwaggerBasicAuthMiddleware&gt;();<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// Startup.ConfigureServices</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    services.AddSwaggerGen();<br>    services.AddSwaggerAuthorization(option =&gt;<br>    &#123;<br>        option.RedirectUrl = <span class="hljs-string">&quot;/Login&quot;</span>;<br>        option.UrlSegment = <span class="hljs-string">&quot;/swagger&quot;</span>;<br>    &#125;);<br>&#125;<br><br><span class="hljs-comment">// Startup.Configure</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.UseRouting();<br>    app.UseAuthorization();<br>    app.UseAuthentication();<br><br>    <span class="hljs-comment">// HERE</span><br>    <span class="hljs-comment">// Becarful, It should be after UseAuthorization &amp; UseAuthentication middlewares.</span><br>    app.UseSwaggerAuthorization();<br><br>    <span class="hljs-comment">// Enable middleware to serve generated Swagger as a JSON endpoint.</span><br>    app.UseSwagger();<br><br>    <span class="hljs-comment">// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),</span><br>    <span class="hljs-comment">// specifying the Swagger JSON endpoint.</span><br>    app.UseSwaggerUI(c =&gt;<br>    &#123;<br>        c.SwaggerEndpoint(<span class="hljs-string">&quot;/swagger/v1/swagger.json&quot;</span>, <span class="hljs-string">&quot;My API V1&quot;</span>);<br>    &#125;);<br><br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllers();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle">https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle</a></li>
+<li><a target="_blank" rel="noopener" href="http://stevenmaglio.blogspot.com/2019/12/using-swagger-ui-and-redoc-in-aspnet.html">http://stevenmaglio.blogspot.com/2019/12/using-swagger-ui-and-redoc-in-aspnet.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore">https://github.com/domaindrivendev/Swashbuckle.AspNetCore</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters">https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-swagger/" data-id="cl5ph9gid00148wpb5oirdfqq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Swagger",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi api openapi swagger",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-09-19",
+        "dateCreated": "2020-09-19",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-swagger/",
+        "description": "When consuming a web API, understanding its various methods can be challenging for a developer. Swagger, also known as OpenAPI, solves the problem of generating useful documentation and help pages for web APIs. It provides benefits such as interactive documentation, client SDK generation, and API discoverability.",
+        "wordCount": 2269
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-rate-limit/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Rate Limit
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-global-exception/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - Global Exception Handling</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-swagger/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

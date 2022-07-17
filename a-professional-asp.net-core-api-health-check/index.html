@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - HealthCheck | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,healthy,unhealthy,health,healthcheck" />
+    
+    <meta name="description" content="ASP.NET Core offers Health Checks Middleware and libraries for reporting the health of app infrastructure components. Health checks are exposed by an app as HTTP endpoints. Health check endpoints can">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - HealthCheck">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-health-check/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="ASP.NET Core offers Health Checks Middleware and libraries for reporting the health of app infrastructure components. Health checks are exposed by an app as HTTP endpoints. Health check endpoints can">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-05T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="healthy">
+<meta property="article:tag" content="unhealthy">
+<meta property="article:tag" content="health">
+<meta property="article:tag" content="healthcheck">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-health-check" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - HealthCheck
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-health-check/" class="article-date">
+       <time datetime="2020-10-05T00:00:00.000Z" itemprop="datePublished">2020-10-05</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-health-check/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/health/" rel="tag">health</a>, <a class="tag-link-link" href="/tags/healthcheck/" rel="tag">healthcheck</a>, <a class="tag-link-link" href="/tags/healthy/" rel="tag">healthy</a>, <a class="tag-link-link" href="/tags/unhealthy/" rel="tag">unhealthy</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">2.2k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">13 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>ASP.NET Core offers Health Checks Middleware and libraries for reporting the health of app infrastructure components.</p>
+<p>Health checks are exposed by an app as HTTP endpoints. Health check endpoints can be configured for a variety of real-time monitoring scenarios:</p>
+<ul>
+<li>Health probes can be used by container orchestrators and load balancers to check an app’s status. For example, a container orchestrator may respond to a failing health check by halting a rolling deployment or restarting a container. A load balancer might react to an unhealthy app by routing traffic away from the failing instance to a healthy instance.</li>
+<li>Use of memory, disk, and other physical server resources can be monitored for healthy status.</li>
+<li>Health checks can test an app’s dependencies, such as databases and external service endpoints, to confirm availability and normal functioning.</li>
+</ul>
+<span id="more"></span>
+
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Microsoft.AspNetCore.Diagnostics.HealthChecks -Version 2.2.0<br>dotnet add package Microsoft.AspNetCore.Diagnostics.HealthChecks --version 2.2.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.AspNetCore.Diagnostics.HealthChecks&quot;</span> Version=<span class="hljs-string">&quot;2.2.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>To start working with HealthCheck system you should add configs as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddHealthChecks();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>        &#123;<br>            app.UseDeveloperExceptionPage();<br>        &#125;<br><br>        app.UseRouting();<br>        app.UseAuthorization();<br>        <br>        app.UseEndpoints(endpoints =&gt;<br>        &#123;<br>            endpoints.MapControllers();<br>            <br>            <span class="hljs-comment">// HERE</span><br>            endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now, You are able to browse <code>http://localhost:PORT/health</code> to see <code>Healthy</code>!</p>
+<h2 id="Create-health-checks"><a href="#Create-health-checks" class="headerlink" title="Create health checks"></a>Create health checks</h2><p>Health checks are created by implementing the <code>IHealthCheck</code> interface. The <code>CheckHealthAsync</code> method returns a <code>HealthCheckResult</code> that indicates the health as <code>Healthy</code>, <code>Degraded</code>, or <code>Unhealthy</code>. The result is written as a plaintext response with a configurable status code. <code>HealthCheckResult</code> can also return optional key-value pairs.</p>
+<p>The following <code>ExampleHealthCheck</code> class demonstrates the layout of a health check. The health checks logic is placed in the <code>CheckHealthAsync</code> method. The following example sets a dummy variable, healthCheckResultHealthy, to <code>true</code>. If the value of healthCheckResultHealthy is set to <code>false</code>, the <code>HealthCheckResult.Unhealthy</code> status is returned.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// ExampleHealthCheck.cs</span><br><br><span class="hljs-keyword">using</span> System.Threading;<br><span class="hljs-keyword">using</span> Microsoft.Extensions.Diagnostics.HealthChecks;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ExampleHealthCheck</span> : <span class="hljs-title">IHealthCheck</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;HealthCheckResult&gt; <span class="hljs-title">CheckHealthAsync</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">        HealthCheckContext context,</span></span><br><span class="hljs-params"><span class="hljs-function">        CancellationToken cancellationToken = <span class="hljs-literal">default</span></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> healthCheckResultHealthy = <span class="hljs-literal">true</span>;<br><br>        <span class="hljs-keyword">if</span> (healthCheckResultHealthy)<br>        &#123;<br>            <span class="hljs-keyword">return</span> Task.FromResult(<br>                HealthCheckResult.Healthy(<span class="hljs-string">&quot;A healthy result.&quot;</span>));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> Task.FromResult(<br>            HealthCheckResult.Unhealthy(<span class="hljs-string">&quot;An unhealthy result.&quot;</span>));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Register-health-check-services"><a href="#Register-health-check-services" class="headerlink" title="Register health check services"></a>Register health check services</h2><p>The <code>ExampleHealthCheck</code> type is added to health check services with AddCheck in <code>Startup.ConfigureServices</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddHealthChecks()<br>            .AddCheck&lt;ExampleHealthCheck&gt;(<span class="hljs-string">&quot;example_health_check&quot;</span>) <span class="hljs-comment">/* HERE */</span><br>        ;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Tags</strong> </p>
+<p>They can be used to filter health checks.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        services.AddHealthChecks()<br>            .AddCheck&lt;ExampleHealthCheck&gt;(<br>                <span class="hljs-string">&quot;example_health_check&quot;</span>,<br>                failureStatus: HealthStatus.Degraded,<br>                tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;example&quot;</span> &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>AddCheck</code> can also execute a lambda function. In the following example, the health check name is specified as <code>Example</code> and the check always returns a <code>healthy</code> state:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        services.AddHealthChecks()<br>            .AddCheck(<span class="hljs-string">&quot;Example&quot;</span>, () =&gt;<br>                HealthCheckResult.Healthy(<span class="hljs-string">&quot;Example is OK!&quot;</span>), tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;example&quot;</span> &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Health check with arguments</strong></p>
+<p>Call <code>AddTypeActivatedCheck</code> to pass arguments to a health check implementation. In the following example, <code>TestHealthCheckWithArgs</code> accepts an integer and a string for use when <code>CheckHealthAsync</code> is called:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TestHealthCheckWithArgs</span> : <span class="hljs-title">IHealthCheck</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TestHealthCheckWithArgs</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> i, <span class="hljs-built_in">string</span> s</span>)</span><br>    &#123;<br>        I = i;<br>        S = s;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> I &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> S &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Task&lt;HealthCheckResult&gt; <span class="hljs-title">CheckHealthAsync</span>(<span class="hljs-params">HealthCheckContext context, </span></span><br><span class="hljs-params"><span class="hljs-function">        CancellationToken cancellationToken = <span class="hljs-literal">default</span></span>)</span><br>    &#123;<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>TestHealthCheckWithArgs</code> is registered by calling <code>AddTypeActivatedCheck</code> with the integer and string passed to the implementation:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs">services.AddHealthChecks()<br>    .AddTypeActivatedCheck&lt;TestHealthCheckWithArgs&gt;(<br>        <span class="hljs-string">&quot;test&quot;</span>, <br>        failureStatus: HealthStatus.Degraded, <br>        tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;example&quot;</span> &#125;, <br>        args: <span class="hljs-keyword">new</span> <span class="hljs-built_in">object</span>[] &#123; <span class="hljs-number">5</span>, <span class="hljs-string">&quot;string&quot;</span> &#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>HealthStatus</strong></p>
+<p>Represents the reported status of a health check result.</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Degraded</td>
+<td>It could be used for checks that did succeed but are slow or unstable. For example, A simple database query did succeed but took more than a second. Moving traffic to another instance is probably a good idea until the problem has resolved.</td>
+</tr>
+<tr>
+<td>Healthy</td>
+<td>Indicates that the health check determined that the component was healthy.</td>
+</tr>
+<tr>
+<td>Unhealthy</td>
+<td>It means that the component does not work at all. For example, A connection to the Redis cache could no be established. Restarting the instance could solve this issue.</td>
+</tr>
+</tbody></table>
+<h2 id="Health-Checks-Routing"><a href="#Health-Checks-Routing" class="headerlink" title="Health Checks Routing"></a>Health Checks Routing</h2><p>In <code>Startup.Configure</code>, call MapHealthChecks on the endpoint builder with the endpoint URL or relative path:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseEndpoints(endpoints =&gt;<br>&#123;<br>    endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>Require host</strong></p>
+<p>Call <code>RequireHost</code> to specify one or more permitted hosts for the health check endpoint. Hosts should be Unicode rather than punycode and may include a port. If a collection isn’t supplied, any host is accepted.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseEndpoints(endpoints =&gt;<br>&#123;<br>    endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>).RequireHost(<span class="hljs-string">&quot;www.contoso.com:5001&quot;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>Require authorization</strong></p>
+<p>Call <code>RequireAuthorization</code> to run Authorization Middleware on the health check request endpoint. A <code>RequireAuthorization</code> overload accepts one or more authorization policies. If a policy isn’t provided, the default authorization policy is used.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseEndpoints(endpoints =&gt;<br>&#123;<br>    endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>).RequireAuthorization();<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Filter-health-checks"><a href="#Filter-health-checks" class="headerlink" title="Filter health checks"></a>Filter health checks</h2><p>By default, Health Checks Middleware runs all registered health checks. To run a subset of health checks, provide a function that returns a boolean to the <code>Predicate</code> option. In the following example, the <code>Bar</code> health check is filtered out by its tag (<code>bar_tag</code>) in the function’s conditional statement, where true is only returned if the health check’s Tags property matches <code>foo_tag</code> or <code>baz_tag</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs">services.AddHealthChecks()<br>    .AddCheck(<span class="hljs-string">&quot;Foo&quot;</span>, () =&gt;<br>        HealthCheckResult.Healthy(<span class="hljs-string">&quot;Foo is OK!&quot;</span>), tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;foo_tag&quot;</span> &#125;)<br>    .AddCheck(<span class="hljs-string">&quot;Bar&quot;</span>, () =&gt;<br>        HealthCheckResult.Unhealthy(<span class="hljs-string">&quot;Bar is unhealthy!&quot;</span>), tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;bar_tag&quot;</span> &#125;)<br>    .AddCheck(<span class="hljs-string">&quot;Baz&quot;</span>, () =&gt;<br>        HealthCheckResult.Healthy(<span class="hljs-string">&quot;Baz is OK!&quot;</span>), tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;baz_tag&quot;</span> &#125;);<br></code></pre></td></tr></table></figure>
+
+<p>In <code>Startup.Configure</code>, the <code>Predicate</code> filters out the ‘Bar’ health check. Only Foo and Baz execute.:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseEndpoints(endpoints =&gt;<br>&#123;<br>    endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>, <span class="hljs-keyword">new</span> HealthCheckOptions()<br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        Predicate = (check) =&gt; check.Tags.Contains(<span class="hljs-string">&quot;foo_tag&quot;</span>) ||<br>            check.Tags.Contains(<span class="hljs-string">&quot;baz_tag&quot;</span>)<br>    &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Suppress-cache-headers"><a href="#Suppress-cache-headers" class="headerlink" title="Suppress cache headers"></a>Suppress cache headers</h2><p><code>AllowCachingResponses</code> controls whether the Health Checks Middleware adds HTTP headers to a probe response to prevent response caching. If the value is <code>false</code> (default), the middleware sets or overrides the <code>Cache-Control</code>, <code>Expires</code>, and <code>Pragma</code> headers to prevent response caching. If the value is true, the middleware doesn’t modify the cache headers of the response.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.UseEndpoints(endpoints =&gt;<br>&#123;<br>    endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>, <span class="hljs-keyword">new</span> HealthCheckOptions()<br>    &#123;<br>        AllowCachingResponses = <span class="hljs-literal">false</span><br>    &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Customize-output"><a href="#Customize-output" class="headerlink" title="Customize output"></a>Customize output</h2><p>In order to generate a more readable response that makes sense, let’s add a bunch of reponse classes.</p>
+<ul>
+<li>Response Class for Overall Health</li>
+<li>Response Class for Component-wise Health</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// HealthCheckResponse.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HealthCheckResponse</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Status &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Component &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Description &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-built_in">string</span>&gt; Tags &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Exception &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// HealthCheckResult.cs</span><br><span class="hljs-comment">// The aggregation of all health check responses, even if one is unhealthy, &#x27;Status&#x27; will be unhealthy.</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HealthCheckResult</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Status &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;HealthCheckResponse&gt; HealthChecks &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> HealthCheckDuration &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>ResponseWriter</code> is responsible for how the response is displayed.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.Configure</span><br><br><span class="hljs-keyword">using</span> System.Text.Json;<br><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Diagnostics.HealthChecks;<br><span class="hljs-keyword">using</span> Microsoft.Extensions.Diagnostics.HealthChecks;<br><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Http;<br><span class="hljs-keyword">using</span> System.Linq;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>        &#123;<br>            app.UseDeveloperExceptionPage();<br>        &#125;<br><br>        app.UseRouting();<br>        app.UseAuthorization();<br>        <br>        app.UseEndpoints(endpoints =&gt;<br>        &#123;<br>            endpoints.MapControllers();<br>            <br>            <span class="hljs-comment">// HERE</span><br>            endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>, <span class="hljs-keyword">new</span> HealthCheckOptions<br>            &#123;<br>                ResponseWriter = <span class="hljs-keyword">async</span> (context, report) =&gt;<br>                &#123;<br>                    context.Response.ContentType = <span class="hljs-string">&quot;application/json&quot;</span>;<br>                    <span class="hljs-keyword">var</span> response = <span class="hljs-keyword">new</span> HealthCheckResult<br>                    &#123;<br>                        Status = report.Status.ToString(),<br>                        HealthChecks = report.Entries.Select(x =&gt; <span class="hljs-keyword">new</span> HealthCheckResponse<br>                        &#123;<br>                            Component = x.Key,<br>                            Status = x.Value.Status.ToString(),<br>                            Description = x.Value.Description,<br>                            Exception = x.Value.Exception?.Message,<br>                            Tags = x.Value.Tags<br>                        &#125;),<br>                        HealthCheckDuration = report.TotalDuration.ToString()<br>                    &#125;;<br>                    <span class="hljs-keyword">await</span> context.Response.WriteAsync(JsonSerializer.Serialize(response));<br>                &#125;<br>            &#125;);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Based on above sample the result will be:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>   <span class="hljs-attr">&quot;Status&quot;</span>:<span class="hljs-string">&quot;Healthy&quot;</span>,<br>   <span class="hljs-attr">&quot;HealthChecks&quot;</span>:[<br>      &#123;<br>         <span class="hljs-attr">&quot;Status&quot;</span>:<span class="hljs-string">&quot;Healthy&quot;</span>,<br>         <span class="hljs-attr">&quot;Component&quot;</span>:<span class="hljs-string">&quot;example_health_check&quot;</span>,<br>         <span class="hljs-attr">&quot;Description&quot;</span>:<span class="hljs-string">&quot;A healthy result.&quot;</span>,<br>         <span class="hljs-attr">&quot;Tags&quot;</span>:[<br>            <span class="hljs-string">&quot;example&quot;</span><br>         ],<br>         <span class="hljs-attr">&quot;Exception&quot;</span>:<span class="hljs-literal">null</span><br>      &#125;<br>   ],<br>   <span class="hljs-attr">&quot;HealthCheckDuration&quot;</span>:<span class="hljs-string">&quot;00:00:00.0010732&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Enterprise-solution"><a href="#Enterprise-solution" class="headerlink" title="Enterprise solution"></a>Enterprise solution</h2><p><a target="_blank" rel="noopener" href="https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks">AspNetCore.Diagnostics.HealthChecks</a> is an enterprise HealthChecks for ASP.NET Core Diagnostics Package.</p>
+<p>There are a lot of HealthChecks packages that you can find in above link.</p>
+<p><strong>URIs</strong></p>
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package AspNetCore.HealthChecks.Uris -Version 3.1.2<br>dotnet add package AspNetCore.HealthChecks.Uris --version 3.1.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;AspNetCore.HealthChecks.Uris&quot;</span> Version=<span class="hljs-string">&quot;3.1.2&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Register you site’s URL via <code>AddUrlGroup</code></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> System;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    services.AddHealthChecks()<br>            <span class="hljs-comment">// HERE</span><br>            .AddUrlGroup(<span class="hljs-keyword">new</span> Uri(<span class="hljs-string">&quot;https://hamedfathi.me&quot;</span>), <br>                name: <span class="hljs-string">&quot;Hamed Fathi&#x27;s Blog&quot;</span>, <br>                tags: <span class="hljs-keyword">new</span>[] &#123; <span class="hljs-string">&quot;blog&quot;</span>, <span class="hljs-string">&quot;tutorial&quot;</span> &#125;<br>            );<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>System</strong></p>
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package AspNetCore.HealthChecks.System -Version 3.1.2<br>dotnet add package AspNetCore.HealthChecks.System --version 3.1.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;AspNetCore.HealthChecks.System&quot;</span> Version=<span class="hljs-string">&quot;3.1.2&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Register it inside <code>ConfigureServices</code></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> System;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    services.AddHealthChecks()<br>            <span class="hljs-comment">// HERE</span><br>            .AddDiskStorageHealthCheck(s =&gt; s.AddDrive(<span class="hljs-string">&quot;C:\\&quot;</span>, <span class="hljs-number">1024</span>)) <span class="hljs-comment">// 1024 MB (1 GB) free minimum</span><br>            .AddProcessAllocatedMemoryHealthCheck(<span class="hljs-number">512</span>) <span class="hljs-comment">// 512 MB max allocated memory</span><br>            .AddProcessHealthCheck(<span class="hljs-string">&quot;svchost&quot;</span>, p =&gt; p.Length &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// The process is available</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>HealthChecks UI</strong></p>
+<p>The project <code>HealthChecks.UI</code> is a minimal UI interface that stores and shows the health checks results from the configured HealthChecks URIs, So:</p>
+<p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package AspNetCore.HealthChecks.UI -Version 3.1.3<br>dotnet add package AspNetCore.HealthChecks.UI --version 3.1.3<br>&lt;PackageReference Include=<span class="hljs-string">&quot;AspNetCore.HealthChecks.UI&quot;</span> Version=<span class="hljs-string">&quot;3.1.3&quot;</span> /&gt;<br><br>Install-Package AspNetCore.HealthChecks.UI.Client -Version 3.1.2<br>dotnet add package AspNetCore.HealthChecks.UI.Client --version 3.1.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;AspNetCore.HealthChecks.UI.Client&quot;</span> Version=<span class="hljs-string">&quot;3.1.2&quot;</span> /&gt;<br><br>Install-Package AspNetCore.HealthChecks.UI.InMemory.Storage -Version 3.1.2<br>dotnet add package AspNetCore.HealthChecks.UI.InMemory.Storage --version 3.1.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;AspNetCore.HealthChecks.UI.InMemory.Storage&quot;</span> Version=<span class="hljs-string">&quot;3.1.2&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>To config the <code>HealthChecks.UI</code> you should do as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddControllers();<br>        <br>        <span class="hljs-comment">// HERE</span><br>        services.AddHealthChecks();<br>        services.AddHealthChecksUI(options =&gt;<br>                 &#123;<br>                     options.AddHealthCheckEndpoint(<span class="hljs-string">&quot;endpoint1&quot;</span>, <span class="hljs-string">&quot;http://localhost:5000/health&quot;</span>);<br>                 &#125;)<br>                .AddInMemoryStorage();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>        &#123;<br>            app.UseDeveloperExceptionPage();<br>        &#125;<br><br>        app.UseRouting();<br><br>        app.UseAuthorization();<br><br>        <span class="hljs-comment">// HERE</span><br>        app.UseHealthChecksUI();<br><br>        app.UseEndpoints(endpoints =&gt;<br>        &#123;<br>            endpoints.MapControllers();<br>            <br>            <span class="hljs-comment">// HERE</span><br>            endpoints.MapHealthChecks(<span class="hljs-string">&quot;/health&quot;</span>, <span class="hljs-keyword">new</span> HealthCheckOptions()<br>            &#123;<br>                Predicate = _ =&gt; <span class="hljs-literal">true</span>,<br>                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse<br>            &#125;);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now, Browse your UI via <code>http://localhost:PORT/healthchecks-ui</code>.</p>
+<p>The important part of configuration is <code>AddHealthCheckEndpoint</code>.</p>
+<h2 id="HealthChecks-UI-Settings"><a href="#HealthChecks-UI-Settings" class="headerlink" title="HealthChecks UI Settings"></a>HealthChecks UI Settings</h2><p>Here are some important settings:</p>
+<p><strong>UI Polling interval</strong></p>
+<p>You can configure the polling interval in seconds for the UI inside the setup method. Default value is <code>10</code> seconds:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <br>    services.AddHealthChecks();<br>    services.AddHealthChecksUI(options =&gt;<br>             &#123;<br>                 options.AddHealthCheckEndpoint(<span class="hljs-string">&quot;endpoint1&quot;</span>, <span class="hljs-string">&quot;http://localhost:5000/health&quot;</span>);<br>                 <br>                 <span class="hljs-comment">// Configures the UI to poll for healthchecks updates every 5 seconds</span><br>                 options.SetEvaluationTimeInSeconds(<span class="hljs-number">5</span>); <br>             &#125;)<br>            .AddInMemoryStorage();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>UI API max active requests</strong></p>
+<p>You can configure max active requests to the HealthChecks UI backend api using the setup method. Default value is <code>3</code> active requests:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <br>    services.AddHealthChecks();<br>    services.AddHealthChecksUI(options =&gt;<br>             &#123;<br>                 options.AddHealthCheckEndpoint(<span class="hljs-string">&quot;endpoint1&quot;</span>, <span class="hljs-string">&quot;http://localhost:5000/health&quot;</span>);<br>                 options.SetEvaluationTimeInSeconds(<span class="hljs-number">5</span>); <br>                 <br>                 <span class="hljs-comment">// Only one active request will be executed at a time. </span><br>                 <span class="hljs-comment">// All the excedent requests will result in 429 (Too many requests)</span><br>                 options.SetApiMaxActiveRequests(<span class="hljs-number">1</span>); <br>             &#125;)<br>            .AddInMemoryStorage();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="HealthChecks-UI-JSON-Settings"><a href="#HealthChecks-UI-JSON-Settings" class="headerlink" title="HealthChecks UI JSON Settings"></a>HealthChecks UI JSON Settings</h2><p>It is possible for you to customize your settings in <code>appsettings.json</code>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;HealthChecksUI&quot;</span>: &#123;<br>     <span class="hljs-attr">&quot;HealthChecks&quot;</span>: [<br>          &#123;<br>              <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;endpoint1&quot;</span>,<br>              <span class="hljs-attr">&quot;Uri&quot;</span>: <span class="hljs-string">&quot;http://localhost:5000/health&quot;</span><br>          &#125;<br>     ],<br>     <span class="hljs-attr">&quot;EvaluationTimeOnSeconds&quot;</span>: <span class="hljs-number">10</span>,<br>     <span class="hljs-attr">&quot;MinimumSecondsBetweenFailureNotifications&quot;</span>: <span class="hljs-number">60</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks">https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codewithmukesh.com/blog/healthchecks-in-aspnet-core-explained/">https://www.codewithmukesh.com/blog/healthchecks-in-aspnet-core-explained/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.zhaytam.com/2020/04/30/health-checks-aspnetcore/">https://blog.zhaytam.com/2020/04/30/health-checks-aspnetcore/</a></li>
+<li><a target="_blank" rel="noopener" href="https://volosoft.com/blog/Using-Health-Checks-in-ASP.NET-Boilerplate">https://volosoft.com/blog/Using-Health-Checks-in-ASP.NET-Boilerplate</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks">https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-health-check/" data-id="cl5ph9ghy000h8wpb5vzf04xd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - HealthCheck",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi healthy unhealthy health healthcheck",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-10-05",
+        "dateCreated": "2020-10-05",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-health-check/",
+        "description": "ASP.NET Core offers Health Checks Middleware and libraries for reporting the health of app infrastructure components.
+Health checks are exposed by an app as HTTP endpoints. Health check endpoints can be configured for a variety of real-time monitoring scenarios:
+
+Health probes can be used by container orchestrators and load balancers to check an app’s status. For example, a container orchestrator may respond to a failing health check by halting a rolling deployment or restarting a container. A load balancer might react to an unhealthy app by routing traffic away from the failing instance to a healthy instance.
+Use of memory, disk, and other physical server resources can be monitored for healthy status.
+Health checks can test an app’s dependencies, such as databases and external service endpoints, to confirm availability and normal functioning.
+",
+        "wordCount": 4447
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-feature-management/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Feature Management
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-paging/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - Paging</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-health-check/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

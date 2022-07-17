@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Versioning | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,api,versioning" />
+    
+    <meta name="description" content="When developing APIs, you should keep one thing in mind: Change is inevitable. When your API has reached a point where you need to add more responsibilities, you should consider versioning your API. H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Versioning">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-versioning/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="When developing APIs, you should keep one thing in mind: Change is inevitable. When your API has reached a point where you need to add more responsibilities, you should consider versioning your API. H">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-21T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="api">
+<meta property="article:tag" content="versioning">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-versioning" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Versioning
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-versioning/" class="article-date">
+       <time datetime="2020-09-21T00:00:00.000Z" itemprop="datePublished">2020-09-21</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-versioning/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/api/" rel="tag">api</a>, <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/versioning/" rel="tag">versioning</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">3.3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">20 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>When developing APIs, you should keep one thing in mind: <strong>Change is inevitable</strong>. When your API has reached a point where you need to add more responsibilities, you should consider versioning your API. Hence you will need a versioning strategy.</p>
+<span id="more"></span>
+
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Microsoft.AspNetCore.Mvc.Versioning -Version 4.1.1<br>dotnet add package Microsoft.AspNetCore.Mvc.Versioning --version 4.1.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.AspNetCore.Mvc.Versioning&quot;</span> Version=<span class="hljs-string">&quot;4.1.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Configure-API-versioning"><a href="#Configure-API-versioning" class="headerlink" title="Configure API versioning"></a>Configure API versioning</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc.Versioning;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddApiVersioning(config =&gt;<br>    &#123;<br>        <span class="hljs-comment">// You can specify the default version as 1.0.</span><br>        config.DefaultApiVersion = <span class="hljs-keyword">new</span> ApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>        <span class="hljs-comment">// Set defaul version if you dont specify it.</span><br>        config.AssumeDefaultVersionWhenUnspecified = <span class="hljs-literal">true</span>;<br>        <span class="hljs-comment">// Let the clients of the API know all supported versions.</span><br>        <span class="hljs-comment">// The consumers could read the &#x27;api-supported-versions&#x27; header.</span><br>        config.ReportApiVersions = <span class="hljs-literal">true</span>;<br>        config.ApiVersionReader = <span class="hljs-keyword">new</span> HeaderApiVersionReader(<span class="hljs-string">&quot;x-api-version&quot;</span>);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>if you don’t set these two configurations</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs">config.DefaultApiVersion = <span class="hljs-keyword">new</span> ApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>config.AssumeDefaultVersionWhenUnspecified = <span class="hljs-literal">true</span>;<br></code></pre></td></tr></table></figure>
+
+<p>And don’t set any version for your Controller/Action, You will get the following error when you send a request.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;error&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;ApiVersionUnspecified&quot;</span>,<br>        <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;An API version is required, but was not     </span><br><span class="hljs-string">specified.&quot;</span>,<br>        <span class="hljs-attr">&quot;innerError&quot;</span>: <span class="hljs-literal">null</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="API-Version-Reader"><a href="#API-Version-Reader" class="headerlink" title="API Version Reader"></a>API Version Reader</h2><p>API Version Reader defines how an API version is read from the HTTP request. If not explicitly configured, the default setting is that our API version will be a query string parameter named <code>v</code> (example: ../users?v=2.0). Another, probably more popular option is to store the API version in the HTTP header. We have also the possibility of having an API version both in a query string as well as in an HTTP header.</p>
+<p><strong>Query string parameter</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// /api/home?v=2.0</span><br>config.ApiVersionReader = <span class="hljs-keyword">new</span> QueryStringApiVersionReader(<span class="hljs-string">&quot;v&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>HTTP header</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// x-api-version: 2.0</span><br>config.ApiVersionReader = <span class="hljs-keyword">new</span> HeaderApiVersionReader(<span class="hljs-string">&quot;x-api-version&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>Media type</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Content-Type: text/plain; charset=utf-8; v=2</span><br><span class="hljs-comment">// Content-Type: application/json; charset=utf-8; v=2</span><br>config.ApiVersionReader = <span class="hljs-keyword">new</span> MediaTypeApiVersionReader();<br><br><span class="hljs-comment">// Content-Type: text/plain; charset=utf-8; version=2</span><br><span class="hljs-comment">// Content-Type: application/json; charset=utf-8; version=2</span><br>config.ApiVersionReader = <span class="hljs-keyword">new</span> MediaTypeApiVersionReader(<span class="hljs-string">&quot;version&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<p><strong>API Version Reader Composition</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs">config.ApiVersionReader = ApiVersionReader.Combine(<br>        <span class="hljs-keyword">new</span> QueryStringApiVersionReader(<span class="hljs-string">&quot;v&quot;</span>),<br>        <span class="hljs-keyword">new</span> HeaderApiVersionReader(<span class="hljs-string">&quot;x-api-version&quot;</span>),<br>        <span class="hljs-keyword">new</span> MediaTypeApiVersionReader(<span class="hljs-string">&quot;version&quot;</span>)<br>);<br></code></pre></td></tr></table></figure>
+
+<p><strong>The URL Path</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// [Route(&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;)]  </span><br>config.ApiVersionReader = <span class="hljs-keyword">new</span> UrlSegmentApiVersionReader();<br></code></pre></td></tr></table></figure>
+
+<h2 id="Set-version-s-to-Controllers-and-Actions"><a href="#Set-version-s-to-Controllers-and-Actions" class="headerlink" title="Set version(s) to Controllers and Actions"></a>Set version(s) to Controllers and Actions</h2><p>Consider the following example:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br><span class="hljs-comment">// api-supported-versions: 1.1, 2.0</span><br><span class="hljs-comment">// api-deprecated-versions: 1.0</span><br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>, Deprecated = true)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.1&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br><span class="hljs-comment">// api/v2/values/4</span><br><span class="hljs-comment">// api/v2.0/values/4</span><br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ValuesController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-comment">// GET api/v1/values</span><br>    [<span class="hljs-meta">HttpGet</span>]<br>    <span class="hljs-keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; Get()<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; <span class="hljs-string">&quot;value1&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span> &#125;;<br>    &#125;<br><br>    <span class="hljs-comment">// GET api/v2/values/5</span><br>    <span class="hljs-comment">// GET api/v2.0/values/5</span><br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-comment">// POST api/v1/values/5</span><br>    <span class="hljs-comment">// POST api/v1.0/values/5</span><br>    <span class="hljs-comment">// POST api/v1.1/values/5</span><br>    <span class="hljs-comment">// POST api/v2/values/5</span><br>    <span class="hljs-comment">// POST api/v2.0/values/5</span><br>    [<span class="hljs-meta">HttpPost(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Post</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Tip:</strong> Since no version number is specified to the actions in <code>ValuesController</code>, all the endpoints are assumed to have the default version of <code>1.0</code>.</p>
+<p><strong>[ApiVersion(“1.0”, Deprecated = true)]</strong></p>
+<p>Annotating our controller with, for example, [ApiVersion(“1.0”)] attribute, means that this controller supports API version 1.0.</p>
+<p>To deprecate some version in our API controller, we need to set Deprecated flag to true: [ApiVersion(“1.0”, Deprecated = true)].</p>
+<p>In such cases a <code>api-deprecated-versions</code> header will be added to identify deprecated versions.</p>
+<p><strong>[ApiVersion(“1.1”)]</strong></p>
+<p><strong>[ApiVersion(“2.0”)]</strong></p>
+<p>Controllers can support multiple API versions.</p>
+<p><strong>[Route(“api/v{version:apiVersion}/[controller]”)]</strong></p>
+<p>To implement URL path versioning, You can modify the Route attribute of the controllers to accept API versioning info in the path param.</p>
+<p><strong>[MapToApiVersion(“2.0”)]</strong></p>
+<p>From the several versions introduced for the controller, you can specify a specific version (eg. version 2.0) for the action. The action is <strong>only</strong> available with this version.</p>
+<p>If you try to access it with other versions, you will encounter an <code>UnsupportedApiVersion</code> error.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;error&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;UnsupportedApiVersion&quot;</span>,<br>        <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;The HTTP resource that matches the request URI &#x27;http://localhost:5000/api/v1.0/values/4&#x27; does not support the API version &#x27;1.0&#x27;.&quot;</span>,<br>        <span class="hljs-attr">&quot;innerError&quot;</span>: <span class="hljs-literal">null</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>[ApiVersionNeutral]</strong></p>
+<p>If we have a service that is version-neutral, we will mark that controller with <code>[ApiVersionNeutral]</code> attribute.</p>
+<p><strong>How to get the API version inside a controller?</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">var</span> apiVersion = HttpContext.GetRequestedApiVersion();<br></code></pre></td></tr></table></figure>
+
+<p>And also</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Get</span>(<span class="hljs-params"> <span class="hljs-built_in">int</span> id, ApiVersion apiVersion </span>)</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="API-Version-Conventions"><a href="#API-Version-Conventions" class="headerlink" title="API Version Conventions"></a>API Version Conventions</h2><p>Besides attributing our controllers and methods, another way to configure service versioning is with API versioning conventions. There are several reasons why would we use API versioning conventions instead of attributes:</p>
+<ul>
+<li>Centralized management and application of all service API versions</li>
+<li>Apply API versions to services defined by controllers in external .NET assemblies</li>
+<li>Dynamically apply API versions from external sources; for example, from the configuration</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">services.AddApiVersioning(config =&gt;<br>&#123;<br>    config.Conventions.Controller&lt;MyController&gt;().HasApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>Here’s an example of setting deprecated API version as well as versioning controller actions:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cs">services.AddApiVersioning(config =&gt;<br>&#123;<br>    config.Conventions.Controller&lt;MyController&gt;()	   <br>                       .HasDeprecatedApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br>                       .HasApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>                       .HasApiVersion(<span class="hljs-number">2</span>, <span class="hljs-number">0</span>)<br>                       .Action(c =&gt; c.Get1_0()).MapToApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br>                       .Action(c =&gt; c.Get1_1()).MapToApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>                       .Action(c =&gt; c.Get2_0()).MapToApiVersion(<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>There is also an option to define custom conventions.There is a <code>IControllerConvention</code> interface for this purpose. Custom conventions are added to the convention builder through the API versioning options:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">services.AddApiVersioning(config =&gt;<br>&#123;<br>    config.Conventions.Add(<span class="hljs-keyword">new</span> MyCustomConvention());<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="How-to-prevent-an-unavailable-or-deprecated-api-version-from-loading"><a href="#How-to-prevent-an-unavailable-or-deprecated-api-version-from-loading" class="headerlink" title="How to prevent an unavailable or deprecated api version from loading?"></a>How to prevent an unavailable or deprecated api version from loading?</h2><p>Consider the following example</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.1&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ValuesController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-comment">// GET api/v1/values</span><br>    [<span class="hljs-meta">HttpGet</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; Get()<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; <span class="hljs-string">&quot;value1&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span> &#125;;<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>In this example, we have two valid versions (<code>1.1</code>, <code>2.0</code>) for all actions but the <code>Get()</code> has mapped to version <code>1.0</code> which is invalid for us. We want to prevent this method from loading.</p>
+<p>To do this, you should write an <code>ActionFilterAttribute</code> as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// UnavailableApiVersion.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UnavailableApiVersion</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Code &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Message &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-built_in">string</span>&gt; AvailableVersions &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> IEnumerable&lt;<span class="hljs-built_in">string</span>&gt; DeprecatedVersions &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UnavailableApiVersion</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        AvailableVersions = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">string</span>&gt;();<br>        DeprecatedVersions = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">string</span>&gt;();<br>    &#125;<br>&#125;   <br><br><span class="hljs-comment">// PreventUnavailableApiVersionsAttribute.cs</span><br><br>[<span class="hljs-meta">AttributeUsage(AttributeTargets.Class)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PreventUnavailableApiVersionsAttribute</span> : <span class="hljs-title">ActionFilterAttribute</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Header &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;x-api-version&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> QueryString &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;v&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> UrlSegment &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;version&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsADeprecatedVersionValid &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-literal">true</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">GetUrl</span>(<span class="hljs-params">HttpRequest request</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;request.Scheme&#125;</span>://<span class="hljs-subst">&#123;request.Host&#125;</span><span class="hljs-subst">&#123;request.Path&#125;</span><span class="hljs-subst">&#123;request.QueryString&#125;</span>&quot;</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnActionExecuting</span>(<span class="hljs-params">ActionExecutingContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> props = context.ActionDescriptor.Properties;<br>        <span class="hljs-keyword">var</span> url = GetUrl(context.HttpContext.Request);<br>        <span class="hljs-keyword">var</span> headerVersion = context.HttpContext.Request.Headers.Count(x =&gt; <span class="hljs-built_in">string</span>.Equals(x.Key, Header.Trim(), StringComparison.InvariantCultureIgnoreCase));<br>        <span class="hljs-keyword">var</span> routeVersion = context.RouteData.Values[UrlSegment.Trim()];<br>        <span class="hljs-keyword">var</span> queryVersion = context.HttpContext.Request.QueryString.Value.Trim();<br>        <span class="hljs-keyword">var</span> matchedQuery = queryVersion.Replace(<span class="hljs-string">&quot;?&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).Split(<span class="hljs-string">&#x27;&amp;&#x27;</span>).FirstOrDefault(x =&gt; x.StartsWith(<span class="hljs-string">$&quot;<span class="hljs-subst">&#123;QueryString&#125;</span>=&quot;</span>));<br>        <span class="hljs-keyword">var</span> isSkippable = routeVersion == <span class="hljs-literal">null</span> &amp;&amp; headerVersion == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">string</span>.IsNullOrEmpty(matchedQuery);<br>        <span class="hljs-keyword">if</span> (isSkippable) <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">var</span> version = <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">if</span> (routeVersion != <span class="hljs-literal">null</span>)<br>        &#123;<br>            version = routeVersion.ToString();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (headerVersion &gt; <span class="hljs-number">0</span>)<br>        &#123;<br>            version = context.HttpContext.Request.Headers[<span class="hljs-string">&quot;x-api-version&quot;</span>].ToString();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">string</span>.IsNullOrEmpty(matchedQuery))<br>        &#123;<br>            version = matchedQuery.Replace(<span class="hljs-string">$&quot;<span class="hljs-subst">&#123;QueryString&#125;</span>=&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);<br>        &#125;<br>        version = version.Contains(<span class="hljs-string">&#x27;.&#x27;</span>) ? version : <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;version&#125;</span>.0&quot;</span>;<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> props)<br>        &#123;<br>            <span class="hljs-keyword">var</span> apiVersionModel = prop.Value <span class="hljs-keyword">as</span> ApiVersionModel;<br>            <span class="hljs-keyword">if</span> (apiVersionModel != <span class="hljs-literal">null</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span> (apiVersionModel.IsApiVersionNeutral) <span class="hljs-keyword">return</span>;<br>                <span class="hljs-keyword">var</span> deprecated = apiVersionModel.DeprecatedApiVersions.Select(x =&gt; x.ToString());<br>                <span class="hljs-keyword">var</span> impl = apiVersionModel.ImplementedApiVersions.Select(x =&gt; x.ToString());<br>                <span class="hljs-keyword">var</span> supported = apiVersionModel.SupportedApiVersions.Select(x =&gt; x.ToString());<br>                <span class="hljs-keyword">var</span> isSupported = IsADeprecatedVersionValid ? impl.Contains(version) : supported.Contains(version);<br>                <span class="hljs-keyword">if</span> (!isSupported)<br>                &#123;<br>                    context.Result = <span class="hljs-keyword">new</span> JsonResult(<span class="hljs-keyword">new</span> UnavailableApiVersion<br>                    &#123;<br>                        Code = <span class="hljs-string">&quot;UnavailableApiVersion&quot;</span>,<br>                        AvailableVersions = supported,<br>                        DeprecatedVersions = deprecated,<br>                        Message = <span class="hljs-string">$&quot;The HTTP resource that matches the request URI &#x27;<span class="hljs-subst">&#123;url&#125;</span>&#x27; does not available via the API version &#x27;<span class="hljs-subst">&#123;version&#125;</span>&#x27;.&quot;</span><br>                    &#125;);<br>                    context.HttpContext.Response.StatusCode = (<span class="hljs-built_in">int</span>)HttpStatusCode.BadRequest;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And consume it on top of your controller</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">PreventUnavailableApiVersions</span>]<br>[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.1&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ValuesController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-comment">// GET api/v1/values</span><br>    [<span class="hljs-meta">HttpGet</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; Get()<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; <span class="hljs-string">&quot;value1&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span> &#125;;<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now, whenever you call the <code>Get()</code> action, the <code>PreventUnavailableApiVersions</code> checks the version you requested (<code>1.0</code>) with versions  of your controller (<code>1.1</code>, <code>2.0</code>), If the requested version is not in the list, it returns the same error as below.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// Status code: 400 Bad Request</span><br>&#123;<br>    <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-string">&quot;UnavailableApiVersion&quot;</span>,<br>    <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;The HTTP resource that matches the request URI &#x27;http://localhost:5000/api/v1/WeatherForecast?v=1.0&#x27; does not available by the API version &#x27;1.0&#x27;.&quot;</span>,<br>    <span class="hljs-attr">&quot;availableVersions&quot;</span>: [<br>        <span class="hljs-string">&quot;1.1&quot;</span>,<br>        <span class="hljs-string">&quot;2.0&quot;</span><br>    ],<br>    <span class="hljs-attr">&quot;deprecatedVersions&quot;</span>: [<br>        <span class="hljs-string">&quot;1.0&quot;</span><br>    ]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Deprecated versions</strong></p>
+<p>As a default behaviour deprecated versions are in valid list it means if you write like the below code</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">PreventUnavailableApiVersions</span>]<br>[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>, Deprecated = true)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.1&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ValuesController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-comment">// GET api/v1/values</span><br>    [<span class="hljs-meta">HttpGet</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; Get()<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; <span class="hljs-string">&quot;value1&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span> &#125;;<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>You will see the result of action method without any unavailable error but you can config to remove deprecated versions from list of valid versions.<br>You just need to write</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// IsADeprecatedVersionValid: default is true</span><br>[<span class="hljs-meta">PreventUnavailableApiVersions(IsADeprecatedVersionValid = false)</span>]<br></code></pre></td></tr></table></figure>
+
+<p>Now, the action filter consider the version <code>1.0</code> as an unavailable and you will get an <code>UnavailableApiVersion</code> response.</p>
+<p><strong>Configuration</strong></p>
+<p><code>PreventUnavailableApiVersions</code> action filter supports <code>header</code>, <code>query string</code> and <code>url segment</code> mode so you can configure any of these just like what you did in <code>ApiVersionReader</code>.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Default is &#x27;v&#x27;</span><br><span class="hljs-comment">// QueryStringApiVersionReader(&quot;ver&quot;)</span><br>[<span class="hljs-meta">PreventUnavailableApiVersions(QueryString = <span class="hljs-meta-string">&quot;ver&quot;</span>)</span>] <br><br><span class="hljs-comment">// Default is &#x27;x-api-version&#x27;</span><br><span class="hljs-comment">// HeaderApiVersionReader(&quot;api-version-header&quot;)</span><br>[<span class="hljs-meta">PreventUnavailableApiVersions(Header = <span class="hljs-meta-string">&quot;api-version-header&quot;</span>)</span>]<br><br><span class="hljs-comment">// UrlSegmentApiVersionReader</span><br><span class="hljs-comment">// Default is &#x27;version&#x27;, [Route(&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;)]</span><br><span class="hljs-comment">// [Route(&quot;api/v&#123;myversion:apiVersion&#125;/[controller]&quot;)]</span><br>[<span class="hljs-meta">PreventUnavailableApiVersions(UrlSegment = <span class="hljs-meta-string">&quot;myversion&quot;</span>)</span>] <br></code></pre></td></tr></table></figure>
+
+<p><strong>A Second way!</strong></p>
+<p>Always you can find an easier way so you can rewrite the above action filter as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UnavailableApiVersionsAttribute</span> : <span class="hljs-title">ActionFilterAttribute</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">GetUrl</span>(<span class="hljs-params">HttpRequest request</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;request.Scheme&#125;</span>://<span class="hljs-subst">&#123;request.Host&#125;</span><span class="hljs-subst">&#123;request.Path&#125;</span><span class="hljs-subst">&#123;request.QueryString&#125;</span>&quot;</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-built_in">string</span> <span class="hljs-title">FixVersion</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> version</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> v = version.Contains(<span class="hljs-string">&#x27;.&#x27;</span>) ? version : <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;version&#125;</span>.0&quot;</span>;<br>        <span class="hljs-keyword">return</span> v.Trim();<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span> _commaSeparatedVersions;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UnavailableApiVersionsAttribute</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> commaSeparatedVersions</span>)</span><br>    &#123;<br>        _commaSeparatedVersions = commaSeparatedVersions;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Header &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;x-api-version&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> QueryString &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;v&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> UrlSegment &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-string">&quot;version&quot;</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> IsADeprecatedVersionValid &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-literal">true</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">OnActionExecuting</span>(<span class="hljs-params">ActionExecutingContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">string</span>.IsNullOrEmpty(_commaSeparatedVersions)) <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">var</span> props = context.ActionDescriptor.Properties;<br>        <span class="hljs-keyword">var</span> url = GetUrl(context.HttpContext.Request);<br>        <span class="hljs-keyword">var</span> headerVersion = context.HttpContext.Request.Headers.Count(x =&gt; <span class="hljs-built_in">string</span>.Equals(x.Key, Header.Trim(), StringComparison.InvariantCultureIgnoreCase));<br>        <span class="hljs-keyword">var</span> routeVersion = context.RouteData.Values[UrlSegment.Trim()];<br>        <span class="hljs-keyword">var</span> queryVersion = context.HttpContext.Request.QueryString.Value.Trim();<br>        <span class="hljs-keyword">var</span> matchedQuery = queryVersion.Replace(<span class="hljs-string">&quot;?&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).Split(<span class="hljs-string">&#x27;&amp;&#x27;</span>).FirstOrDefault(x =&gt; x.StartsWith(<span class="hljs-string">$&quot;<span class="hljs-subst">&#123;QueryString&#125;</span>=&quot;</span>));<br>        <span class="hljs-keyword">var</span> isSkippable = routeVersion == <span class="hljs-literal">null</span> &amp;&amp; headerVersion == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-built_in">string</span>.IsNullOrEmpty(matchedQuery);<br>        <span class="hljs-keyword">if</span> (isSkippable) <span class="hljs-keyword">return</span>;<br>        <span class="hljs-keyword">var</span> version = <span class="hljs-string">&quot;&quot;</span>;<br>        <span class="hljs-keyword">if</span> (routeVersion != <span class="hljs-literal">null</span>)<br>        &#123;<br>            version = routeVersion.ToString();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (headerVersion &gt; <span class="hljs-number">0</span>)<br>        &#123;<br>            version = context.HttpContext.Request.Headers[<span class="hljs-string">&quot;x-api-version&quot;</span>].ToString();<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">string</span>.IsNullOrEmpty(matchedQuery))<br>        &#123;<br>            version = matchedQuery.Replace(<span class="hljs-string">$&quot;<span class="hljs-subst">&#123;QueryString&#125;</span>=&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);<br>        &#125;<br>        version = FixVersion(version);<br>        <span class="hljs-keyword">var</span> unavailableVersions = _commaSeparatedVersions.Split(<span class="hljs-string">&#x27;,&#x27;</span>).Select(x =&gt; FixVersion(x.Trim()));<br>        <span class="hljs-keyword">var</span> isUnavailableVersion =  unavailableVersions.Contains(version);<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> props)<br>        &#123;<br>            <span class="hljs-keyword">var</span> apiVersionModel = prop.Value <span class="hljs-keyword">as</span> ApiVersionModel;<br>            <span class="hljs-keyword">if</span> (apiVersionModel != <span class="hljs-literal">null</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span> (apiVersionModel.IsApiVersionNeutral) <span class="hljs-keyword">return</span>;<br>                <span class="hljs-keyword">var</span> deprecated = apiVersionModel.DeprecatedApiVersions.Select(x =&gt; x.ToString());<br>                <span class="hljs-keyword">var</span> supported = IsADeprecatedVersionValid ?<br>                    apiVersionModel.SupportedApiVersions.Select(x =&gt; x.ToString()).Concat(deprecated).Except(unavailableVersions) :<br>                    apiVersionModel.SupportedApiVersions.Select(x =&gt; x.ToString()).Except(unavailableVersions);<br>                <span class="hljs-keyword">if</span>(!isUnavailableVersion &amp;&amp; !IsADeprecatedVersionValid)<br>                &#123;<br>                    isUnavailableVersion = deprecated.Contains(version);<br>                &#125;<br>                <span class="hljs-keyword">if</span> (isUnavailableVersion)<br>                &#123;<br>                    context.Result = <span class="hljs-keyword">new</span> JsonResult(<span class="hljs-keyword">new</span> UnavailableApiVersion<br>                    &#123;<br>                        Code = <span class="hljs-string">&quot;UnavailableApiVersion&quot;</span>,<br>                        AvailableVersions = supported,<br>                        DeprecatedVersions = deprecated,<br>                        Message = <span class="hljs-string">$&quot;The HTTP resource that matches the request URI &#x27;<span class="hljs-subst">&#123;url&#125;</span>&#x27; does not available via the API version &#x27;<span class="hljs-subst">&#123;version&#125;</span>&#x27;.&quot;</span><br>                    &#125;);<br>                    context.HttpContext.Response.StatusCode = (<span class="hljs-built_in">int</span>)HttpStatusCode.BadRequest;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>UnavailableApiVersions</code> attribute get a comma-separated versions via constructor just on action methods. When you use this action filter you cannot access to the api via these forbidden versions.</p>
+<p>So you should consume it like below code</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>, Deprecated = true)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;1.1&quot;</span>)</span>]<br>[<span class="hljs-meta">ApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/v&#123;version:apiVersion&#125;/[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ValuesController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-comment">// GET api/v1/values</span><br>    [<span class="hljs-meta">HttpGet</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;1.0&quot;</span>)</span>]<br>    [<span class="hljs-meta">UnavailableApiVersions(<span class="hljs-meta-string">&quot;1.0,1.1&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> ActionResult&lt;IEnumerable&lt;<span class="hljs-built_in">string</span>&gt;&gt; Get()<br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>[] &#123; <span class="hljs-string">&quot;value1&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span> &#125;;<br>    &#125;<br><br>    [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;id&#125;&quot;</span>)</span>]<br>    [<span class="hljs-meta">MapToApiVersion(<span class="hljs-meta-string">&quot;2.0&quot;</span>)</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ActionResult&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> id</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;value&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>You can use <code>UnavailableApiVersionsAttribute</code> on any controller or action method.</p>
+<p><strong>Global registration</strong></p>
+<p>Also, You are able to register the <code>UnavailableApiVersionsAttribute</code> filter globally.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers(options =&gt;<br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        options.Filters.Add(<span class="hljs-keyword">new</span> UnavailableApiVersionsAttribute(<span class="hljs-string">&quot;1.0,1.1&quot;</span>) &#123; IsADeprecatedVersionValid = <span class="hljs-literal">false</span> &#125;);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Swagger-integration"><a href="#Swagger-integration" class="headerlink" title="Swagger integration"></a>Swagger integration</h2><p>Install the below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer -Version 4.1.1<br>dotnet add package Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer --version 4.1.1<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer&quot;</span> Version=<span class="hljs-string">&quot;4.1.1&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Add <code>ConfigureSwaggerOptions</code> to make some custom options.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// ConfigureSwaggerOptions.cs</span><br><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     Configures the Swagger generation options.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;remarks&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     This allows API versioning to define aSwagger document per API version after the</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span>     <span class="hljs-doctag">&lt;see cref=&quot;IApiVersionDescriptionProvider&quot; /&gt;</span>service has been resolved from the service container.</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/remarks&gt;</span></span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">sealed</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ConfigureSwaggerOptions</span> :<span class="hljs-title">IConfigureOptions</span>&lt;<span class="hljs-title">SwaggerGenOptions</span>&gt;<br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IApiVersionDescriptionProvider _provider;<br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span>     Initializes a new instance of the <span class="hljs-doctag">&lt;see cref=&quot;ConfigureSwaggerOptions&quot; /&gt;</span> class.</span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;provider&quot;&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span>     The <span class="hljs-doctag">&lt;see cref=&quot;IApiVersionDescriptionProvider&quot;&gt;</span>provider<span class="hljs-doctag">&lt;/see&gt;</span> used to generate Swagger</span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span>     documents.</span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/param&gt;</span></span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ConfigureSwaggerOptions</span>(<span class="hljs-params">IApiVersionDescriptionProvider provider</span>)</span> =&gt; _provider = provider;<br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;inheritdoc /&gt;</span></span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">SwaggerGenOptions options</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// add a swagger document for each discovered API version</span><br>        <span class="hljs-comment">// note: you might choose to skip or document deprecated API versions differently</span><br>        <span class="hljs-keyword">foreach</span> (ApiVersionDescription description <span class="hljs-keyword">in</span> _provider.ApiVersionDescriptions)<br>        &#123;<br>            options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> OpenApiInfo <span class="hljs-title">CreateInfoForApiVersion</span>(<span class="hljs-params">ApiVersionDescription description</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> info = <span class="hljs-keyword">new</span> OpenApiInfo<br>        &#123;<br>            Title = <span class="hljs-string">&quot;A Web API&quot;</span>,<br>            Version = description.ApiVersion.ToString(),<br>            Description = <span class="hljs-string">&quot;An API sample.&quot;</span>,<br>            Contact = <span class="hljs-keyword">new</span> OpenApiContact &#123; Name = <span class="hljs-string">&quot;hamedfathi&quot;</span>, Email = <span class="hljs-string">&quot;hamedfathi@outlook.com&quot;</span> &#125;,<br>            TermsOfService = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">&quot;https://hamedfathi.me&quot;</span>),<br>            License = <span class="hljs-keyword">new</span> OpenApiLicense<br>            &#123;<br>                Name = <span class="hljs-string">&quot;MIT License&quot;</span>,<br>                Url = <span class="hljs-keyword">new</span> Uri(<span class="hljs-string">&quot;https://opensource.org/licenses/MIT&quot;</span>)<br>            &#125;<br>        &#125;;<br>        <span class="hljs-keyword">if</span> (description.IsDeprecated)<br>        &#123;<br>            info.Description += <span class="hljs-string">&quot; This API version has been deprecated.&quot;</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> info;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Modify your <code>Startup.cs</code> as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br><br>    services.AddTransient&lt;IConfigureOptions&lt;SwaggerGenOptions&gt;, ConfigureSwaggerOptions&gt;();<br>    services.AddSwaggerGen(c =&gt;<br>    &#123;<br>        <span class="hljs-keyword">var</span> xmlFile = <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;Assembly.GetExecutingAssembly().GetName().Name&#125;</span>.xml&quot;</span>;<br>        <span class="hljs-keyword">var</span> xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);<br>        c.IncludeXmlComments(xmlPath);<br>    &#125;); <br>	services.AddApiVersioning(config =&gt;<br>    &#123;<br>        config.DefaultApiVersion = <span class="hljs-keyword">new</span> ApiVersion(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>);<br>        config.AssumeDefaultVersionWhenUnspecified = <span class="hljs-literal">true</span>;<br>        config.ReportApiVersions = <span class="hljs-literal">true</span>;<br>        config.ApiVersionReader = <span class="hljs-keyword">new</span> UrlSegmentApiVersionReader();<br>    &#125;);<br>    services.AddVersionedApiExplorer(<br>       options =&gt;<br>       &#123;<br>           <span class="hljs-comment">// add the versioned api explorer, which also adds IApiVersionDescriptionProvider service</span><br>           <span class="hljs-comment">// note: the specified format code will format the version as &quot;&#x27;v&#x27;major[.minor][-status]&quot;</span><br>           options.GroupNameFormat = <span class="hljs-string">&quot;&#x27;v&#x27;VVV&quot;</span>;<br><br>           <span class="hljs-comment">// note: this option is only necessary when versioning by url segment. the SubstitutionFormat</span><br>           <span class="hljs-comment">// can also be used to control the format of the API version in route templates</span><br>           options.SubstituteApiVersionInUrl = <span class="hljs-literal">true</span>;<br>       &#125;);<br><br>&#125;<br><br><span class="hljs-comment">// Startup.Configure</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider</span>)</span><br>&#123;<br>    app.UseSwagger();<br>    app.UseSwaggerUI(<br>        options =&gt;<br>        &#123;<br>            <span class="hljs-keyword">foreach</span> (ApiVersionDescription description <span class="hljs-keyword">in</span> provider.ApiVersionDescriptions)<br>            &#123;<br>                <span class="hljs-built_in">string</span> swaggerEndpoint;<br><br>                <span class="hljs-built_in">string</span> basePath = Configuration[<span class="hljs-string">&quot;ASPNETCORE_BASEPATH&quot;</span>];<br>                Console.WriteLine(<span class="hljs-string">&quot;PATH: &quot;</span> + basePath);<br>                <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">string</span>.IsNullOrEmpty(basePath))<br>                &#123;<br>                    swaggerEndpoint = <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;basePath&#125;</span>/swagger/<span class="hljs-subst">&#123;description.GroupName&#125;</span>/swagger.json&quot;</span>;<br>                &#125;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    swaggerEndpoint = <span class="hljs-string">$&quot;/swagger/<span class="hljs-subst">&#123;description.GroupName&#125;</span>/swagger.json&quot;</span>;<br>                &#125;<br><br>                options.SwaggerEndpoint(swaggerEndpoint, description.GroupName.ToUpperInvariant());<br>            &#125;<br>        &#125;);<br><br>    app.UseRouting();<br>    app.UseAuthorization();<br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllers();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html">https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.to/99darshan/restful-web-api-versioning-with-asp-net-core-1e8g">https://dev.to/99darshan/restful-web-api-versioning-with-asp-net-core-1e8g</a></li>
+<li><a target="_blank" rel="noopener" href="https://dotnetcoretutorials.com/2017/01/17/api-versioning-asp-net-core/">https://dotnetcoretutorials.com/2017/01/17/api-versioning-asp-net-core/</a></li>
+<li><a target="_blank" rel="noopener" href="https://exceptionnotfound.net/overview-of-api-versioning-in-asp-net-core-3-0/">https://exceptionnotfound.net/overview-of-api-versioning-in-asp-net-core-3-0/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/aspnet-api-versioning/wiki/API-Version-Reader">https://github.com/microsoft/aspnet-api-versioning/wiki/API-Version-Reader</a></li>
+<li></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-versioning/" data-id="cl5ph9gid00178wpb1illfgvw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Versioning",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi api versioning",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-09-21",
+        "dateCreated": "2020-09-21",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-versioning/",
+        "description": "When developing APIs, you should keep one thing in mind: Change is inevitable. When your API has reached a point where you need to add more responsibilities, you should consider versioning your API. Hence you will need a versioning strategy.",
+        "wordCount": 6147
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-security-headers/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Security Headers
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-cors/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - CORS</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-versioning/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

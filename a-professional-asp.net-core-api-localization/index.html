@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core API - Localization | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,localization" />
+    
+    <meta name="description" content="Globalization and localization are two important concepts that you should be aware of to internationalize your applications. In essence, globalization and localization are concepts that help you reach">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core API - Localization">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-api-localization/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="Globalization and localization are two important concepts that you should be aware of to internationalize your applications. In essence, globalization and localization are concepts that help you reach">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-27T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="localization">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore-api/">aspnetcore-api</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-api-localization" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core API - Localization
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-api-localization/" class="article-date">
+       <time datetime="2020-09-27T00:00:00.000Z" itemprop="datePublished">2020-09-27</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-api-localization/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/localization/" rel="tag">localization</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">2.4k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">15 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Globalization and localization are two important concepts that you should be aware of to internationalize your applications. In essence, globalization and localization are concepts that help you reach a wider audience. The former relates to building applications that support various cultures and the latter relates to how you can build your application that can support a particular locale and culture. In other words, an application takes advantage of globalization to be able to cater to different languages based on user choice. Localization is adopted by the application to adapt the content of a website to various regions or cultures.</p>
+<span id="more"></span>
+
+<p><code>IStringLocalizer</code> and <code>IStringLocalizer&lt;T&gt;</code> were architected to improve productivity when developing localized apps. <code>IStringLocalizer</code> uses the <code>ResourceManager</code> and <code>ResourceReader</code> to provide culture-specific resources at run time. The interface has an indexer and an IEnumerable for returning localized strings. <code>IStringLocalizer</code> doesn’t require storing the default language strings in a resource file. You can develop an app targeted for localization and not need to create resource files early in development. The code below shows how to wrap the string “About Title” for localization.</p>
+<p>Register <code>AddLocalization</code> service.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <span class="hljs-comment">// HERE</span><br>    services.AddLocalization();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And, Use it via <code>IStringLocalizer</code></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.AspNetCore.Mvc;<br><span class="hljs-keyword">using</span> Microsoft.Extensions.Localization;<br><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">WebApplicationSample.Controllers</span><br>&#123;<br>    [<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;api/[controller]&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AboutController</span> : <span class="hljs-title">Controller</span><br>    &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IStringLocalizer&lt;AboutController&gt; _localizer;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AboutController</span>(<span class="hljs-params">IStringLocalizer&lt;AboutController&gt; localizer</span>)</span><br>        &#123;<br>            _localizer = localizer;<br>        &#125;<br><br>        [<span class="hljs-meta">HttpGet</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>        &#123;<br>            <span class="hljs-keyword">return</span> _localizer[<span class="hljs-string">&quot;About Title&quot;</span>];<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>There are three methods used to configure localization in ASP.NET Core. These include the following:</p>
+<ul>
+<li><code>AddDataAnnotationsLocalization</code>: This method is used to provide support for DataAnnotations validation messages.</li>
+<li><code>AddLocalization</code>: This method is used to add localization services to the services container.</li>
+<li><code>AddViewLocalization</code>: This method is used to provide support for localized views.</li>
+</ul>
+<h2 id="Define-the-Allowed-Cultures"><a href="#Define-the-Allowed-Cultures" class="headerlink" title="Define the Allowed Cultures"></a>Define the Allowed Cultures</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.cs</span><br><br><span class="hljs-function"><span class="hljs-keyword">private</span> RequestLocalizationOptions <span class="hljs-title">GetLocalizationOptions</span>(<span class="hljs-params"></span>)</span><br>&#123;<br>    <span class="hljs-keyword">var</span> supportedCultures = <span class="hljs-keyword">new</span> List&lt;CultureInfo&gt;<br>    &#123;<br>        <span class="hljs-keyword">new</span> CultureInfo(<span class="hljs-string">&quot;en-US&quot;</span>),<br>        <span class="hljs-keyword">new</span> CultureInfo(<span class="hljs-string">&quot;de-DE&quot;</span>),<br>        <span class="hljs-keyword">new</span> CultureInfo(<span class="hljs-string">&quot;fr-FR&quot;</span>),<br>        <span class="hljs-keyword">new</span> CultureInfo(<span class="hljs-string">&quot;en-GB&quot;</span>)<br>    &#125;;<br>    <span class="hljs-keyword">var</span> options = <span class="hljs-keyword">new</span> RequestLocalizationOptions<br>    &#123;<br>        DefaultRequestCulture = <span class="hljs-keyword">new</span> RequestCulture(<span class="hljs-string">&quot;en-GB&quot;</span>),<br>        SupportedCultures = supportedCultures,<br>        SupportedUICultures = supportedCultures<br>    &#125;;<br>    <span class="hljs-keyword">return</span> options;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Add above option to <code>UseRequestLocalization</code> middleware</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.Configure</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>    &#123;<br>        app.UseDeveloperExceptionPage();<br>    &#125;<br>    <span class="hljs-comment">// HERE</span><br>    app.UseRequestLocalization(GetLocalizationOptions());<br><br>    app.UseRouting();<br>    app.UseAuthorization();<br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllers();<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The middleware adds three providers for the request culture by default:</p>
+<ul>
+<li><code>QueryStringRequestCultureProvider</code>: Gets the culture from query string values</li>
+<li><code>CookieRequestCultureProvider</code>: Gets the culture from a cookie</li>
+<li><code>AcceptLanguageHeaderRequestCultureProvider</code>: Gets the culture from the <strong>Accept-Language</strong> request header</li>
+</ul>
+<h2 id="Create-Resource-Files-for-Each-Locale"><a href="#Create-Resource-Files-for-Each-Locale" class="headerlink" title="Create Resource Files for Each Locale"></a>Create Resource Files for Each Locale</h2><p>There are various ways in which you can create resource files. In this example, you’ll take advantage of the Visual Studio Resource Designer to create an XML-based <code>.resx</code> file.</p>
+<p>To specify a specific rsource folder, we should change our service settings like below</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br>    <span class="hljs-comment">// HERE</span><br>    services.AddLocalization(opt =&gt; opt.ResourcesPath = <span class="hljs-string">&quot;Resources&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>ResourcesPath</code> property has been used to set the path to the folder where resource files (for various locales) will reside. If you don’t specify any value for this property, the application will expect the resource files to be available in the application’s <code>root directory</code>.</p>
+<p>Select the project in the Solution Explorer Window and create a new folder named <code>Resources</code> in it. Resources in .NET are comprised of key/value pair of data that are compiled to a <code>.resources</code> file. A resource file is one where you can store strings, images, or object data - resources of the application.</p>
+<p>Next, add a resources file into the newly created folder. Name the resource files as </p>
+<ul>
+<li><code>Controllers.AboutController.en-GB.resx</code></li>
+<li><code>Controllers.AboutController.en-US.resx</code></li>
+<li><code>Controllers.AboutController.de-DE.resx</code></li>
+<li><code>Controllers.AboutController.fr-FR.resx</code></li>
+</ul>
+<h2 id="Resource-file-naming"><a href="#Resource-file-naming" class="headerlink" title="Resource file naming"></a>Resource file naming</h2><p><code>Resources</code> are named for <strong>the full type name of their class minus the assembly name</strong>. For example, a French resource in a project whose main assembly is <code>LocalizationWebsite.Web.dll</code> for the class <code>LocalizationWebsite.Web.Startup</code> would be named <code>Startup.fr.resx</code>. A resource for the class <code>LocalizationWebsite.Web.Controllers.HomeController</code> would be named <code>Controllers.HomeController.fr.resx</code>. If your targeted class’s namespace isn’t the same as the assembly name you will need the full type name. For example, in the sample project a resource for the type <code>ExtraNamespace.Tools</code> would be named <code>ExtraNamespace.Tools.fr.resx</code>.</p>
+<p>In the sample project, the <code>ConfigureServices</code> method sets the <code>ResourcesPath</code> to “Resources”, so the project relative path for the home controller’s French resource file is <code>Resources/Controllers.HomeController.fr.resx</code>. Alternatively, you can use folders to organize resource files. For the about controller, the path would be <code>Resources/Controllers/AboutController.fr.resx</code>. If you don’t use the <code>ResourcesPath</code> option, the <code>.resx</code> file would go in the project base directory. The resource file for <code>AboutController</code> would be named <code>Controllers.HomeController.fr.resx</code>. The choice of using the <code>dot</code> or <code>path</code> naming convention depends on how you want to organize your resource files.</p>
+<p>In our sample, <code>WebApplicationSample</code> is the assembly name so we should create our resources inside <code>Resources</code> folder with this way.</p>
+<p><strong>[NamespaceWithoutAssemblyName].[ControllerName].[Culture].resx</strong></p>
+<p>Or</p>
+<p><strong>[NamespaceWithoutAssemblyName]/[ControllerName].[Culture].resx</strong></p>
+<h2 id="How-to-use-resource-files"><a href="#How-to-use-resource-files" class="headerlink" title="How to use resource files?"></a>How to use resource files?</h2><p>Write below key-values:</p>
+<p>Controllers.AboutController.en-GB.resx</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GreetingMessage</td>
+<td>Hello {0}</td>
+</tr>
+<tr>
+<td>SayHello</td>
+<td>Hello</td>
+</tr>
+</tbody></table>
+<p>Controllers.AboutController.de-DE.resx</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GreetingMessage</td>
+<td>Hallo {0}</td>
+</tr>
+<tr>
+<td>SayHello</td>
+<td>Hallo</td>
+</tr>
+</tbody></table>
+<p>Now, You can use them via controllers</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">namespace</span> <span class="hljs-title">WebApplicationSample.Controllers</span><br>&#123;<br>    [<span class="hljs-meta">ApiController</span>]<br>    [<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AboutController</span> : <span class="hljs-title">ControllerBase</span><br>    &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IStringLocalizer&lt;AboutController&gt; _localizer;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AboutController</span>(<span class="hljs-params">IStringLocalizer&lt;AboutController&gt; localizer</span>)</span><br>        &#123;<br>            _localizer = localizer;<br>        &#125;<br><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=en-GB</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=de-DE</span><br>        [<span class="hljs-meta">HttpGet</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>        &#123;<br>            <span class="hljs-keyword">return</span> _localizer[<span class="hljs-string">&quot;SayHello&quot;</span>];<br><br>        &#125;<br><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed?culture=en-GB</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed?culture=de-DE</span><br>        [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;name&#125;&quot;</span>)</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name</span>)</span><br>        &#123;<br><br>            <span class="hljs-keyword">return</span> _localizer[<span class="hljs-built_in">string</span>.Format(_localizer[<span class="hljs-string">&quot;GreetingMessage&quot;</span>], name)];<br><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>SayHello</code> returns a simple text based on your culture.<br><code>GreetingMessage</code> returns a text but accept variable too. You can use unlimited place holders <code>(&#123;0&#125; &#123;1&#125; &#123;2&#125; &#123;3&#125; , ...)</code> and pass your variables via <code>string.Format()</code>.</p>
+<p>If <code>IStringLocalizer</code> does not find any value for the key, It will return <code>the key</code> itself as a result.</p>
+<h2 id="JSON-Localization-Resources"><a href="#JSON-Localization-Resources" class="headerlink" title="JSON Localization Resources"></a>JSON Localization Resources</h2><p>You may want to use <code>.json</code> files as a resource instead of <code>.resx</code> files, so</p>
+<p>Install below package </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package My.Extensions.Localization.Json -Version 2.1.0<br>dotnet add package My.Extensions.Localization.Json --version 2.1.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;My.Extensions.Localization.Json&quot;</span> Version=<span class="hljs-string">&quot;2.1.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Remove <code>services.AddLocalization();</code> and replace it with <code>services.AddJsonLocalization()</code>:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">using</span> System.IO;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services.AddControllers();<br><br>    <span class="hljs-comment">// REMOVE THIS</span><br>    <span class="hljs-comment">// services.AddLocalization(opt =&gt; opt.ResourcesPath = &quot;Resources&quot;);</span><br><br>    <span class="hljs-comment">// HERE</span><br>    services.AddJsonLocalization(opt =&gt; opt.ResourcesPath = <span class="hljs-string">&quot;Resources&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Write below <code>JSON</code> files:</p>
+<p>Controllers.AboutController.en-GB.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;GreetingMessage&quot;</span>: <span class="hljs-string">&quot;Hello &#123;0&#125;&quot;</span>,<br>  <span class="hljs-attr">&quot;SayHello&quot;</span>: <span class="hljs-string">&quot;Hello&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Controllers.AboutController.de-DE.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;GreetingMessage&quot;</span>: <span class="hljs-string">&quot;Hallo &#123;0&#125;&quot;</span>,<br>  <span class="hljs-attr">&quot;SayHello&quot;</span>: <span class="hljs-string">&quot;Hallo&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Now, You can use them via controllers</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cs"><br><span class="hljs-keyword">namespace</span> <span class="hljs-title">WebApplicationSample.Controllers</span><br>&#123;<br>    [<span class="hljs-meta">ApiController</span>]<br>    [<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AboutController</span> : <span class="hljs-title">ControllerBase</span><br>    &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IStringLocalizer&lt;AboutController&gt; _localizer;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AboutController</span>(<span class="hljs-params">IStringLocalizer&lt;AboutController&gt; localizer</span>)</span><br>        &#123;<br>            _localizer = localizer;<br>        &#125;<br><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=en-GB</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=de-DE</span><br>        [<span class="hljs-meta">HttpGet</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"></span>)</span><br>        &#123;<br>            <span class="hljs-keyword">return</span> _localizer[<span class="hljs-string">&quot;SayHello&quot;</span>];<br><br>        &#125;<br><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed?culture=en-GB</span><br>        <span class="hljs-comment">// http://localhost:PORT/weatherforecast/hamed?culture=de-DE</span><br>        [<span class="hljs-meta">HttpGet(<span class="hljs-meta-string">&quot;&#123;name&#125;&quot;</span>)</span>]<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> <span class="hljs-title">Get</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name</span>)</span><br>        &#123;<br><br>            <span class="hljs-keyword">return</span> _localizer[<span class="hljs-built_in">string</span>.Format(_localizer[<span class="hljs-string">&quot;GreetingMessage&quot;</span>], name)];<br><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="DataAnnotation-amp-Localization"><a href="#DataAnnotation-amp-Localization" class="headerlink" title="DataAnnotation &amp; Localization"></a>DataAnnotation &amp; Localization</h2><p>Install below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Microsoft.AspNetCore.Mvc.DataAnnotations -Version 2.2.0<br>dotnet add package Microsoft.AspNetCore.Mvc.DataAnnotations --version 2.2.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Microsoft.AspNetCore.Mvc.DataAnnotations&quot;</span> Version=<span class="hljs-string">&quot;2.2.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>You can use DataAnnotation and Localization together. Update your <code>ConfigureServices</code> as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// Be Careful, You must register &#x27;AddLocalization&#x27; before &#x27;AddDataAnnotationsLocalization&#x27; like below.</span><br>        services.AddLocalization(opt =&gt; opt.ResourcesPath = <span class="hljs-string">&quot;Resources&quot;</span>);<br>        services.AddControllers()<br>                <span class="hljs-comment">// HERE</span><br>                .AddDataAnnotationsLocalization(options =&gt;<br>                &#123;<br>                    options.DataAnnotationLocalizerProvider = (type, factory) =&gt;<br>                        factory.Create(<span class="hljs-keyword">typeof</span>(DataAnnotationValidation));<br>                &#125;)<br>        ;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Based on above configuration, you must add below files in <code>Resources</code> folder.</p>
+<p>DataAnnotationValidation.en-GB.resx</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Name</td>
+<td>‘{0}’ is required</td>
+</tr>
+</tbody></table>
+<p>DataAnnotationValidation.de-DE.resx</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Name</td>
+<td>‘{0}’ ist erforderlich</td>
+</tr>
+</tbody></table>
+<p>We want to validate <code>Person</code> class.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Person.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span><br>&#123;<br>    <span class="hljs-comment">// The string of &#x27;ErrorMessage&#x27; is the key.</span><br>    [<span class="hljs-meta">Required(ErrorMessage = <span class="hljs-meta-string">&quot;Name&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> FamilyName &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Address &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> EmailAddress &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Age &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And you controller will be</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IStringLocalizer&lt;WeatherForecastController&gt; _localizer;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IStringLocalizer&lt;WeatherForecastController&gt; localizer</span>)</span><br>    &#123;<br>        _localizer = localizer;<br>    &#125;<br><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast</span><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=en-GB</span><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=de-DE</span><br>    [<span class="hljs-meta">HttpPost</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Post</span>(<span class="hljs-params">[FromBody] Person person</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!ModelState.IsValid)<br>        &#123;<br>            <span class="hljs-keyword">return</span> BadRequest(ModelState);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">return</span> Ok();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And the result is</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;https://tools.ietf.org/html/rfc7231#section-6.5.1&quot;</span>,<br>    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;One or more validation errors occurred.&quot;</span>,<br>    <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-attr">&quot;traceId&quot;</span>: <span class="hljs-string">&quot;|82e992e6-411f3f305ff4df95.&quot;</span>,<br>    <span class="hljs-attr">&quot;errors&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: [<br>            <span class="hljs-string">&quot;&#x27;Name&#x27; is required&quot;</span><br>        ]<br>    &#125;<br>&#125;<br><br>&#123;<br>    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;https://tools.ietf.org/html/rfc7231#section-6.5.1&quot;</span>,<br>    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;One or more validation errors occurred.&quot;</span>,<br>    <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-attr">&quot;traceId&quot;</span>: <span class="hljs-string">&quot;|82e992e5-411f3f305ff4df95.&quot;</span>,<br>    <span class="hljs-attr">&quot;errors&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: [<br>            <span class="hljs-string">&quot;&#x27;Name&#x27; ist erforderlich&quot;</span><br>        ]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="DataAnnotation-amp-JSON-Localization"><a href="#DataAnnotation-amp-JSON-Localization" class="headerlink" title="DataAnnotation &amp; JSON Localization"></a>DataAnnotation &amp; JSON Localization</h2><p>You can also use DataAnnotation and JSON Localization together. </p>
+<p>Make an emptyu class as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">DataAnnotationValidation</span><br>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Update your <code>ConfigureServices</code> as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.ConfigureServices</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// Be Careful, You must register &#x27;AddJsonLocalization&#x27; before &#x27;AddDataAnnotationsLocalization&#x27; like below.</span><br>        services.AddJsonLocalization(opt =&gt; opt.ResourcesPath = <span class="hljs-string">&quot;Resources&quot;</span>);<br>        services.AddControllers()<br>                <span class="hljs-comment">// HERE</span><br>                .AddDataAnnotationsLocalization(options =&gt;<br>                &#123;<br>                    options.DataAnnotationLocalizerProvider = (type, factory) =&gt;<br>                        factory.Create(<span class="hljs-keyword">typeof</span>(DataAnnotationValidation));<br>                &#125;)<br>        ;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Then write below <code>JSON</code> files in <code>Resources</code> folder.</p>
+<p>DataAnnotationValidation.en-GB.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;&#x27;&#123;0&#125;&#x27; is required&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>DataAnnotationValidation.de-DE.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;Name&quot;</span>: <span class="hljs-string">&quot;&#x27;&#123;0&#125;&#x27; ist erforderlich&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>We want to validate <code>Person</code> class.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Person.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span><br>&#123;<br>    <span class="hljs-comment">// The string of &#x27;ErrorMessage&#x27; is the key.</span><br>    [<span class="hljs-meta">Required(ErrorMessage = <span class="hljs-meta-string">&quot;Name&quot;</span>)</span>]<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> FamilyName &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Address &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> EmailAddress &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Age &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And you controller will be</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cs">[<span class="hljs-meta">ApiController</span>]<br>[<span class="hljs-meta">Route(<span class="hljs-meta-string">&quot;[controller]&quot;</span>)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">WeatherForecastController</span> : <span class="hljs-title">ControllerBase</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> IStringLocalizer&lt;WeatherForecastController&gt; _localizer;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">WeatherForecastController</span>(<span class="hljs-params">IStringLocalizer&lt;WeatherForecastController&gt; localizer</span>)</span><br>    &#123;<br>        _localizer = localizer;<br>    &#125;<br><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast</span><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=en-GB</span><br>    <span class="hljs-comment">// http://localhost:PORT/weatherforecast?culture=de-DE</span><br>    [<span class="hljs-meta">HttpPost</span>]<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> IActionResult <span class="hljs-title">Post</span>(<span class="hljs-params">[FromBody] Person person</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (!ModelState.IsValid)<br>        &#123;<br>            <span class="hljs-keyword">return</span> BadRequest(ModelState);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">return</span> Ok();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And the result is</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;https://tools.ietf.org/html/rfc7231#section-6.5.1&quot;</span>,<br>    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;One or more validation errors occurred.&quot;</span>,<br>    <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-attr">&quot;traceId&quot;</span>: <span class="hljs-string">&quot;|82e992e6-411f3f305ff4df95.&quot;</span>,<br>    <span class="hljs-attr">&quot;errors&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: [<br>            <span class="hljs-string">&quot;&#x27;Name&#x27; is required&quot;</span><br>        ]<br>    &#125;<br>&#125;<br><br>&#123;<br>    <span class="hljs-attr">&quot;type&quot;</span>: <span class="hljs-string">&quot;https://tools.ietf.org/html/rfc7231#section-6.5.1&quot;</span>,<br>    <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;One or more validation errors occurred.&quot;</span>,<br>    <span class="hljs-attr">&quot;status&quot;</span>: <span class="hljs-number">400</span>,<br>    <span class="hljs-attr">&quot;traceId&quot;</span>: <span class="hljs-string">&quot;|82e992e5-411f3f305ff4df95.&quot;</span>,<br>    <span class="hljs-attr">&quot;errors&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;Name&quot;</span>: [<br>            <span class="hljs-string">&quot;&#x27;Name&#x27; ist erforderlich&quot;</span><br>        ]<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="FluentValidation-amp-Localization"><a href="#FluentValidation-amp-Localization" class="headerlink" title="FluentValidation &amp; Localization"></a>FluentValidation &amp; Localization</h2><p>Install below packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package FluentValidation -Version 9.2.2<br>dotnet add package FluentValidation --version 9.2.2<br>&lt;PackageReference Include=<span class="hljs-string">&quot;FluentValidation&quot;</span> Version=<span class="hljs-string">&quot;9.2.2&quot;</span> /&gt;<br><br>Install-Package FluentValidation.AspNetCore -Version 9.2.0<br>dotnet add package FluentValidation.AspNetCore --version 9.2.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;FluentValidation.AspNetCore&quot;</span> Version=<span class="hljs-string">&quot;9.2.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<p>Register <code>FluentValidation</code> as following</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>&#123;<br>    services<br>        .AddControllers()        <br>        .AddFluentValidation() <span class="hljs-comment">// HERE</span><br>        ;<br><br>    <span class="hljs-comment">// HERE</span><br>    services.AddTransient&lt;IValidator&lt;Person&gt;, PersonValidator&gt;(); <br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>To use localization, pass <code>IStringLocalizer&lt;T&gt;</code> to the constructor and do the same as we explained before.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Person.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Name &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> FamilyName &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> Address &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">string</span> EmailAddress &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>	<span class="hljs-keyword">public</span> <span class="hljs-built_in">int</span> Age &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br><br><span class="hljs-comment">// PersonValidator.cs</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">PersonValidator</span> : <span class="hljs-title">AbstractValidator</span>&lt;<span class="hljs-title">Person</span>&gt;<br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PersonValidator</span>(<span class="hljs-params">IStringLocalizer&lt;Person&gt; localizer</span>)</span><br>    &#123;<br>        RuleFor(e =&gt; e.Name).MinimumLength(<span class="hljs-number">5</span>)<br>            .WithMessage(e =&gt; <span class="hljs-built_in">string</span>.Format(localizer[Name], <span class="hljs-keyword">nameof</span>(e.Name)));<br><br>        RuleFor(e =&gt; e.FamilyName).MinimumLength(<span class="hljs-number">5</span>)<br>            .WithMessage(e =&gt; <span class="hljs-built_in">string</span>.Format(localizer[Name], <span class="hljs-keyword">nameof</span>(e.FamilyName)));<br><br>        RuleFor(e =&gt; e.Address).MinimumLength(<span class="hljs-number">10</span>).WithMessage(e =&gt; localizer[Address]);<br><br>        RuleFor(e =&gt; e.EmailAddress).EmailAddress().WithMessage(e =&gt; localizer[EmailAddress]);     <br>                  <br>        RuleFor(e =&gt; e.Age).InclusiveBetween(<span class="hljs-number">20</span>, <span class="hljs-number">60</span>).WithMessage(e =&gt; localizer[Age]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.codemag.com/Article/2009081/A-Deep-Dive-into-ASP.NET-Core-Localization">https://www.codemag.com/Article/2009081/A-Deep-Dive-into-ASP.NET-Core-Localization</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hishamco/My.Extensions.Localization.Json">https://github.com/hishamco/My.Extensions.Localization.Json</a></li>
+<li><a target="_blank" rel="noopener" href="https://joonasw.net/view/aspnet-core-localization-deep-dive">https://joonasw.net/view/aspnet-core-localization-deep-dive</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-api-localization/" data-id="cl5ph9ghz000k8wpb5bsxg5gn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core API - Localization",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet aspnetcore webapi localization",
+        "genre": "aspnetcore-api",
+        "datePublished": "2020-09-27",
+        "dateCreated": "2020-09-27",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-api-localization/",
+        "description": "Globalization and localization are two important concepts that you should be aware of to internationalize your applications. In essence, globalization and localization are concepts that help you reach a wider audience. The former relates to building applications that support various cultures and the latter relates to how you can build your application that can support a particular locale and culture. In other words, an application takes advantage of globalization to be able to cater to different languages based on user choice. Localization is adopted by the application to adapt the content of a website to various regions or cultures.",
+        "wordCount": 3994
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-serilog/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Serilog
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-dryioc/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - DryIoc</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-api-localization/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

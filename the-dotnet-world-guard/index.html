@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>The .NET World - Guard | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,guard" />
+    
+    <meta name="description" content="I want to introduce a high-performance, extensible argument validation library. Guard is a fluent argument validation library that is intuitive, fast and extensible. Guard takes advantage of almost al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The .NET World - Guard">
+<meta property="og:url" content="https://hamedfathi.me/the-dotnet-world-guard/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="I want to introduce a high-performance, extensible argument validation library. Guard is a fluent argument validation library that is intuitive, fast and extensible. Guard takes advantage of almost al">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-02T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="guard">
+<meta name="twitter:card" content="summary">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/dotnet/">dotnet</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-the-dotnet-world-guard" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        The .NET World - Guard
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/the-dotnet-world-guard/" class="article-date">
+       <time datetime="2020-10-02T00:00:00.000Z" itemprop="datePublished">2020-10-02</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/the-dotnet-world-guard/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/guard/" rel="tag">guard</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">3.3k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">20 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>I want to introduce a high-performance, extensible argument validation library.</p>
+<p><code>Guard</code> is a fluent argument validation library that is intuitive, fast and extensible. <code>Guard</code> takes advantage of almost all the new features introduced in <code>C# 7.2</code>.</p>
+<span id="more"></span>
+
+<p>Install the below package</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">Install-Package Dawn.Guard -Version 1.12.0<br>dotnet add package Dawn.Guard --version 1.12.0<br>&lt;PackageReference Include=<span class="hljs-string">&quot;Dawn.Guard&quot;</span> Version=<span class="hljs-string">&quot;1.12.0&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Here is a sample constructor that validates its arguments without Guard:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name, <span class="hljs-built_in">int</span> age</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (name == <span class="hljs-literal">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentNullException(<span class="hljs-keyword">nameof</span>(name), <span class="hljs-string">&quot;Name cannot be null.&quot;</span>);<br><br>    <span class="hljs-keyword">if</span> (name.Length == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentException(<span class="hljs-string">&quot;Name cannot be empty.&quot;</span>, <span class="hljs-keyword">nameof</span>(name));<br><br>    <span class="hljs-keyword">if</span> (age &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentOutOfRangeException(<span class="hljs-keyword">nameof</span>(age), age, <span class="hljs-string">&quot;Age cannot be negative.&quot;</span>);<br><br>    Name = name;<br>    Age = age;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>And this is how we write the same constructor with Guard:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">using Dawn; // Bring Guard into scope.<br><br>public Person(string name, int age)<br>&#123;<br>    Name = Guard.Argument(name, nameof(name)).NotNull().NotEmpty();<br>    Age = Guard.Argument(age, nameof(age)).NotNegative();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Standard-Validations"><a href="#Standard-Validations" class="headerlink" title="Standard Validations"></a>Standard Validations</h2><p>Below is a complete list of validations that are included with the library. Optional parameters that<br>allow you to specify custom exception messages are omitted for brevity.</p>
+<p><strong>Null Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt; where T : class</code> and <code>ArgumentInfo&lt;T?&gt; where T : struct</code></p>
+<ul>
+<li><code>Null()</code></li>
+<li><code>NotNull()</code> - When called for an argument of <code>T?</code>, returns an argument of <code>T</code>.</li>
+</ul>
+<p>Static without type constraints:</p>
+<ul>
+<li><code>NotAllNull(ArgumentInfo&lt;T1&gt;, ArgumentInfo&lt;T2&gt;)</code></li>
+<li><code>NotAllNull(ArgumentInfo&lt;T1&gt;, ArgumentInfo&lt;T2&gt;, ArgumentInfo&lt;T3&gt;)</code></li>
+</ul>
+<p><strong>Equality Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>Equal(T)</code></li>
+<li><code>Equal(T, IEqualityComparer&lt;T&gt;)</code></li>
+<li><code>NotEqual(T)</code></li>
+<li><code>NotEqual(T, IEqualityComparer&lt;T&gt;)</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;T&gt; where T : class</code></p>
+<ul>
+<li><code>Same(T)</code></li>
+<li><code>NotSame(T)</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;T|T?&gt; where T : struct</code></p>
+<ul>
+<li><code>Default()</code></li>
+<li><code>NotDefault()</code></li>
+</ul>
+<p><strong>Comparison Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt; where T : IComparable&lt;T&gt;</code></p>
+<ul>
+<li><code>Min(T)</code></li>
+<li><code>Max(T)</code></li>
+<li><code>GreaterThan(T)</code></li>
+<li><code>LessThan(T)</code></li>
+<li><code>InRange(T, T)</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;T|T?&gt; where T : struct, IComparable&lt;T&gt;</code></p>
+<ul>
+<li><code>Zero()</code></li>
+<li><code>NotZero()</code></li>
+<li><code>Positive()</code></li>
+<li><code>NotPositive()</code></li>
+<li><code>Negative()</code></li>
+<li><code>NotNegative()</code></li>
+</ul>
+<p><strong>Boolean Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;bool|bool?&gt;</code></p>
+<ul>
+<li><code>True()</code></li>
+<li><code>False()</code></li>
+</ul>
+<p><strong>Collection Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt; where T : IEnumerable</code></p>
+<ul>
+<li><code>Empty()</code></li>
+<li><code>NotEmpty()</code></li>
+<li><code>Count(int)</code></li>
+<li><code>NotCount(int)</code></li>
+<li><code>MinCount(int)</code></li>
+<li><code>MaxCount(int)</code></li>
+<li><code>CountInRange(int, int)</code></li>
+<li><code>Contains&lt;TItem&gt;(TItem)</code></li>
+<li><code>Contains&lt;TItem&gt;(TItem, IEqualityComparer&lt;TItem&gt;)</code></li>
+<li><code>DoesNotContain&lt;TItem&gt;(TItem)</code></li>
+<li><code>DoesNotContain&lt;TItem&gt;(TItem, IEqualityComparer&lt;TItem&gt;)</code></li>
+<li><code>ContainsNull()</code></li>
+<li><code>DoesNotContainNull()</code></li>
+<li><code>DoesNotContainDuplicate()</code></li>
+<li><code>DoesNotContainDuplicate(IEqualityComparer&lt;TItem&gt;)</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>In&lt;TCollection&gt;(TCollection)</code></li>
+<li><code>In&lt;TCollection&gt;(TCollection, IEqualityComparer&lt;T&gt;)</code></li>
+<li><code>NotIn&lt;TCollection&gt;(TCollection)</code></li>
+<li><code>NotIn&lt;TCollection&gt;(TCollection, IEqualityComparer&lt;T&gt;)</code></li>
+</ul>
+<p><strong>String Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;string&gt;</code></p>
+<ul>
+<li><code>Empty()</code></li>
+<li><code>NotEmpty()</code></li>
+<li><code>WhiteSpace()</code></li>
+<li><code>NotWhiteSpace()</code></li>
+<li><code>Length(int)</code></li>
+<li><code>NotLength(int)</code></li>
+<li><code>MinLength(int)</code></li>
+<li><code>MaxLength(int)</code></li>
+<li><code>LengthInRange(int, int)</code></li>
+<li><code>Equal(string, StringComparison)</code></li>
+<li><code>NotEqual(string, StringComparison)</code></li>
+<li><code>StartsWith(string)</code></li>
+<li><code>StartsWith(string, StringComparison)</code></li>
+<li><code>DoesNotStartWith(string)</code></li>
+<li><code>DoesNotStartWith(string, StringComparison)</code></li>
+<li><code>EndsWith(string)</code></li>
+<li><code>EndsWith(string, StringComparison)</code></li>
+<li><code>DoesNotEndWith(string)</code></li>
+<li><code>DoesNotEndWith(string, StringComparison)</code></li>
+<li><code>Matches(string)</code></li>
+<li><code>Matches(string, TimeSpan)</code></li>
+<li><code>Matches(Regex)</code></li>
+<li><code>DoesNotMatch(string)</code></li>
+<li><code>DoesNotMatch(string, TimeSpan)</code></li>
+<li><code>DoesNotMatch(Regex)</code></li>
+</ul>
+<p><strong>Time Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;DateTime|DateTime?&gt;</code></p>
+<ul>
+<li><code>KindSpecified()</code></li>
+<li><code>KindUnspecified()</code></li>
+</ul>
+<p><strong>Floating-Point Number Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;float|float?|double|double?&gt;</code></p>
+<ul>
+<li><code>NaN()</code></li>
+<li><code>NotNaN()</code></li>
+<li><code>Infinity()</code></li>
+<li><code>NotInfinity()</code></li>
+<li><code>PositiveInfinity()</code></li>
+<li><code>NotPositiveInfinity()</code></li>
+<li><code>NegativeInfinity()</code></li>
+<li><code>NotNegativeInfinity()</code></li>
+<li><code>Equal(T, T)</code> - Approx. equality.</li>
+<li><code>NotEqual(T, T)</code> - Approx. unequality.</li>
+</ul>
+<p><strong>URI Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;Uri&gt;</code></p>
+<ul>
+<li><code>Absolute</code></li>
+<li><code>Relative</code></li>
+<li><code>Scheme(string)</code></li>
+<li><code>NotScheme(string)</code></li>
+<li><code>Http()</code></li>
+<li><code>Http(bool)</code></li>
+<li><code>Https()</code></li>
+</ul>
+<p><strong>Enum Guards</strong><br>For <code>ArgumentInfo&lt;T|T?&gt; where T : struct, Enum</code></p>
+<ul>
+<li><code>Defined()</code></li>
+<li><code>HasFlag(T)</code></li>
+<li><code>DoesNotHaveFlag(T)</code></li>
+</ul>
+<p><strong>Email Guards</strong><br>For <code>ArgumentInfo&lt;MailAddress&gt;</code></p>
+<ul>
+<li><code>HasHost(string)</code></li>
+<li><code>DoesNotHaveHost(string)</code></li>
+<li><code>HostIn(IEnumerable&lt;string&gt;)</code></li>
+<li><code>HostNotIn(IEnumerable&lt;string&gt;)</code></li>
+<li><code>HasDisplayName()</code></li>
+<li><code>DoesNotHaveDisplayName()</code></li>
+</ul>
+<p><strong>Type Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>Compatible&lt;TTarget&gt;()</code></li>
+<li><code>NotCompatible&lt;TTarget&gt;()</code></li>
+<li><code>Cast&lt;TTarget&gt;</code> - Returns an argument of <code>TTarget</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;object&gt;</code></p>
+<ul>
+<li><code>Type&lt;T&gt;()</code> - Returns an argument of <code>T</code>.</li>
+<li><code>NotType&lt;T&gt;()</code></li>
+<li><code>Type(Type)</code></li>
+<li><code>NotType(Type)</code></li>
+</ul>
+<p><strong>Member Guards</strong><br>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>Member&lt;TMember&gt;(Expression&lt;Func&lt;T, TMember&gt;&gt;, Action&lt;ArgumentInfo&lt;TMember&gt;&gt;)</code></li>
+<li><code>Member&lt;TMember&gt;(Expression&lt;Func&lt;T, TMember&gt;&gt;, Action&lt;ArgumentInfo&lt;TMember&gt;&gt;, bool)</code></li>
+</ul>
+<p><strong>Normalization Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>Modify&lt;TTarget&gt;(TTarget value)</code> - Returns an argument of <code>TTarget</code></li>
+<li><code>Modify&lt;TTarget&gt;(Func&lt;T, TTarget&gt;)</code> - Returns an argument of <code>TTarget</code></li>
+<li><code>Wrap&lt;TTarget&gt;(Func&lt;T, TTarget&gt;)</code> - Returns an argument of <code>TTarget</code></li>
+</ul>
+<p>For <code>ArgumentInfo&lt;T&gt; where T : class, ICloneable</code></p>
+<ul>
+<li><code>Clone()</code></li>
+</ul>
+<p><strong>Predicate Guards</strong></p>
+<p>For <code>ArgumentInfo&lt;T&gt;</code></p>
+<ul>
+<li><code>Require(bool)</code></li>
+<li><code>Require&lt;TException&gt;(bool)</code></li>
+<li><code>Require(Func&lt;T, bool&gt;)</code></li>
+<li><code>Require&lt;TException&gt;(Func&lt;T, bool&gt;)</code></li>
+</ul>
+<p><strong>State Guards</strong></p>
+<p>For validating instance states instead of method arguments:</p>
+<ul>
+<li><code>Operation(bool)</code> - Throws <code>InvalidOperationException</code> for <code>false</code></li>
+<li><code>Support(bool)</code> - Throws <code>NotSupportedException</code> for <code>false</code></li>
+<li><code>Disposal(bool, string)</code> - Throws <code>ObjectDisposedException</code> for <code>true</code></li>
+</ul>
+<h2 id="Initializing-a-Guarded-Argument"><a href="#Initializing-a-Guarded-Argument" class="headerlink" title="Initializing a Guarded Argument"></a>Initializing a Guarded Argument</h2><p>Guard needs to know the argument’s value to test it against preconditions and its name to include in<br>a potential exception. There are three ways to initialize a guarded argument:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// First, by specifying the argument value and name separately.</span><br>Guard.Argument(arg, <span class="hljs-keyword">nameof</span>(arg));<br><br><span class="hljs-comment">// Second, omitting the optional argument name.</span><br>Guard.Argument(arg);<br><br><span class="hljs-comment">// Third, creating a MemberExpression via a lambda expression.</span><br>Guard.Argument(() =&gt; arg);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>The first sample initializes a guarded argument by specifying both the argument’s value and name.</li>
+<li>The second sample does not specify the argument name. This is allowed but not recommended since<br>the argument name proves a valuable piece of information when you try to identify the error cause<br>from logs or crash dumps.</li>
+<li>The third sample initializes a <code>MemberExpression</code> that provides both the argument’s value and<br>name. Although compiling an expression tree is an expensive operation, it is a convenient<br>alternative that can be used in applications that are not performance-critical.</li>
+</ul>
+<h2 id="Exception-Types"><a href="#Exception-Types" class="headerlink" title="Exception Types"></a>Exception Types</h2><p>Each validation in Guard has a specific exception type it throws when its precondition is not<br>satisfied. <code>NotNull</code> throws an <code>ArgumentNullException</code>. The validations on <code>IComparable&lt;T&gt;</code><br>arguments like <code>MinValue</code> and <code>NotZero</code> throw <code>ArgumentOutOfRangeException</code>s. Most others<br>throw <code>ArgumentException</code>s. (See Modifying Arguments for exceptional cases.)</p>
+<p>Throwing custom exceptions from standard validations seems counter-intuitive and right now, the only<br>way to do so is to use the generic <code>Require&lt;TException&gt;</code> validation.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cs">Guard.Argument(() =&gt; arg).Require&lt;KeyNotFoundException&gt;(a =&gt; a != <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+<p>The above code throws a <code>KeyNotFoundException</code> if the <code>arg</code> is passed <code>0</code>.</p>
+<h2 id="Exception-Messages"><a href="#Exception-Messages" class="headerlink" title="Exception Messages"></a>Exception Messages</h2><p>Guard creates a meaningful exception message that contains the argument name and a description<br>specific to the validation when a precondition can’t be satisfied. Additionaly, every validation in<br>Guard accepts an optional parameter letting the user specify a custom error message.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws an ArgumentException if the arg is not null.</span><br>Guard.Argument(() =&gt; arg).Null(a =&gt; <span class="hljs-string">&quot;The argument must be null but it is: &quot;</span> + a);<br><br><span class="hljs-comment">// Throws an ArgumentNullException if the arg is null.</span><br>Guard.Argument(() =&gt; arg).NotNull(<span class="hljs-string">&quot;The argument cannot be null.&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>In the first example above, we specify a factory that will create the error message if the<br>validation fails. <code>arg</code> is passed to the factory as <code>a</code> so it can be used in the error message. We<br>could of course use <code>arg</code> directly but that would cause it to be captured by the lambda expression,<br>thus prevent the expression from being cached. We could make the <code>Null</code> validation accept a<br><code>string</code> parameter instead of a <code>Func&lt;T, string&gt;</code>, but that would require the error message to<br>be initialized even when the precondition is satisfied, i.e. when the argument is null.</p>
+<p>In the second example, we see that the <code>NotNull</code> validation accepts the error message as a string<br>instead of a factory. This is because it only throws an exception if the argument value is null.<br>Therefore the only possible value that can be passed to a factory would be null.</p>
+<h2 id="Secure-Arguments"><a href="#Secure-Arguments" class="headerlink" title="Secure Arguments"></a>Secure Arguments</h2><p>Exceptions thrown for failed Guard validations contain very descriptive messages.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws with message: &quot;token must be a2C-p.&quot;</span><br>Guard.Argument(<span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-string">&quot;token&quot;</span>).Equal(<span class="hljs-string">&quot;a2C-p&quot;</span>);<br><br><span class="hljs-comment">// Throws with message: &quot;number must be one of the following: 1, 2, 3&quot;</span><br>Guard.Argument(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;number&quot;</span>).In(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+
+<p>There may be cases where you don’t want to expose that additional data to the caller. For these<br>scenarios, you can specify the optional “secure” flag when you initialize the argument.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws with message: &quot;token is invalid.&quot;</span><br>Guard.Argument(<span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-string">&quot;token&quot;</span>, <span class="hljs-literal">true</span>).Equal(<span class="hljs-string">&quot;a2C-p&quot;</span>);<br><br><span class="hljs-comment">// Throws with message: &quot;number is invalid.&quot;</span><br>Guard.Argument(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;number&quot;</span>, <span class="hljs-literal">true</span>).In(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+
+<p>Things to note:</p>
+<ul>
+<li>Parameter names are never secured.</li>
+<li>Min/Max values of range checks are never secured.</li>
+<li>Type names are never secured.</li>
+<li>Exceptions that are not directly thrown by the library are never secured.</li>
+</ul>
+<h2 id="Modifying-Arguments"><a href="#Modifying-Arguments" class="headerlink" title="Modifying Arguments"></a>Modifying Arguments</h2><p>A method that validates its arguments can also apply some normalization routines before using them.<br>Trimming a string before assigning it to a field/property is a good example for that. Guard provides<br>the <code>Modify</code> overloads that can be used for normalizing argument values.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Person</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> name</span>)</span><br>&#123;<br>    Name = Guard.Argument(() =&gt; name)<br>        .NotNull()<br>        .Modify(s =&gt; s.Trim())<br>        .MinLength(<span class="hljs-number">3</span>); <span class="hljs-comment">// Validates the trimmed version.</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Since the arguments can be modified to have any value, including null, <code>NotNull</code> validations<br>applied to modified arguments shouldn’t throw <code>ArgumentNullException</code>s.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> Person <span class="hljs-title">GetOwner</span>(<span class="hljs-params">Car car</span>)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> Guard.Argument(() =&gt; car)<br>        .NotNull()<br>        .Modify(c =&gt; c.Owner)<br>        .NotNull();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The first call to <code>NotNull</code> in the above example throws an <code>ArgumentNullException</code> if <code>car</code> is<br>null but the second call to <code>NotNull</code> should throw an <code>ArgumentException</code>. This is because<br>throwing an <code>ArgumentNullException</code> there would indicate that <code>car</code> is null when in fact its<br><code>Owner</code> is null.</p>
+<p>The same goes for <code>ArgumentOutOfRangeException</code>s. If the original argument is modified, an<br><code>ArgumentException</code> is thrown instead of a more specialized exception. For validations to detect<br>whether the argument is modified, <code>ArgumentInfo&lt;T&gt;</code> contains a boolean <code>Modified</code> flag along<br>with the argument’s name and value.</p>
+<h2 id="Validating-Argument-Members"><a href="#Validating-Argument-Members" class="headerlink" title="Validating Argument Members"></a>Validating Argument Members</h2><p>Some arguments may contain fields/properties that we want to validate individually. Guard provides<br><code>Member</code> overloads that can be used to validate these members without modifying the arguments.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">BuyCar</span>(<span class="hljs-params">Person buyer, Car car</span>)</span><br>&#123;<br>    Guard.Argument(() =&gt; buyer)<br>        .NotNull()<br>        .Member(p =&gt; p.Age, a =&gt; a.Min(<span class="hljs-number">18</span>))<br>        .Member(p =&gt; p.Address.City, c =&gt; c.NotNull().NotEmpty());<br><br>    Guard.Argument(() =&gt; car)<br>        .NotNull()<br>        .Member(c =&gt; c.Owner, o =&gt; o.Null());<br><br>    car.Owner = buyer;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>What makes <code>Member</code> overloads powerful is that they provide members as guarded arguments so you can<br>directly start chaining validations. What’s better is when a member validation fails, the exception<br>is still thrown for the original argument (same <code>ParamName</code>) but also with a clear error message<br>that contains the actual member’s name.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">var</span> address = <span class="hljs-keyword">new</span> Address &#123; City = <span class="hljs-literal">null</span> &#125;;<br><span class="hljs-keyword">var</span> buyer = <span class="hljs-keyword">new</span> Person &#123; Age = <span class="hljs-number">18</span>, Address = address &#125;;<br><span class="hljs-keyword">var</span> car = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">&quot;Dodge&quot;</span>, <span class="hljs-string">&quot;Power Wagon&quot;</span>);<br>BuyCar(buyer, car);<br></code></pre></td></tr></table></figure>
+
+<p>The above code throws an <code>ArgumentException</code> with the parameter name “buyer” and message<br>“Address.City cannot be null.”.</p>
+<p>Keep in mind that member validations require building <code>MemberExpression</code>s. Even though the<br>compiled delegates get cached and reused, creating expression trees may still be expensive for your<br>particular application.</p>
+<h2 id="State-Guards"><a href="#State-Guards" class="headerlink" title="State Guards"></a>State Guards</h2><p>Along with its arguments, a method may also need to validate the state of the instance it belongs<br>to. Guard currently provides three validations to handle these cases:</p>
+<h3 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h3><ul>
+<li>Throws an <code>InvalidOperationException</code> when the first parameter (<code>valid</code>) is passed false.</li>
+<li>A custom message can be specified using the second parameter (<code>message</code>).</li>
+<li>A third parameter marked with <code>[CallerMemberName]</code> exists to retrieve the invoked method’s name.</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws an InvalidOperationException with the message:</span><br><span class="hljs-comment">// &quot;TestOperation call is not valid due to the current state of the object.&quot;</span><br>Guard.Operation(<span class="hljs-literal">false</span>);<br><br><span class="hljs-comment">// Throws an InvalidOperationException with the message:</span><br><span class="hljs-comment">// &quot;Custom message.&quot;</span><br>Guard.Operation(<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;Custom message.&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="Support"><a href="#Support" class="headerlink" title="Support"></a>Support</h3><ul>
+<li>Throws a <code>NotSupportedException</code> when the first parameter (<code>supported</code>) is passed false.</li>
+<li>A custom message can be specified using the second parameter (<code>message</code>).</li>
+<li>A third parameter marked with <code>[CallerMemberName]</code>] exists to retrieve the invoked method’s name.</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws a NotSupportedException with the message:</span><br><span class="hljs-comment">// &quot;TestSupport is not supported&quot;</span><br>Guard.Support(<span class="hljs-literal">false</span>);<br><br><span class="hljs-comment">// Throws a NotSupportedException with the message:</span><br><span class="hljs-comment">// &quot;Custom message.&quot;</span><br>Guard.Support(<span class="hljs-literal">false</span>, <span class="hljs-string">&quot;Custom message.&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="Disposal"><a href="#Disposal" class="headerlink" title="Disposal"></a>Disposal</h3><ul>
+<li>Throws an <code>ObjectDisposedException</code> when the first parameter (<code>disposed</code>) is passed true.</li>
+<li>The object name can be specified using the second parameter (<code>objectName</code>).</li>
+<li>A custom message can be specified using the third parameter (<code>message</code>).</li>
+</ul>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Throws an ObjectDisposedException with the message:</span><br><span class="hljs-comment">// &quot;Cannot access a disposed object.&quot;</span><br>Guard.Disposal(<span class="hljs-literal">true</span>);<br><br><span class="hljs-comment">// Throws an ObjectDisposedException with the message:</span><br><span class="hljs-comment">// &quot;Cannot access a disposed object.\r\nObject name: &#x27;TestClass&#x27;.&quot;</span><br>Guard.Disposal(<span class="hljs-literal">true</span>, <span class="hljs-keyword">nameof</span>(TestClass));<br><br><span class="hljs-comment">// Throws an ObjectDisposedException with the message:</span><br><span class="hljs-comment">// &quot;Custom message.&quot;</span><br>Guard.Disposal(<span class="hljs-literal">true</span>, <span class="hljs-keyword">nameof</span>(TestClass), <span class="hljs-string">&quot;Custom message.&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Guarding-Scopes"><a href="#Guarding-Scopes" class="headerlink" title="Guarding Scopes"></a>Guarding Scopes</h2><p>Scopes can be created to intercept exceptions that are caused by failed validations.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Foo</span>(<span class="hljs-params"></span>)</span><br>&#123;<br>    <span class="hljs-keyword">using</span> (Guard.BeginScope((ex, stackTrace) =&gt; _logger.Log(stackTrace)))<br>    &#123;<br>        Print(<span class="hljs-literal">null</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Print</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> message</span>)</span><br>&#123;<br>    Guard.Argument(() =&gt; message).NotNull();<br>    Console.WriteLine(message);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>In the above example we create a scope with an exception interceptor that logs the stack traces of<br>failed validations. When we call <code>Print</code> with a null argument, <code>NotNull</code> validation fails and an<br><code>ArgumentNullException</code> is created. This exception is passed to the interceptor right before it is<br>thrown.</p>
+<p>Since the exception hasn’t been thrown yet, its <code>StackTrace</code> property is null at the point of<br>interception. This is why the stack trace is passed as a separate argument to the interceptor<br>delegate.</p>
+<ul>
+<li>Scopes are implemented using <code>AsyncLocal&lt;T&gt;</code>, so they are bound to the execution context.<br>This makes them available to use on asynchronous code.</li>
+<li>The existence of a scope is checked only when a validation fails, so this has no performance<br>overhead for successful validations.</li>
+<li>Scopes can be nested and by default, the exceptions bubble-up to parent scopes. <code>BeginScope</code><br>accepts a second, optional parameter that can be used to disable this behavior.</li>
+<li>Scopes do not have to end. You can create one in <code>Main</code> and not dispose it to provide an<br>application-wide scope; or in the <code>BeginRequest</code> of an ASP.NET application to provide a<br>request-wide scope.</li>
+</ul>
+<h2 id="Extensibility"><a href="#Extensibility" class="headerlink" title="Extensibility"></a>Extensibility</h2><p>This document describes how to add custom validations to Guard by writing simple extension methods.</p>
+<p><strong>A Basic Validation</strong></p>
+<p>Here is a basic extension that throws an <code>ArgumentException</code> if a GUID argument is passed<br>uninitialized. It is not included among the standard validations because the <code>NotDefault</code> method<br>defined for structs covers its functionality.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GuardExtensions</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">ref</span> <span class="hljs-keyword">readonly</span> Guard.<span class="hljs-function">ArgumentInfo&lt;Guid&gt; <span class="hljs-title">NotEmpty</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> Guard.ArgumentInfo&lt;Guid&gt; argument</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (argument.Value == <span class="hljs-literal">default</span>) <span class="hljs-comment">// Check whether the GUID is empty.</span><br>        &#123;<br>            <span class="hljs-keyword">throw</span> Guard.Fail(<span class="hljs-keyword">new</span> ArgumentException(<br>                <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;argument.Name&#125;</span> is not initialized. &quot;</span> +<br>                <span class="hljs-string">&quot;Consider using the static Guid.NewGuid method.&quot;</span>,<br>                argument.Name));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">ref</span> argument;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">GetRecord</span>(<span class="hljs-params">Guid id</span>)</span><br>    &#123;<br>        Guard.Argument(() =&gt; id).NotEmpty();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>What Did We Do?</p>
+<ul>
+<li>We wrote an extension method for <code>ArgumentInfo&lt;Guid&gt;</code>.</li>
+<li>We accepted the argument as a <code>readonly reference</code><br>and returned the same reference.</li>
+<li>We passed the argument name to the <code>ArgumentException</code>, also mentioning it in the exception message.</li>
+<li>We passed the exception to <code>Guard.Fail</code> before throwing it to support <code>scopes</code>.</li>
+</ul>
+<p>What if the argument was nullable?</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">GetRecord</span>(<span class="hljs-params">Guid? id</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// This won&#x27;t compile since the id is not a Guid, it&#x27;s a Nullable&lt;Guid&gt;.</span><br>        Guard.Argument(() =&gt; id).Valid();<br>    <br>        <span class="hljs-comment">// Calling NotNull converts the ArgumentInfo&lt;Guid?&gt; to an ArgumentInfo&lt;Guid&gt;.</span><br>        <span class="hljs-comment">// After that we can use our NotEmpty extension.</span><br>        Guard.Argument(() =&gt; id).NotNull().NotEmpty();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>But forcing the argument to be non-null contradicts the convention followed by the standard validations where null arguments are ignored.</p>
+<p>Let’s add an overload to our extension, this time specifically for nullable GUIDs.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GuardExtensions</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">ref</span> <span class="hljs-keyword">readonly</span> Guard.ArgumentInfo&lt;Guid?&gt; NotEmpty(<br>        <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> Guard.ArgumentInfo&lt;Guid?&gt; argument)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (argument.HasValue() &amp;&amp; <span class="hljs-comment">// Ignore if the GUID is null.</span><br>            argument.Value.Value == <span class="hljs-literal">default</span>) <span class="hljs-comment">// Check whether the GUID is empty.</span><br>        &#123;<br>            <span class="hljs-keyword">throw</span> Guard.Fail(<span class="hljs-keyword">new</span> ArgumentException(<br>                <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;argument.Name&#125;</span> is not initialized. &quot;</span> +<br>                <span class="hljs-string">&quot;Consider using the static Guid.NewGuid method.&quot;</span>,<br>                argument.Name));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">ref</span> argument;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Record <span class="hljs-title">GetRecord</span>(<span class="hljs-params">Guid? id</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// Ignored if `id` is null.</span><br>        Guard.Argument(() =&gt; id).NotEmpty();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>What Did We Do?</p>
+<ul>
+<li>We wrote an extension method for <code>ArgumentInfo&lt;Guid?&gt;</code>.</li>
+<li>We used the <code>HasValue</code> method to check whether the GUID is null.</li>
+<li>We ignored the arguments that are null.</li>
+<li>The rest is the same with our non-nullable validation.</li>
+</ul>
+<p><strong>Accepting and Returning the Argument by Reference</strong></p>
+<p>Being a struct, <code>ArgumentInfo&lt;T&gt;</code> is subject to copy-by-value semantics. This means that it would<br>get copied once to send it as a parameter, and once to return it to the caller with each validation.<br>Think of a validation chain like <code>.NotNull().CountInRange(1, 5).DoesNotContainNull()</code>.<br>This would cause our argument instance to be copied six times if we didn’t accept and returned<br>it as reference.</p>
+<p>Sending and returning values as reference add a small overhead but it’s negligible for values<br>heavier than four bytes and the benefits start to overweight this overhead as the value gets bigger.<br>An <code>ArgumentInfo&lt;T&gt;</code> instance contains three fields:</p>
+<ul>
+<li>The value of the argument of type <code>T</code>.</li>
+<li>A string that contains the argument name.</li>
+<li>A boolean that is used to determine whether the argument is <code>modified</code>.</li>
+<li>A boolean that is used to determine whether the exception messages should not contain <code>sensitive information</code>.</li>
+</ul>
+<p>So an <code>ArgumentInfo&lt;int&gt;</code> instance on a 32-bit system is <em>at least</em> 10 bytes and an<br><code>ArgumentInfo&lt;long&gt;</code> instance on a 64-bit system is <em>at least</em> 18 bytes. Even more if we use heavier<br>structs like a <code>Guid</code> or <code>decimal</code>. So accepting and returning our validation arguments as reference<br>allows us to avoid copying heavier instances around.</p>
+<p><strong>The HasValue Method</strong></p>
+<p>In our examples above where we specifically targeted GUID arguments, we could just check whether the<br>argument is null by writing <code>argument.Value != null</code>.  Using <code>argument.HasValue()</code> here made no<br>difference. But if we targeted a generic argument <code>T</code> where <code>T</code> is a struct, the <code>argument.Value != null</code> check<br>would cause boxing.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">IDuck</span><br>&#123;<br>    <span class="hljs-built_in">bool</span> CanQuack &#123; <span class="hljs-keyword">get</span>; &#125;<br><br>    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">Quack</span>(<span class="hljs-params"></span>)</span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">RefDuck</span> : <span class="hljs-title">IDuck</span> &#123; <span class="hljs-comment">/*...*/</span> &#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">struct</span> ValueDuck : IDuck &#123; <span class="hljs-comment">/*...*/</span> &#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">GuardExtensions</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">ref</span> <span class="hljs-keyword">readonly</span> Guard.<span class="hljs-function"><span class="hljs-title">ArgumentInfo</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-title">CanQuack</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">        <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span> Guard.ArgumentInfo&lt;T&gt; argument</span>)</span><br><span class="hljs-function">        <span class="hljs-keyword">where</span> T : IDuck</span><br>    &#123;<br>        <span class="hljs-comment">// Writing `argument.Value != null` here would box a `ValueDuck`.</span><br>        <span class="hljs-keyword">if</span> (argument.HasValue() &amp;&amp; !argument.Value.CanQuack)<br>        &#123;<br>            <span class="hljs-comment">// Throw is it is a non-null duck who sadly cannot quack.</span><br>            <span class="hljs-keyword">throw</span> Guard.Fail(<span class="hljs-keyword">new</span> ArgumentException(<br>                <span class="hljs-string">$&quot;<span class="hljs-subst">&#123;argument.Name&#125;</span> must be able to quack.&quot;</span>, argument.Name));<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">ref</span> argument;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Program</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Main</span>(<span class="hljs-params"></span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> refDuck = <span class="hljs-keyword">new</span> RefDuck();<br>        MakeItQuack(refDuck);<br><br>        <span class="hljs-keyword">var</span> valueDuck = <span class="hljs-keyword">new</span> ValueDuck();<br>        MakeItQuack(valueDuck); <span class="hljs-comment">// No boxing.</span><br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">MakeItQuack</span>&lt;<span class="hljs-title">T</span>&gt;(<span class="hljs-params">T duck</span>)</span><br><span class="hljs-function">        <span class="hljs-keyword">where</span> T : IDuck</span><br>    &#123;<br>        Guard.Argument(() =&gt; duck).CanQuack();<br><br>        Console.WriteLine(duck.Quack());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/safakgur/guard">https://github.com/safakgur/guard</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/the-dotnet-world-guard/" data-id="cl5ph9gjm007p8wpb1qh95fon" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "The .NET World - Guard",
+        "image": "https://hamedfathi.me",
+        "keywords": "dotnet guard",
+        "genre": "dotnet",
+        "datePublished": "2020-10-02",
+        "dateCreated": "2020-10-02",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/the-dotnet-world-guard/",
+        "description": "I want to introduce a high-performance, extensible argument validation library.
+Guard is a fluent argument validation library that is intuitive, fast and extensible. Guard takes advantage of almost all the new features introduced in C# 7.2.",
+        "wordCount": 3652
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-api-paging/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core API - Paging
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/awesome-dotnet/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Awesome .NET!</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/the-dotnet-world-guard/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

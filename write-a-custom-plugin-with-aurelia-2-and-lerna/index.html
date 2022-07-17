@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Write a custom plugin with Aurelia 2 and Lerna | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="aurelia2,plugin,lerna,bootstrap5,monorepository" />
+    
+    <meta name="description" content="In this article, We want to write a simple Bootstrap 5 plugin for Aurelia 2 and manage our packages via Lerna.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Write a custom plugin with Aurelia 2 and Lerna">
+<meta property="og:url" content="https://hamedfathi.me/write-a-custom-plugin-with-aurelia-2-and-lerna/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="In this article, We want to write a simple Bootstrap 5 plugin for Aurelia 2 and manage our packages via Lerna.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hamedfathi.me/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png">
+<meta property="article:published_time" content="2020-11-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="aurelia2">
+<meta property="article:tag" content="plugin">
+<meta property="article:tag" content="lerna">
+<meta property="article:tag" content="bootstrap5">
+<meta property="article:tag" content="monorepository">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hamedfathi.me/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aurelia/">aurelia</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-write-a-custom-plugin-with-aurelia-2-and-lerna" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Write a custom plugin with Aurelia 2 and Lerna
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="article-date">
+       <time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aurelia2/" rel="tag">aurelia2</a>, <a class="tag-link-link" href="/tags/bootstrap5/" rel="tag">bootstrap5</a>, <a class="tag-link-link" href="/tags/lerna/" rel="tag">lerna</a>, <a class="tag-link-link" href="/tags/monorepository/" rel="tag">monorepository</a>, <a class="tag-link-link" href="/tags/plugin/" rel="tag">plugin</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">1.8k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">10 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>In this article, We want to write a simple <a target="_blank" rel="noopener" href="https://v5.getbootstrap.com/">Bootstrap 5</a> plugin for <code>Aurelia 2</code> and manage our packages via <a target="_blank" rel="noopener" href="https://lerna.js.org/">Lerna</a>.</p>
+<span id="more"></span>
+
+<p>With help of my friend, <a target="_blank" rel="noopener" href="https://github.com/Sayan751">Sayan</a>, I want to discuss about writing a custom plugin. At the end, you will have a good knowledge to write your own plugins, so stay tuned.</p>
+<h3 id="What-is-Bootstrap"><a href="#What-is-Bootstrap" class="headerlink" title="What is Bootstrap?"></a>What is Bootstrap?</h3><blockquote>
+<p>Bootstrap is the most popular CSS Framework for developing responsive and mobile-first websites.</p>
+</blockquote>
+<p>The main purpose of this article is to create a component of <code>Bootstrap 5</code> as a plugin for Aurelia 2.</p>
+<h3 id="What-is-Lerna"><a href="#What-is-Lerna" class="headerlink" title="What is Lerna?"></a>What is Lerna?</h3><blockquote>
+<p>A tool for managing JavaScript projects with multiple packages.<br>Splitting up large codebases into separate independently versioned packages is extremely useful for code sharing. However, making changes across many repositories is messy and difficult to track, and testing across repositories becomes complicated very quickly.<br>To solve these (and many other) problems, some projects will organize their codebases into multi-package repositories (sometimes called monorepos).</p>
+</blockquote>
+<p>To achieve the ultimate goal of this article, we will create our project in the form of monorepos.</p>
+<h3 id="What-is-a-plugin"><a href="#What-is-a-plugin" class="headerlink" title="What is a plugin?"></a>What is a plugin?</h3><blockquote>
+<p>In computing, a plug-in (or plugin, add-in, addin, add-on, or addon) is a software component that adds a specific feature to an existing computer program. When a program supports plug-ins, it enables customization.</p>
+</blockquote>
+<p>I want the user to be able to customize their requirements while using this plugin so in the following we will examine how to add config to our plugin.</p>
+<h3 id="Aurelia-1-vs-Aurelia-2"><a href="#Aurelia-1-vs-Aurelia-2" class="headerlink" title="Aurelia 1 vs Aurelia 2"></a>Aurelia 1 vs Aurelia 2</h3><p><strong>Aurelia 1</strong></p>
+<p>Writing a new Aurelia Plugin is not difficult but it requires a lot of work that you can read through <a target="_blank" rel="noopener" href="http://aurelia.io/docs/plugins/write-new-plugin">here</a>. To be honest, it was not really straightforward!</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// src/main(.js|.ts)</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">configure</span>(<span class="hljs-params">aurelia: Aurelia</span>): <span class="hljs-title">void</span> </span>&#123;<br><br>aurelia.use.plugin(PLATFORM.moduleName(<span class="hljs-string">&#x27;bootstrap-v5&#x27;</span>));<br><span class="hljs-comment">// OR</span><br><span class="hljs-comment">// aurelia.use.plugin(PLATFORM.moduleName(&#x27;bootstrap-v5/button&#x27;));</span><br><br>  aurelia.start()<br>         .then(<span class="hljs-function">() =&gt;</span> aurelia.setRoot(PLATFORM.moduleName(<span class="hljs-string">&#x27;app&#x27;</span>)));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Aurelia 2</strong></p>
+<p>In version 2, everything is straightforward, just introduce the items you export to the <code>register</code> method. In fact, everything is possible by the <code>register</code> method so we will see how it works.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// main.ts</span><br><br><span class="hljs-keyword">import</span> Aurelia <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;aurelia&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; App &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./app&#x27;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> BsComponents <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bootstrap-v5&#x27;</span>;<br><br>Aurelia<br>  .register(<br>    BsComponents <span class="hljs-comment">// This globalizes all the exports.</span><br>  )<br>  .app(App)<br>  .start();<br></code></pre></td></tr></table></figure>
+
+<h3 id="The-structure"><a href="#The-structure" class="headerlink" title="The structure"></a>The structure</h3><p>We want to separate our plugin in three packages.</p>
+<ul>
+<li><strong>bootstrap-v5-core</strong></li>
+</ul>
+<p>We will add the Bootstrap 5 configurations in this package.</p>
+<ul>
+<li><strong>bootstrap-v5</strong></li>
+</ul>
+<p>Our Bootstrap 5 components will define in this package. <code>bootstrap-v5</code> depends <code>bootstrap-v5-core</code> packages.</p>
+<ul>
+<li><strong>demo</strong></li>
+</ul>
+<p>We will use our plugin in this package as a demo. <code>demo</code> depends on <code>bootstrap-v5-core</code> and <code>bootstrap-v5</code>.</p>
+<p><img src="/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png"></p>
+<h3 id="Lerna-configuration"><a href="#Lerna-configuration" class="headerlink" title="Lerna configuration"></a>Lerna configuration</h3><p>To config your monorepos, you should do as following:</p>
+<p>Install <code>Lerna</code> as a global tool.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm i lerna -g<br></code></pre></td></tr></table></figure>
+
+<p>Go to a folder that you want to make project and run</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lerna init<br></code></pre></td></tr></table></figure>
+
+<p>The result should contain</p>
+<ul>
+<li><code>packages</code>: The folder you will create your repositories there.</li>
+<li><code>lerna.json</code>: Lerna’s configuration file.</li>
+<li><code>package.json</code>: Node’s configuration file.</li>
+</ul>
+<p>Open your <code>packages</code> folder and install the projects inside it.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">npx makes aurelia bootstrap-v5-core -s typescript<br>npx makes aurelia bootstrap-v5 -s typescript<br>npx makes aurelia demo -s typescript<br></code></pre></td></tr></table></figure>
+
+<p>After creating, delete all files inside <code>src</code> folders of <code>bootstrap-v5-core</code> and <code>bootstrap-v5</code>. We will add our files there.</p>
+<p>To continue we need to config <code>Lerna</code>, Open your <code>lerna.json</code> and paste the followimg code:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs json">&#123;<br>  <span class="hljs-attr">&quot;version&quot;</span>: <span class="hljs-string">&quot;0.1.0&quot;</span>,<br>  <span class="hljs-attr">&quot;npmClient&quot;</span>: <span class="hljs-string">&quot;npm&quot;</span>,<br>  <span class="hljs-attr">&quot;command&quot;</span>: &#123;<br>    <span class="hljs-attr">&quot;bootstrap&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;hoist&quot;</span>: <span class="hljs-string">&quot;**&quot;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-attr">&quot;packages&quot;</span>: [<span class="hljs-string">&quot;packages/*&quot;</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>version</strong>: the current version of the repository.</p>
+<p><strong>npmClient</strong>: an option to specify a specific client to run commands with (this can also be specified on a per command basis). Change to “yarn” to run all commands with yarn. Defaults to “npm”.</p>
+<p><strong>command.bootstrap.hoist</strong>: Common dependencies will be installed only to the top-level <code>node_modules</code>, and omitted from individual package <code>node_modules</code>.</p>
+<p><strong>packages</strong>: Array of globs to use as package locations.</p>
+<h2 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h2><p>As described in the structure section defined packages depend on each other. So, we link them together and add the other prerequisites for each.</p>
+<ul>
+<li><strong>bootstrap-v5-core</strong></li>
+</ul>
+<p>This package has no dependency.</p>
+<ul>
+<li><strong>bootstrap-v5</strong></li>
+</ul>
+<p>Go to <code>package.json</code> and add the following dependencies:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// bootstrap-v5/package.json</span><br><span class="hljs-string">&quot;dependencies&quot;</span>: &#123;	<br>    <span class="hljs-string">&quot;aurelia&quot;</span>: <span class="hljs-string">&quot;dev&quot;</span>,<br>    <span class="hljs-string">&quot;bootstrap&quot;</span>: <span class="hljs-string">&quot;^5.0.0-alpha2&quot;</span>,	<br>    <span class="hljs-string">&quot;bootstrap-v5-core&quot;</span>: <span class="hljs-string">&quot;0.1.0&quot;</span><br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>demo</strong></li>
+</ul>
+<p>Go to <code>package.json</code> and add the following dependencies</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// demo/package.json</span><br><span class="hljs-string">&quot;dependencies&quot;</span>: &#123;	<br>    <span class="hljs-string">&quot;aurelia&quot;</span>: <span class="hljs-string">&quot;dev&quot;</span>,	<br>    <span class="hljs-string">&quot;bootstrap-v5-core&quot;</span>: <span class="hljs-string">&quot;0.1.0&quot;</span>,<br>    <span class="hljs-string">&quot;bootstrap-v5&quot;</span>: <span class="hljs-string">&quot;0.1.0&quot;</span><br>&#125;,<br></code></pre></td></tr></table></figure>
+
+<p><strong>Note</strong>: All created packages have <code>0.1.0</code> version so pay attention if the version changes, update it in other packages.</p>
+<p>Finally, run the below command inside your root folder (where <code>lerna.json</code> is) to install packages.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">lerna bootstrap<br></code></pre></td></tr></table></figure>
+
+<h3 id="Plugin-configuration"><a href="#Plugin-configuration" class="headerlink" title="Plugin configuration"></a>Plugin configuration</h3><p>Go to the <code>src</code> folder of <code>bootstrap-v5-core</code> package and create each of below files there.</p>
+<p><strong>Size</strong></p>
+<p>As I mentioned before, I want to write a configurable Bootstrap plugin so create <code>src/Size.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> enum Size &#123;<br>    ExtraSmall = <span class="hljs-string">&#x27;xs&#x27;</span>,<br>    Small = <span class="hljs-string">&#x27;sm&#x27;</span>,<br>    Medium = <span class="hljs-string">&#x27;md&#x27;</span>,<br>    Large = <span class="hljs-string">&#x27;lg&#x27;</span>,<br>    ExtraLarge = <span class="hljs-string">&#x27;xl&#x27;</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>I made a <code>Size</code> enum to handle all Bootstrap sizes. Next we can manage our components according to size value.</p>
+<p><strong>Global Bootstrap 5 Options</strong></p>
+<p>Create <code>src/IGlobalBootstrapV5Options.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; Size &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./Size&quot;</span>;<br><span class="hljs-keyword">export</span> interface IGlobalBootstrapV5Options &#123;<br>    defaultSize?: Size;<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> defaultOptions: IGlobalBootstrapV5Options = &#123;<br>    <span class="hljs-attr">defaultSize</span>: Size.Medium<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>You need to define your configs via an interface With its default values as a constant.</p>
+<p><strong>DI</strong></p>
+<p>Create <code>src/BootstrapV5Configuration.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; DI, IContainer, Registration &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;aurelia&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; IGlobalBootstrapV5Options, defaultOptions &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./IGlobalBootstrapV5Options&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> IBootstrapV5Options = DI.createInterface&lt;IGlobalBootstrapV5Options&gt;(<span class="hljs-string">&#x27;IBootstrapV5Options&#x27;</span>).noDefault();<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createIBootstrapV5Configuration</span>(<span class="hljs-params">optionsProvider: (options: IGlobalBootstrapV5Options) =&gt; <span class="hljs-keyword">void</span></span>) </span>&#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>        optionsProvider,<br>        <span class="hljs-function"><span class="hljs-title">register</span>(<span class="hljs-params">container: IContainer</span>)</span> &#123;<br>            optionsProvider(defaultOptions);<br>            <span class="hljs-keyword">return</span> container.register(Registration.instance(IBootstrapV5Options, defaultOptions))<br>        &#125;,<br>        <span class="hljs-function"><span class="hljs-title">customize</span>(<span class="hljs-params">cb?: (options: IGlobalBootstrapV5Options) =&gt; <span class="hljs-keyword">void</span></span>)</span> &#123;<br>            <span class="hljs-keyword">return</span> createIBootstrapV5Configuration(cb ?? optionsProvider);<br>        &#125;,<br>    &#125;;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> BootstrapV5Configuration = createIBootstrapV5Configuration(<span class="hljs-function">() =&gt;</span> &#123;&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>We can define our <code>IGlobalBootstrapV5Options</code> to DI container so this happened via <code>IBootstrapV5Options</code> constant.</p>
+<p><code>createIBootstrapV5Configuration</code> is the most important part of creating settings. </p>
+<ul>
+<li><p><code>register(container: IContainer)</code> helps us to introduce our default config to DI container.</p>
+</li>
+<li><p><code>customize(cb?: (options: IGlobalBootstrapV5Options) =&gt; void)</code> alse helps us to introduce our custom config to the DI container.</p>
+</li>
+</ul>
+<p>Finally, we should export our current configuration with default options via <code>BootstrapV5Configuration</code>.</p>
+<p><strong>Exports</strong></p>
+<p>Create <code>src/index.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./BootstrapV5Configuration&#x27;</span>;<br><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./IGlobalBootstrapV5Options&#x27;</span>;<br><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./Size&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>Create new <code>index.ts</code> file inside <code>bootstrap-v5-core</code> package.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./src&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Plugin-implementation"><a href="#Plugin-implementation" class="headerlink" title="Plugin implementation"></a>Plugin implementation</h3><p>Go to the <code>src</code> folder of <code>bootstrap-v5</code> package, create a <code>button</code> folder then create each of below files there.</p>
+<p><img src="/images/write-a-custom-plugin-with-aurelia-2-and-lerna/button.png"></p>
+<ul>
+<li><strong>Resource</strong></li>
+</ul>
+<p>Create <code>resource.d.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js">declare <span class="hljs-built_in">module</span> <span class="hljs-string">&#x27;*.html&#x27;</span> &#123;<br>  <span class="hljs-keyword">import</span> &#123; IContainer &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@aurelia/kernel&#x27;</span>;<br>  <span class="hljs-keyword">import</span> &#123; IBindableDescription &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@aurelia/runtime&#x27;</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name: string;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> template: string;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> template;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> dependencies: string[];<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> containerless: boolean | <span class="hljs-literal">undefined</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> bindables: Record&lt;string, IBindableDescription&gt;;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> shadowOptions: &#123; <span class="hljs-attr">mode</span>: <span class="hljs-string">&#x27;open&#x27;</span> | <span class="hljs-string">&#x27;closed&#x27;</span>&#125; | <span class="hljs-literal">undefined</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">register</span>(<span class="hljs-params">container: IContainer</span>)</span>;<br>&#125;<br><br>declare <span class="hljs-built_in">module</span> <span class="hljs-string">&#x27;*.css&#x27;</span>;<br>declare <span class="hljs-built_in">module</span> <span class="hljs-string">&#x27;*.scss&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>View</strong></li>
+</ul>
+<p>Create <code>bs-button.html</code> file.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;btn btn-primary&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;bsButtonTemplate&quot;</span>&gt;</span><br>    Primary Button<br><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>ViewModel</strong></li>
+</ul>
+<p>Create <code>bs-button.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; customElement, INode, containerless &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;aurelia&quot;</span>;<br><span class="hljs-keyword">import</span> template <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./bs-button.html&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; IBootstrapV5Options, IGlobalBootstrapV5Options, Size &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;bootstrap-v5-core&quot;</span>;<br><br>@customElement(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;bs-button&quot;</span>, template &#125;)<br>@containerless<br><span class="hljs-keyword">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BootstrapButton</span> </span>&#123;<br>  private bsButtonTemplate: Element;<br>  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params"></span></span><br><span class="hljs-params"><span class="hljs-function">    @IBootstrapV5Options private options: IGlobalBootstrapV5Options</span></span><br><span class="hljs-params"><span class="hljs-function">  </span>)</span> &#123;<br>  &#125;<br><br>  <span class="hljs-function"><span class="hljs-title">afterAttach</span>(<span class="hljs-params"></span>)</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.options.defaultSize) &#123;<br>      <span class="hljs-keyword">switch</span> (<span class="hljs-built_in">this</span>.options.defaultSize) &#123;<br>        <span class="hljs-keyword">case</span> Size.ExtraSmall:<br>        <span class="hljs-keyword">case</span> Size.Small:<br>          <span class="hljs-built_in">this</span>.bsButtonTemplate.classList.add(<span class="hljs-string">&quot;btn-sm&quot;</span>);<br>          <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> Size.Large:<br>        <span class="hljs-keyword">case</span> Size.ExtraLarge:<br>          <span class="hljs-built_in">this</span>.bsButtonTemplate.classList.add(<span class="hljs-string">&quot;btn-lg&quot;</span>);<br>          <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">default</span>:<br>          <span class="hljs-built_in">this</span>.bsButtonTemplate.classList.remove(<span class="hljs-string">&quot;btn-sm&quot;</span>, <span class="hljs-string">&quot;btn-lg&quot;</span>);<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>As you can see we are able to access to plugin options easy via <code>ctor</code> (DI) and react appropriately to its values.</p>
+<p>In this example I get the size from the user and apply it to the button component.</p>
+<ul>
+<li><strong>Button Index</strong></li>
+</ul>
+<p>Create <code>src/button/index.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./bs-button&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Src Index</strong></li>
+</ul>
+<p>Create <code>src/index.ts</code> file.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./button&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Global Index</strong></li>
+</ul>
+<p>Create new <code>index.ts</code> file inside <code>bootstrap-v5</code> package.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;bootstrap/dist/css/bootstrap.min.css&#x27;</span>;<br><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./src&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Plugin-usage"><a href="#Plugin-usage" class="headerlink" title="Plugin usage"></a>Plugin usage</h3><p>Open <code>demo</code> package and go to the <code>src</code> and update <code>main.ts</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> Aurelia <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;aurelia&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; MyApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./my-app&#x27;</span>;<br><br><span class="hljs-keyword">import</span> &#123; BootstrapV5Configuration, Size &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bootstrap-v5-core&#x27;</span>;<br><span class="hljs-comment">// import &#123; BootstrapButton &#125; from &#x27;bootstrap-v5&#x27;;</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> BsComponents <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bootstrap-v5&#x27;</span>;<br><br>Aurelia<br><br>  <span class="hljs-comment">//.register(BootstrapButton)</span><br>  .register(BsComponents)<br><br>  <span class="hljs-comment">//.register(BootstrapV5Configuration)</span><br>  .register(BootstrapV5Configuration.customize(<span class="hljs-function">(<span class="hljs-params">options</span>) =&gt;</span> &#123; options.defaultSize = Size.Small &#125;))<br><br>  .app(MyApp)<br>  .start();<br></code></pre></td></tr></table></figure>
+
+<p>Importing is available for whole components</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> BsComponents <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bootstrap-v5&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>Or just a component</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; BootstrapButton &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;bootstrap-v5&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>To register your components you should add them to <code>register</code> method. </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">.register(BsComponents) <span class="hljs-comment">// For whole components</span><br><span class="hljs-comment">// Or</span><br>.register(BootstrapButton) <span class="hljs-comment">// For a component</span><br></code></pre></td></tr></table></figure>
+
+<p>Proudly, we support configuration so we should introduce it to <code>register</code> method too.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"> <span class="hljs-comment">// With default options</span><br>.register(BootstrapV5Configuration)<br><span class="hljs-comment">// Or with a custom option</span><br>.register(BootstrapV5Configuration.customize(<span class="hljs-function">(<span class="hljs-params">options</span>) =&gt;</span> &#123; options.defaultSize = Size.Small &#125;))<br></code></pre></td></tr></table></figure>
+
+<p>Now, You are able to use your <code>bs-button</code> inside <code>src/my-app.html</code>.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;message&quot;</span>&gt;</span>$&#123;message&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bs-button</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">bs-button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>To run the <code>demo</code> easily, go to the root folder (where <code>lerna.json</code> is) and add the following script to <code>package.json</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>  <span class="hljs-string">&quot;start&quot;</span>: <span class="hljs-string">&quot;lerna run start --stream --scope demo&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Then, call the command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm start<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/write-a-custom-plugin-with-aurelia-2-and-lerna/demo.png"></p>
+<p>Enjoy!</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/write-a-custom-plugin-with-aurelia-2-and-lerna/" data-id="cl5ph9gjp007s8wpbhgom0dob" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "Write a custom plugin with Aurelia 2 and Lerna",
+        "image": "https://hamedfathi.me/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png",
+        "keywords": "aurelia2 plugin lerna bootstrap5 monorepository",
+        "genre": "aurelia",
+        "datePublished": "2020-11-09",
+        "dateCreated": "2020-11-09",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/write-a-custom-plugin-with-aurelia-2-and-lerna/",
+        "description": "In this article, We want to write a simple Bootstrap 5 plugin for Aurelia 2 and manage our packages via Lerna.",
+        "wordCount": 2164
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/the-dotnet-world-csharp-source-generator/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            The .NET World - C# Source Generator
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-api-rabbitmq/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core API - RabbitMQ</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/write-a-custom-plugin-with-aurelia-2-and-lerna/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

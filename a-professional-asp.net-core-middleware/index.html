@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>A Professional ASP.NET Core - Middleware | Hamed Fathi&#39;s Personal Blog</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="dotnet,aspnetcore,webapi,middleware,pipeline,request,response" />
+    
+    <meta name="description" content="Middleware is software that’s assembled into an app pipeline to handle requests and responses. Each component:  Chooses whether to pass the request to the next component in the pipeline. Can perform w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Professional ASP.NET Core - Middleware">
+<meta property="og:url" content="https://hamedfathi.me/a-professional-asp.net-core-middleware/index.html">
+<meta property="og:site_name" content="Hamed Fathi&#39;s Personal Blog">
+<meta property="og:description" content="Middleware is software that’s assembled into an app pipeline to handle requests and responses. Each component:  Chooses whether to pass the request to the next component in the pipeline. Can perform w">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hamedfathi.me/images/a-professional-asp.net-core-middleware/request-delegate-pipeline.png">
+<meta property="article:published_time" content="2020-10-11T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-17T15:33:10.749Z">
+<meta property="article:author" content="Hamed Fathi">
+<meta property="article:tag" content="dotnet">
+<meta property="article:tag" content="aspnetcore">
+<meta property="article:tag" content="webapi">
+<meta property="article:tag" content="middleware">
+<meta property="article:tag" content="pipeline">
+<meta property="article:tag" content="request">
+<meta property="article:tag" content="response">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hamedfathi.me/images/a-professional-asp.net-core-middleware/request-delegate-pipeline.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/images/logo.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore/">aspnetcore</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/aurelia/">aurelia</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/dotnet/">dotnet</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/aspnetcore/">aspnetcore</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-a-professional-asp.net-core-middleware" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        A Professional ASP.NET Core - Middleware
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/a-professional-asp.net-core-middleware/" class="article-date">
+       <time datetime="2020-10-11T00:00:00.000Z" itemprop="datePublished">2020-10-11</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/a-professional-asp.net-core-middleware/" class="article-date">
+     <time datetime="2022-07-17T15:33:10.749Z" itemprop="dateModified">2022-07-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aspnetcore/" rel="tag">aspnetcore</a>, <a class="tag-link-link" href="/tags/dotnet/" rel="tag">dotnet</a>, <a class="tag-link-link" href="/tags/middleware/" rel="tag">middleware</a>, <a class="tag-link-link" href="/tags/pipeline/" rel="tag">pipeline</a>, <a class="tag-link-link" href="/tags/request/" rel="tag">request</a>, <a class="tag-link-link" href="/tags/response/" rel="tag">response</a>, <a class="tag-link-link" href="/tags/webapi/" rel="tag">webapi</a>
+    </div>
+
+                
+
+                
+   <div class="article-counter">
+      <i class="fa fa-file-word-o"></i>
+      <span class="post-count-item-text">Symbols count in article: </span>
+      <span class="post-count">1.9k</span>
+      <i class="fa fa-clock-o"></i>
+      <span class="post-time-item-text">Reading time: </span>
+      <span class="post-count">11 mins. </span>
+   </div>
+
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Middleware is software that’s assembled into an app pipeline to handle requests and responses. Each component:</p>
+<ul>
+<li>Chooses whether to pass the request to the next component in the pipeline.</li>
+<li>Can perform work before and after the next component in the pipeline.</li>
+</ul>
+<p>Request delegates are used to build the request pipeline. The request delegates handle each HTTP request.</p>
+<p>Request delegates are configured using <code>Run</code>, <code>Map</code>, and <code>Use</code> extension methods. An individual request delegate can be specified in-line as an anonymous method (called in-line middleware), or it can be defined in a reusable class. These reusable classes and in-line anonymous methods are middleware, also called middleware components. Each middleware component in the request pipeline is responsible for invoking the next component in the pipeline or short-circuiting the pipeline. When a middleware short-circuits, it’s called a terminal middleware because it prevents further middleware from processing the request.</p>
+<span id="more"></span>
+
+<h2 id="Create-a-middleware-pipeline-with-IApplicationBuilder"><a href="#Create-a-middleware-pipeline-with-IApplicationBuilder" class="headerlink" title="Create a middleware pipeline with IApplicationBuilder"></a>Create a middleware pipeline with IApplicationBuilder</h2><p>The ASP.NET Core request pipeline consists of a sequence of request delegates, called one after the other. The following diagram demonstrates the concept. The thread of execution follows the black arrows.</p>
+<p><img src="/images/a-professional-asp.net-core-middleware/request-delegate-pipeline.png"></p>
+<p>Each delegate can perform operations before and after the next delegate. Exception-handling delegates should be called early in the pipeline, so they can catch exceptions that occur in later stages of the pipeline.</p>
+<p>The simplest possible ASP.NET Core app sets up a single request delegate that handles all requests. This case doesn’t include an actual request pipeline. Instead, a single anonymous function is called in response to every HTTP request.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello, World!&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Chain multiple request delegates together with <code>Use</code>. The next parameter represents the <code>next</code> delegate in the pipeline. You can short-circuit the pipeline by <strong>not</strong> calling the next parameter. You can typically perform actions both before and after the next delegate, as the following example demonstrates:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        app.Use(<span class="hljs-keyword">async</span> (context, next) =&gt;<br>        &#123;<br>            <span class="hljs-comment">// Do work that doesn&#x27;t write to the Response.</span><br>            <span class="hljs-keyword">await</span> next.Invoke();<br>            <span class="hljs-comment">// Do logging or other work that doesn&#x27;t write to the Response.</span><br>        &#125;);<br><br>        app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello from 2nd delegate.&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>When a delegate doesn’t pass a request to the <code>next</code> delegate, it’s called <code>short-circuiting</code> the request pipeline. Short-circuiting is often desirable because it avoids unnecessary work. For example, Static File Middleware can act as a terminal middleware by processing a request for a static file and short-circuiting the rest of the pipeline. Middleware added to the pipeline before the middleware that terminates further processing still processes code after their <code>next.Invoke</code> statements. However, see the following warning about attempting to write to a response that has already been sent.</p>
+<p><code>Run</code> delegates don’t receive a next parameter. The first <code>Run</code> delegate is always terminal and terminates the pipeline. Run is a convention. Some middleware components may expose <code>Run[Middleware]</code> methods that run at the end of the pipeline:</p>
+<h2 id="Middleware-order"><a href="#Middleware-order" class="headerlink" title="Middleware order"></a>Middleware order</h2><p>The following diagram shows the complete request processing pipeline for ASP.NET Core MVC and Razor Pages apps. You can see how, in a typical app, existing middlewares are ordered and where custom middlewares are added. You have full control over how to reorder existing middlewares or inject new custom middlewares as necessary for your scenarios.</p>
+<p><img src="/images/a-professional-asp.net-core-middleware/order.png"></p>
+<p>The <code>Endpoint</code> middleware in the preceding diagram executes the filter pipeline for the corresponding app type—MVC or Razor Pages.</p>
+<p><img src="/images/a-professional-asp.net-core-middleware/endpoint.png"></p>
+<h2 id="Methods-at-a-glance"><a href="#Methods-at-a-glance" class="headerlink" title="Methods at a glance"></a>Methods at a glance</h2><p>Request delegates are configured using various extension methods as following:</p>
+<p><strong>Run</strong></p>
+<p>Terminates chain. No other middleware method will run after this. Should be placed at the end of any pipeline.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>&#123;<br>    <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello from &quot;</span> + _environment);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>UseWhen</strong></p>
+<p>Performs action before and after next delegate if condition is met.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HandleBranch</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>    &#123;<br>        <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Condition is fulfilled&quot;</span>);<br>    &#125;);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureUseWhen</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.UseWhen(context =&gt; &#123;<br>        <span class="hljs-keyword">return</span> context.Request.Query.ContainsKey(<span class="hljs-string">&quot;somekey&quot;</span>);<br>    &#125;, HandleBranch);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Use</strong></p>
+<p>Performs action before and after next delegate.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cs">app.Use(<span class="hljs-keyword">async</span> (context, next) =&gt;<br>&#123;<br>    <span class="hljs-comment">//action before next delegate</span><br>    <span class="hljs-keyword">await</span> next.Invoke(); <span class="hljs-comment">//call next middleware</span><br>    <span class="hljs-comment">//action after called middleware</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p><strong>MapWhen</strong></p>
+<p>Enables branching pipeline. Runs specified middleware if condition is met.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HandleBranch</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>    &#123;<br>        <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Condition is fulfilled&quot;</span>);<br>    &#125;);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureMapWhen</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.MapWhen(context =&gt; &#123;<br>        <span class="hljs-keyword">return</span> context.Request.Query.ContainsKey(<span class="hljs-string">&quot;somekey&quot;</span>);<br>    &#125;, HandleBranch);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>Map</strong></p>
+<p>Similar to <code>MapWhen</code>. Runs middleware if <code>path</code> requested by user equals path provided in parameter.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HandleMapTest</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.Run(<span class="hljs-keyword">async</span> context =&gt;<br>    &#123;<br>        <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Map Test Successful&quot;</span>);<br>    &#125;);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureMapping</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>&#123;<br>    app.Map(<span class="hljs-string">&quot;/maptest&quot;</span>, HandleMapTest);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Common-middlewares-in-order"><a href="#Common-middlewares-in-order" class="headerlink" title="Common middlewares (in order)"></a>Common middlewares (in order)</h2><p>The following is a list of common middlewares in order:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IWebHostEnvironment env</span>)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (env.IsDevelopment())<br>    &#123;<br>        <span class="hljs-comment">// Displays detailed information about request exceptions.</span><br>        app.UseDeveloperExceptionPage();<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-comment">// Provide a path to the custom error page that will be displayed to the user.</span><br>        app.UseExceptionHandler(<span class="hljs-string">&quot;/Home/Error&quot;</span>);<br>        <span class="hljs-comment">// Send HTTP Strict Transport Security Protocol (HSTS) headers to clients.</span><br>        app.UseHsts();<br>    &#125;<br>    <span class="hljs-comment">// Redirect HTTP requests to HTTPS.</span><br>    app.UseHttpsRedirection();<br>    <span class="hljs-comment">// Enables static file serving for the current request path.</span><br>    app.UseStaticFiles();<br>    <span class="hljs-comment">// Enables cookie policy capabilities.</span><br>    app.UseCookiePolicy();<br>    <span class="hljs-comment">// Enables dynamically compressing HTTP Responses.</span><br>    app.UseResponseCompression();<br><br>    <span class="hljs-comment">// Matches request to an endpoint.</span><br>    app.UseRouting();<br>    <span class="hljs-comment">// Set culture information for requests based on information provided by the client.</span><br>    app.UseRequestLocalization();<br>    <span class="hljs-comment">// Applies a CORS policy to all the app&#x27;s endpoints with the specified origins.</span><br>    app.UseCors();<br><br>    <span class="hljs-comment">// Authentication is concerned with determining &#x27;who&#x27; made a request. </span><br>    app.UseAuthentication();<br>    <span class="hljs-comment">// Authorization is concerned with &#x27;what&#x27; a user is allowed to access.</span><br>    app.UseAuthorization();<br> <br>    <span class="hljs-comment">// Enable session state for the application.</span><br>    app.UseSession();<br>    <span class="hljs-comment">// Determines when responses are cacheable, stores responses, and serves responses from cache.</span><br>    app.UseResponseCaching();<br><br>    <span class="hljs-comment">// Execute the matched endpoint.</span><br>    app.UseEndpoints(endpoints =&gt;<br>    &#123;<br>        endpoints.MapControllerRoute(<br>            name: <span class="hljs-string">&quot;default&quot;</span>,<br>            pattern: <span class="hljs-string">&quot;&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;&quot;</span>);<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Componentising-custom-middleware"><a href="#Componentising-custom-middleware" class="headerlink" title="Componentising custom middleware"></a>Componentising custom middleware</h2><p>In some scenarios you might want to write a custom middleware.</p>
+<p>Write below classes:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddleware</span><br>&#123;<br>    <span class="hljs-comment">// A function that can process an HTTP request.</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> RequestDelegate _next;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomMiddleware</span>(<span class="hljs-params">RequestDelegate next</span>)</span><br>    &#123;<br>        _next = next;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Task <span class="hljs-title">Invoke</span>(<span class="hljs-params">HttpContext httpContext</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;------- Before ------ \n\r&quot;</span>);<br><br>        <span class="hljs-comment">// Call the next delegate/middleware in the pipeline.</span><br>        <span class="hljs-keyword">return</span> _next(httpContext);<br><br>        <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;\n\r------- After ------&quot;</span>);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IApplicationBuilder <span class="hljs-title">UseCustomMiddleware</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IApplicationBuilder builder</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> builder.UseMiddleware&lt;CustomMiddleware&gt;();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The middleware class must include:</p>
+<ul>
+<li>A public constructor with a parameter of type <code>RequestDelegate</code>.</li>
+<li>A public method named <code>Invoke</code> or <code>InvokeAsync</code>. This method must:<ul>
+<li>Return a <code>Task</code>.</li>
+<li>Accept a first parameter of type <code>HttpContext</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Additional parameters for the constructor and <code>Invoke</code> or <code>InvokeAsync</code> are populated by dependency injection (DI).</p>
+<p>Now, use it as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-comment">// Startup.cs</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>    &#123;<br>        <span class="hljs-comment">// HERE</span><br>        app.UseCustomMiddleware();<br><br>        app.Run(<span class="hljs-keyword">async</span> (context) =&gt;<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Adding-custom-options-to-middleware"><a href="#Adding-custom-options-to-middleware" class="headerlink" title="Adding custom options to middleware"></a>Adding custom options to middleware</h2><p>Writing a custom middleware is great but you will come to a point where it needs to be made configurable. </p>
+<p>Let’s define a configuration options class which defines some options which the middleware can use.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareOptions</span><br>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> DisplayBefore &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">bool</span> DisplayAfter &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125; = <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Write extension methods to get options with <code>Action&lt;CustomMiddlewareOptions&gt;</code> as following:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareWithOptionsExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddCustomMiddlewareWithOptions</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection service, Action&lt;CustomMiddlewareOptions&gt; options = <span class="hljs-literal">default</span> <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        options = options ?? (opts =&gt; &#123; &#125;);<br><br>        service.Configure(options);<br>        <span class="hljs-keyword">return</span> service;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IApplicationBuilder <span class="hljs-title">UseCustomMiddlewareWithOptions</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IApplicationBuilder builder</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> builder.UseMiddleware&lt;CustomMiddlewareWithOptions&gt;();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>The middleware now can be added into the pipeline and be setup using a lambda expression. It can take the Options in through constructor through the DI mechanism. It comes from the <code>IOptions&lt;T&gt;</code> functionality.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">using</span> Microsoft.Extensions.Options;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareWithOptions</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> RequestDelegate _next;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> CustomMiddlewareOptions _options;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomMiddlewareWithOptions</span>(<span class="hljs-params">RequestDelegate next, IOptions&lt;CustomMiddlewareOptions&gt; options <span class="hljs-comment">/* HERE */</span></span>)</span><br>    &#123;<br>        _next = next;<br>        _options = options.Value;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">HttpContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (_options.DisplayBefore)<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;------- Before ------ \n\r&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">await</span> _next(context);<br><br>        <span class="hljs-keyword">if</span> (_options.DisplayAfter)<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;\n\r------- After ------&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Register and config it as below:</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ConfigureServices</span>(<span class="hljs-params">IServiceCollection services</span>)</span><br>    &#123;<br>        services.AddCustomMiddlewareWithOptions(options =&gt; options.DisplayAfter = <span class="hljs-literal">false</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app</span>)</span><br>    &#123;<br>        app.UseCustomMiddlewareWithOptions();<br><br>        app.Run(<span class="hljs-keyword">async</span> (context) =&gt;<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Multiple-configuration-setup"><a href="#Multiple-configuration-setup" class="headerlink" title="Multiple configuration setup"></a>Multiple configuration setup</h2><p>The other option is the multiple configuration setup option where you want to be able to use the same type of middleware more than once in your application pipeline but want to specify configuration per usage. For this option you specify that you require a configuration option instance directly and it’s not hidden behind <code>IOptions&lt;&gt;</code>.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareWithOptionsMultiUse</span><br>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> RequestDelegate _next;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">readonly</span> CustomMiddlewareOptions _options;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">CustomMiddlewareWithOptionsMultiUse</span>(<span class="hljs-params">RequestDelegate next, CustomMiddlewareOptions options</span>)</span><br>    &#123;<br>        _next = next;<br>        _options = options;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">async</span> Task <span class="hljs-title">InvokeAsync</span>(<span class="hljs-params">HttpContext context</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (_options.DisplayBefore)<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;------- Before ------ \n\r&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">await</span> _next(context);<br><br>        <span class="hljs-keyword">if</span> (_options.DisplayAfter)<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;\n\r------- After ------&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Adding this version into the middleware pipeline is much straight forward however using an extension method makes it cleaner from a consumers point of view.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">CustomMiddlewareWithOptionsMultiUseExtensions</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IApplicationBuilder <span class="hljs-title">UseCustomMiddlewareWithOptionsMultiUse</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IApplicationBuilder builder, CustomMiddlewareOptions options = <span class="hljs-literal">default</span></span>)</span><br>    &#123;<br>        options = options ?? <span class="hljs-keyword">new</span> CustomMiddlewareOptions();<br>        <span class="hljs-keyword">return</span> builder.UseMiddleware&lt;CustomMiddlewareWithOptionsMultiUse&gt;(options);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Passing in the options instance into the UseMiddleware method call allows for the DI system inject it into the middleware constructor directly.</p>
+<p>Using this extension method we can then add in multiple instances into the pipeline with different configuration options specified.</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Startup</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Configure</span>(<span class="hljs-params">IApplicationBuilder app, IHostingEnvironment env</span>)</span><br>    &#123;<br>        app.UseCustomMiddlewareWithOptionsMultiUse(<span class="hljs-keyword">new</span> CustomMiddlewareOptions &#123; DisplayBefore = <span class="hljs-literal">true</span> &#125;);<br>        app.UseCustomMiddlewareWithOptionsMultiUse(<span class="hljs-keyword">new</span> CustomMiddlewareOptions &#123; DisplayAfter = <span class="hljs-literal">false</span> &#125;);<br><br>        app.Run(<span class="hljs-keyword">async</span> (context) =&gt;<br>        &#123;<br>            <span class="hljs-keyword">await</span> context.Response.WriteAsync(<span class="hljs-string">&quot;Hello World!&quot;</span>);<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference-s"><a href="#Reference-s" class="headerlink" title="Reference(s)"></a>Reference(s)</h2><p>Most of the information in this article has gathered from various references.</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware</a></li>
+<li><a target="_blank" rel="noopener" href="https://adamstorr.azurewebsites.net/blog/aspnetcore-exploring-custom-middleware">https://adamstorr.azurewebsites.net/blog/aspnetcore-exploring-custom-middleware</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write">https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.devtrends.co.uk/blog/conditional-middleware-based-on-request-in-asp.net-core">https://www.devtrends.co.uk/blog/conditional-middleware-based-on-request-in-asp.net-core</a></li>
+<li><a target="_blank" rel="noopener" href="https://riptutorial.com/asp-net-core/example/20718/run--map--use">https://riptutorial.com/asp-net-core/example/20718/run--map--use</a></li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://hamedfathi.me/a-professional-asp.net-core-middleware/" data-id="cl5ph9gif001d8wpb3k4q2ebk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Hamed Fathi"
+        },
+        "headline": "A Professional ASP.NET Core - Middleware",
+        "image": "https://hamedfathi.me/images/a-professional-asp.net-core-middleware/request-delegate-pipeline.png",
+        "keywords": "dotnet aspnetcore webapi middleware pipeline request response",
+        "genre": "aspnetcore",
+        "datePublished": "2020-10-11",
+        "dateCreated": "2020-10-11",
+        "dateModified": "2022-07-17",
+        "url": "https://hamedfathi.me/a-professional-asp.net-core-middleware/",
+        "description": "Middleware is software that’s assembled into an app pipeline to handle requests and responses. Each component:
+
+Chooses whether to pass the request to the next component in the pipeline.
+Can perform work before and after the next component in the pipeline.
+
+Request delegates are used to build the request pipeline. The request delegates handle each HTTP request.
+Request delegates are configured using Run, Map, and Use extension methods. An individual request delegate can be specified in-line as an anonymous method (called in-line middleware), or it can be defined in a reusable class. These reusable classes and in-line anonymous methods are middleware, also called middleware components. Each middleware component in the request pipeline is responsible for invoking the next component in the pipeline or short-circuiting the pipeline. When a middleware short-circuits, it’s called a terminal middleware because it prevents further middleware from processing the request.",
+        "wordCount": 3169
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/hamedfathi88" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="https://stackoverflow.com/users/3166171/hamedfathi?tab=profile" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/HamedFathi" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="linkedin" href="https://www.linkedin.com/in/hamedfathi/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-linkedin"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/a-professional-asp.net-core-file-upload/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            A Professional ASP.NET Core - File Upload
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/a-professional-asp.net-core-model-binding/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">A Professional ASP.NET Core - Model Binding</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/the-dotnet-world-csharp-source-generator/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/the-dotnet-world-csharp-source-generator/sg.png)" alt="The .NET World - C# Source Generator" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/dotnet/">dotnet</a></p>
+                            <p class="item-title"><a href="/the-dotnet-world-csharp-source-generator/" class="title">The .NET World - C# Source Generator</a></p>
+                            <p class="item-date"><time datetime="2020-12-08T00:00:00.000Z" itemprop="datePublished">2020-12-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/write-a-custom-plugin-with-aurelia-2-and-lerna/packages.png)" alt="Write a custom plugin with Aurelia 2 and Lerna" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aurelia/">aurelia</a></p>
+                            <p class="item-title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/" class="title">Write a custom plugin with Aurelia 2 and Lerna</a></p>
+                            <p class="item-date"><time datetime="2020-11-09T00:00:00.000Z" itemprop="datePublished">2020-11-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-api-rabbitmq/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-api-rabbitmq/1.png)" alt="A Professional ASP.NET Core API - RabbitMQ" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore-api/">aspnetcore-api</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-api-rabbitmq/" class="title">A Professional ASP.NET Core API - RabbitMQ</a></p>
+                            <p class="item-date"><time datetime="2020-10-23T00:00:00.000Z" itemprop="datePublished">2020-10-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-rss/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-rss/rss.png)" alt="A Professional ASP.NET Core - RSS" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-rss/" class="title">A Professional ASP.NET Core - RSS</a></p>
+                            <p class="item-date"><time datetime="2020-10-22T00:00:00.000Z" itemprop="datePublished">2020-10-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/a-professional-asp.net-core-file-upload/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/a-professional-asp.net-core-file-upload/vs.png)" alt="A Professional ASP.NET Core - File Upload" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/aspnetcore/">aspnetcore</a></p>
+                            <p class="item-title"><a href="/a-professional-asp.net-core-file-upload/" class="title">A Professional ASP.NET Core - File Upload</a></p>
+                            <p class="item-date"><time datetime="2020-10-12T00:00:00.000Z" itemprop="datePublished">2020-10-12</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore/">aspnetcore</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aspnetcore-api/">aspnetcore-api</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/aurelia/">aurelia</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/dotnet/">dotnet</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/amqp/" style="font-size: 10px;">amqp</a> <a href="/tags/api/" style="font-size: 14px;">api</a> <a href="/tags/aspnetcore/" style="font-size: 18px;">aspnetcore</a> <a href="/tags/aurelia2/" style="font-size: 14px;">aurelia2</a> <a href="/tags/awesome/" style="font-size: 10px;">awesome</a> <a href="/tags/backgroundtask/" style="font-size: 10px;">backgroundtask</a> <a href="/tags/binding/" style="font-size: 10px;">binding</a> <a href="/tags/bogus/" style="font-size: 10px;">bogus</a> <a href="/tags/bootstrap5/" style="font-size: 10px;">bootstrap5</a> <a href="/tags/cache/" style="font-size: 10px;">cache</a> <a href="/tags/caching/" style="font-size: 10px;">caching</a> <a href="/tags/chai/" style="font-size: 10px;">chai</a> <a href="/tags/cors/" style="font-size: 10px;">cors</a> <a href="/tags/csharp/" style="font-size: 10px;">csharp</a> <a href="/tags/csharp9/" style="font-size: 10px;">csharp9</a> <a href="/tags/css-in-js/" style="font-size: 10px;">css-in-js</a> <a href="/tags/di/" style="font-size: 10px;">di</a> <a href="/tags/distributed/" style="font-size: 10px;">distributed</a> <a href="/tags/dotnet/" style="font-size: 20px;">dotnet</a> <a href="/tags/dotnet5/" style="font-size: 10px;">dotnet5</a> <a href="/tags/dryioc/" style="font-size: 10px;">dryioc</a> <a href="/tags/e2e/" style="font-size: 10px;">e2e</a> <a href="/tags/easynetq/" style="font-size: 10px;">easynetq</a> <a href="/tags/emotionjs/" style="font-size: 10px;">emotionjs</a> <a href="/tags/end-to-end/" style="font-size: 10px;">end-to-end</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/fakedata/" style="font-size: 10px;">fakedata</a> <a href="/tags/feature/" style="font-size: 10px;">feature</a> <a href="/tags/featureflag/" style="font-size: 10px;">featureflag</a> <a href="/tags/featuremanagement/" style="font-size: 10px;">featuremanagement</a> <a href="/tags/file/" style="font-size: 10px;">file</a> <a href="/tags/fluentvalidation/" style="font-size: 10px;">fluentvalidation</a> <a href="/tags/guard/" style="font-size: 10px;">guard</a> <a href="/tags/header/" style="font-size: 10px;">header</a> <a href="/tags/health/" style="font-size: 10px;">health</a> <a href="/tags/healthcheck/" style="font-size: 10px;">healthcheck</a> <a href="/tags/healthy/" style="font-size: 10px;">healthy</a> <a href="/tags/hostedservices/" style="font-size: 10px;">hostedservices</a> <a href="/tags/inmemory/" style="font-size: 10px;">inmemory</a> <a href="/tags/ioc/" style="font-size: 10px;">ioc</a> <a href="/tags/jest/" style="font-size: 10px;">jest</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/localization/" style="font-size: 10px;">localization</a> <a href="/tags/log/" style="font-size: 10px;">log</a> <a href="/tags/masstransit/" style="font-size: 10px;">masstransit</a> <a href="/tags/messagebroker/" style="font-size: 10px;">messagebroker</a> <a href="/tags/middleware/" style="font-size: 12px;">middleware</a> <a href="/tags/miniprofiler/" style="font-size: 10px;">miniprofiler</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/model/" style="font-size: 10px;">model</a> <a href="/tags/modelbinding/" style="font-size: 10px;">modelbinding</a> <a href="/tags/monorepository/" style="font-size: 10px;">monorepository</a> <a href="/tags/openapi/" style="font-size: 10px;">openapi</a> <a href="/tags/pagination/" style="font-size: 10px;">pagination</a> <a href="/tags/paging/" style="font-size: 10px;">paging</a> <a href="/tags/pipeline/" style="font-size: 10px;">pipeline</a> <a href="/tags/plugin/" style="font-size: 10px;">plugin</a> <a href="/tags/polly/" style="font-size: 10px;">polly</a> <a href="/tags/profiler/" style="font-size: 10px;">profiler</a> <a href="/tags/puppeteer/" style="font-size: 10px;">puppeteer</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/rabbitmq/" style="font-size: 10px;">rabbitmq</a> <a href="/tags/ratelimit/" style="font-size: 10px;">ratelimit</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/refit/" style="font-size: 10px;">refit</a> <a href="/tags/request/" style="font-size: 10px;">request</a> <a href="/tags/resiliency/" style="font-size: 10px;">resiliency</a> <a href="/tags/response/" style="font-size: 10px;">response</a> <a href="/tags/roslyn/" style="font-size: 10px;">roslyn</a> <a href="/tags/rss/" style="font-size: 10px;">rss</a> <a href="/tags/security/" style="font-size: 10px;">security</a> <a href="/tags/sourcegenerator/" style="font-size: 10px;">sourcegenerator</a> <a href="/tags/sqlserver/" style="font-size: 10px;">sqlserver</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/tailwindcss/" style="font-size: 10px;">tailwindcss</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/testdata/" style="font-size: 10px;">testdata</a> <a href="/tags/unhealthy/" style="font-size: 10px;">unhealthy</a> <a href="/tags/upload/" style="font-size: 10px;">upload</a> <a href="/tags/validation/" style="font-size: 10px;">validation</a> <a href="/tags/versioning/" style="font-size: 10px;">versioning</a> <a href="/tags/webapi/" style="font-size: 16px;">webapi</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Hamed Fathi</p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hamedfathi';
+    
+    
+    var disqus_url = 'https://hamedfathi.me/a-professional-asp.net-core-middleware/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
