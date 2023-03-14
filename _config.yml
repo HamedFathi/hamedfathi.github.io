@@ -4,9 +4,9 @@
 
    
 # Site
-title: Hamed Fathi's Personal Blog
+title: Hamed Fathi's Blog
 subtitle: ''
-description: 'I write about programming.'
+description: ''
 keywords:
 author: Hamed Fathi
 language: en
@@ -14,7 +14,7 @@ timezone: UTC
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://hamedfathi.me/
+url: https://hamedfathi.github.io/
 root: /
 permalink: :title/
 permalink_defaults:
