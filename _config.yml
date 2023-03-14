@@ -104,8 +104,8 @@ plugins:
    hexo-generator-feed: true
 
 ## Themes: https://hexo.io/themes/
-theme: hueman
-
+theme: icarus
+  
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
