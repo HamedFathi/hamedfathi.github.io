@@ -9,7 +9,29 @@ tags:
   - default-interface-method
 ---
 
-In object-oriented programming, a mixin is a type that contains methods for use by other classes without having to be the parent class of those other classes. C# does not natively support mixins, but developers have come up with various ways to mimic this functionality. 
+In object-oriented programming, a mixin is a type that contains methods for use by other classes without having to be the parent class of those other classes. C# does not natively support mixins, but developers have devised various ways to mimic this functionality. 
+
+Pros:
+
+1. **Code Reusability**: Mixins can encapsulate behaviour that can be reused across different classes. It promotes the DRY (Don't Repeat Yourself) principle.
+
+2. **Code Organization**: Mixins allow us to separate different functionalities into different classes, making the code easier to read and maintain.
+
+3. **Flexibility**: Unlike inheritance, where a class can only inherit from a single class, a class can mix in multiple other classes, providing more flexibility.
+
+4. **Avoiding Class Explosion**: In languages or scenarios where multiple inheritances are not allowed or lead to complexity, mixins can add class functionality without creating new subclasses for every possible combination of behaviours.
+
+Cons:
+
+1. **Complexity**: Mixins can increase complexity, as it may take time to determine where a particular method or property is defined. Using multiple mixins can lead to problems understanding the flow and interaction of different class functionalities.
+
+2. **Conflicts**: If two mixins implement a method with the same name, it can lead to naming conflicts. This could lead to unexpected behaviour if not properly managed.
+
+3. **Indirection**: Mixins introduce an additional level of indirection, making code harder to understand and debug.
+
+4. **Lack of Explicit Support in C#**: As C# does not natively support mixins, the workaround solutions (like using extension methods on interfaces) may not be as clean and straightforward as in languages that support them directly. This may lead to additional complexity or misuse.
+
+So, the need for mixins comes from the requirement of sharing functionality across classes that do not share a common parent in the class hierarchy outside of the base object class. They can be a powerful tool when used properly but can lead to confusion and complexity when misused.
 
 In this article, we will explore four methods of implementing mixins in C#: 
 
@@ -20,7 +42,7 @@ In this article, we will explore four methods of implementing mixins in C#:
 
 ## 1. Stateless Mixins with Extension Methods
 
-The first method employs extension methods to add behavior to classes that implement a specific interface, often referred to as a "marker interface". Here's an example of a mixin named `IPrintable`, which provides a `Print` method:
+The first method employs extension methods to add behaviour to classes that implement a specific interface, often called a "marker interface". Here's an example of a mixin named `IPrintable`, which provides a `Print` method:
 
 ```csharp
 public interface IPrintable { }
@@ -90,7 +112,9 @@ Any class that implements `IPrintable` will have a `Creator` property and a `Pri
 
 ## 3. Stateful Mixins with Extension Methods
 
-For stateful mixins using extension methods, we can use the `ConditionalWeakTable` class, which lets us associate additional data with instances of a class without altering the class itself. This approach uses a marker interface and a static extension class, with the `ConditionalWeakTable` holding the state of the mixin.
+We can use the `ConditionalWeakTable` class for stateful mixins using extension methods, which lets us associate additional data with class instances without altering the class itself. This approach uses a marker interface and a static extension class, with the `ConditionalWeakTable` holding the state of the mixin.
+
+The `ConditionalWeakTable<TKey, TValue>` is used in stateful mixins in C# because it holds weak references to its keys, allowing them to be garbage collected when no other strong references exist. Unlike a regular `Dictionary`, where keys (and associated values) are kept in memory as long as the dictionary exists, potentially causing memory leaks or undesired extension of object lifetimes, `ConditionalWeakTable` allows the garbage collector to automatically remove the entries when the key objects are collected, thus ensuring more efficient memory usage and preventing unintentional lifetime extension of the associated objects. This makes it a preferred choice for associating state with objects in mixins.
 
 Here's an example of a stateful `IPrintable` mixin, which keeps track of the number of times `Print` has been called:
 
@@ -196,7 +220,7 @@ While C# does not natively support mixins, various methods exist to imitate them
 
 ## Reference(s)
 
-Most of the information in this article has gathered from various references.
+Most of the information in this article has been gathered from various references.
 
 * https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interface-implementation/mixins-with-default-interface-methods
 * https://www.c-sharpcorner.com/article/learn-about-mixin-pattern/
