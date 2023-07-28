@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Awesome .NET! - Hamed Fathi&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Hamed Fathi&#039;s Blog"><meta name="msapplication-TileImage" content="/img/pic.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Hamed Fathi&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="A collection of awesome .NET libraries, tools, frameworks, and software that I suggest you try!"><meta property="og:type" content="blog"><meta property="og:title" content="Awesome .NET!"><meta property="og:url" content="https://hamedfathi.github.io/awesome-dotnet/"><meta property="og:site_name" content="Hamed Fathi&#039;s Blog"><meta property="og:description" content="A collection of awesome .NET libraries, tools, frameworks, and software that I suggest you try!"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://hamedfathi.github.io/img/og_image.png"><meta property="article:published_time" content="2020-10-01T00:00:00.000Z"><meta property="article:modified_time" content="2023-07-28T08:36:42.662Z"><meta property="article:author" content="Hamed Fathi"><meta property="article:tag" content="dotnet"><meta property="article:tag" content="awesome"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://hamedfathi.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://hamedfathi.github.io/awesome-dotnet/"},"headline":"Awesome .NET!","image":["https://hamedfathi.github.io/img/og_image.png"],"datePublished":"2020-10-01T00:00:00.000Z","dateModified":"2023-07-28T08:36:42.662Z","author":{"@type":"Person","name":"Hamed Fathi"},"publisher":{"@type":"Organization","name":"Hamed Fathi's Blog","logo":{"@type":"ImageObject"}},"description":"A collection of awesome .NET libraries, tools, frameworks, and software that I suggest you try!"}</script><link rel="canonical" href="https://hamedfathi.github.io/awesome-dotnet/"><link rel="icon" href="/img/pic.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Hamed Fathi&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/hamedfathi"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2020-10-01T00:00:00.000Z" title="10/1/2020, 12:00:00 AM">2020-10-01</time></span><span class="level-item"><a class="link-muted" href="/categories/dotnet/">dotnet</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Awesome .NET!</h1><div class="content"><p>A collection of awesome <code>.NET</code> libraries, tools, frameworks, and software that I suggest you try!</p>
+<span id="more"></span>
+
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h2><blockquote>
+<p>Simple .NET logging with fully-structured events.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog/">Serilog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Extensions.Logging/">Serilog.Extensions.Logging</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Exceptions/">Serilog.Exceptions</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Sinks.RollingFile">Serilog.Sinks.RollingFile</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Sinks.File/">Serilog.Sinks.File</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Sinks.Console">Serilog.Sinks.Console</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Sinks.ColoredConsole/">Serilog.Sinks.ColoredConsole</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Serilog.Sinks.LiteDB/">Serilog.Sinks.LiteDB</a></p>
+<hr>
+<h2 id="Inversion-of-Control-IoC"><a href="#Inversion-of-Control-IoC" class="headerlink" title="Inversion of Control (IoC)"></a>Inversion of Control (IoC)</h2><blockquote>
+<p>Grace is a feature rich dependency injection container library</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Grace/">Grace</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Grace.AspNetCore.Hosting">Grace.AspNetCore.Hosting</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Grace.AspNetCore.MVC">Grace.AspNetCore.MVC</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Grace.Dynamic/">Grace.Dynamic</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Grace.Factory/">Grace.Factory</a></p>
+<blockquote>
+<p>DryIoc is fast, small, full-featured IoC Container for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DryIoc.dll/">DryIoc</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DryIoc.Microsoft.DependencyInjection/">DryIoc.Microsoft.DependencyInjection</a></p>
+<hr>
+<h2 id="Serialization"><a href="#Serialization" class="headerlink" title="Serialization"></a>Serialization</h2><blockquote>
+<p>Popular high-performance JSON framework for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Newtonsoft.Json/">Newtonsoft.Json</a></p>
+<blockquote>
+<p>JSON Schema draft v4 reader, generator and validator for .NET.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NJsonSchema">NJsonSchema</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NJsonSchema.CodeGeneration">NJsonSchema.CodeGeneration</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NJsonSchema.CodeGeneration.CSharp">NJsonSchema.CodeGeneration.CSharp</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NJsonSchema.CodeGeneration.TypeScript">NJsonSchema.CodeGeneration.TypeScript</a></p>
+<blockquote>
+<p>Classes to serialize, deserialize and validate OData JSON payloads. Supports OData v4 only. Enables construction of OData services and clients.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.OData.Core/">Microsoft.OData.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.OData/">Microsoft.AspNetCore.OData</a></p>
+<blockquote>
+<p>A library for reading and writing CSV files. Extremely fast, flexible, and easy to use. Supports reading and writing of custom class objects.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CsvHelper/">CsvHelper</a></p>
+<blockquote>
+<p>protobuf-net is a contract based serializer for .NET code, that happens to write data in the “protocol buffers” serialization format engineered by Google. The API, however, is very different to Google’s, and follows typical .NET patterns (it is broadly comparable, in usage, to XmlSerializer, DataContractSerializer, etc). It should work for most .NET languages that write standard types and can use attributes.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/protobuf-net/">protobuf-net</a></p>
+<blockquote>
+<p>Extended Xml Serializer for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtendedXmlSerializer">ExtendedXmlSerializer</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtendedXmlSerializer.AspCore/">ExtendedXmlSerializer.AspCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtendedXmlSerializer.Autofac/">ExtendedXmlSerializer.Autofac</a></p>
+<blockquote>
+<p>A YAML portable .NET library. providing parsing and serialization of object graphs, compatible with CoreCLR.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/SharpYaml">SharpYaml</a></p>
+<blockquote>
+<p>Fastest C# Serializer and Infinitely Fast Deserializer for .NET, .NET Core and Unity.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ZeroFormatter">ZeroFormatter</a></p>
+<blockquote>
+<p>Definitely Fastest and Zero Allocation JSON Serializer for C#(NET, .NET Core, Unity, Xamarin).</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Utf8Json">Utf8Json</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Utf8Json.ImmutableCollection">Utf8Json.ImmutableCollection</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Utf8Json.AspNetCoreMvcFormatter">Utf8Json.AspNetCoreMvcFormatter</a></p>
+<hr>
+<h2 id="Test-driven-development-TDD-Behavior-driven-development-BDD"><a href="#Test-driven-development-TDD-Behavior-driven-development-BDD" class="headerlink" title="Test-driven development (TDD) -  Behavior-driven development (BDD)"></a>Test-driven development (TDD) -  Behavior-driven development (BDD)</h2><blockquote>
+<p>xUnit.net is a developer testing framework, built to support Test Driven Development, with a design goal of extreme simplicity and alignment with framework features.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/xunit/">xunit</a></p>
+<blockquote>
+<p>NSubstitute is a friendly substitute for .NET mocking frameworks. It has a simple, succinct syntax to help developers write clearer tests. NSubstitute is designed for Arrange-Act-Assert (AAA) testing and with Test Driven Development (TDD) in mind.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSubstitute/">NSubstitute</a></p>
+<blockquote>
+<p>Moq is the most popular and friendly mocking framework for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Moq/">Moq</a></p>
+<blockquote>
+<p>A BDD style testing framework, heavily relying on (auto mocking) containers.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Chill">Chill</a></p>
+<blockquote>
+<p>xBehave.net is xUnit.net extension for describing your tests using natural language. Ideally suited to a variety of testing styles (e.g. BDD, TDD, ATDD, etc.), xBehave.net can be used for acceptance tests, integration tests, unit tests or any other ad-hoc testing scenarios.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Xbehave/">xBehave</a></p>
+<blockquote>
+<p>LightBDD is a behaviour-driven development test framework offering ability to write tests that are easy to read, easy to track during execution and summarize in user friendly report, while allowing developers to use all of the standard development tools to maintain them.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LightBDD.XUnit2/">LightBDD.XUnit2</a></p>
+<blockquote>
+<p>Fluent Assertions is a set of .NET extension methods that allow you to more naturally specify the expected outcome of a TDD or BDD-style test. We currently use it in all our internal and client projects, and it is used in many open-source projects. It runs on .NET 4.0, 4.5, 4.6, CoreClr, .NET Native, Windows 8.1, Silverlight 5, Windows Phone 8.0…</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FluentAssertions">FluentAssertions</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FluentAssertions.Json/">FluentAssertions.Json</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FluentAssertions.Autofac/">FluentAssertions.Autofac</a></p>
+<blockquote>
+<p>The Tynamix ObjectFiller.NET fills the properties of your objects with random data. Use it for unittest, prototyping and whereever you need some random testdata. It has a fluent API and is highly customizable. It supports also IEnumerables and Dictionaries and constructors WITH parameters. It is also possible to fill instances and to write private properties.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Tynamix.ObjectFiller/">ObjectFiller</a></p>
+<blockquote>
+<p>A simple and sane data generator for populating objects that supports different locales. A delightful port of the famed faker.js and inspired by FluentValidation. Use it to create and load databases and UIs with mock up data. Get started by using Faker class or a DataSet directly.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Bogus/">Bogus</a></p>
+<blockquote>
+<p>Easy integration testing helper for ASP.Net Core applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Alba/">Alba</a></p>
+<blockquote>
+<p>Coverlet is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/coverlet.msbuild/">Coverlet</a></p>
+<hr>
+<h2 id="Message-Brokers"><a href="#Message-Brokers" class="headerlink" title="Message Brokers"></a>Message Brokers</h2><blockquote>
+<p>RawRabbit is a modern .NET client for communication over RabbitMq. It is written for .NET Core and uses Microsoft’s new frameworks for logging, configuration and dependecy injection.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit">RawRabbit</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.Extensions/">RawRabbit.Extensions</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.Attributes/">RawRabbit.Attributes</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.DependencyInjection.Autofac/">RawRabbit.DependencyInjection.Autofac</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.Logging.Serilog/">RawRabbit.Logging.Serilog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.Operations.StateMachine/">RawRabbit.Operations.StateMachine</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RawRabbit.Enrichers.Polly/">RawRabbit.Enrichers.Polly</a></p>
+<blockquote>
+<p>An easy to use .NET API for RabbitMQ</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EasyNetQ">EasyNetQ</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EasyNetQ.Management.Client/">EasyNetQ.Management.Client</a></p>
+<blockquote>
+<p>Rebus is a lean service bus implementation for .NET.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus">Rebus</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.RabbitMq/">Rebus.RabbitMQ</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.Serilog/">Rebus.Serilog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.SqlServer/">Rebus.SqlServer</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.PostgreSql/">Rebus.PostgreSql</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.MongoDb/">Rebus.MongoDb</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rebus.Async/">Rebus.Async</a></p>
+<hr>
+<h2 id="Object-relational-mapping-ORM"><a href="#Object-relational-mapping-ORM" class="headerlink" title="Object-relational mapping (ORM)"></a>Object-relational mapping (ORM)</h2><blockquote>
+<p>A high performance Micro-ORM supporting SQL Server, MySQL, Sqlite, SqlCE, Firebird etc..</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Dapper/">Dapper</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Moq.Dapper/">Moq.Dapper</a></p>
+<blockquote>
+<p>Entity Framework Core is a lightweight and extensible version of the popular Entity Framework data access technology.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/">Microsoft.EntityFrameworkCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/">Microsoft.EntityFrameworkCore.Design</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational/">Microsoft.EntityFrameworkCore.Relational</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational.Design/">Microsoft.EntityFrameworkCore.Relational.Design</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory/">Microsoft.EntityFrameworkCore.InMemory</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools/">Microsoft.EntityFrameworkCore.Tools</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools.DotNet/">Microsoft.EntityFrameworkCore.Tools.DotNet</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Specification.Tests/">Microsoft.EntityFrameworkCore.Specification.Tests</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational.Specification.Tests/">Microsoft.EntityFrameworkCore.Relational.Specification.Tests</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests/">Microsoft.EntityFrameworkCore.Relational.Design.Specification.Tests</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EFSecondLevelCache.Core/">EFSecondLevelCache.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFrameworkCore.Triggers/">EntityFrameworkCore.Triggers</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFrameworkCore.Rx/">EntityFrameworkCore.Rx</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Woodman.EntityFrameworkCore.Bulk/">Woodman.EntityFrameworkCore.Bulk</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.AutoHistory/">Microsoft.EntityFrameworkCore.AutoHistory</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SimonCropp/EfCore.InMemoryHelpers">EfCore.InMemoryHelpers</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFrameworkCore.PrimaryKey/">EntityFrameworkCore.PrimaryKey</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EntityFrameworkCore.TypedOriginalValues/">EntityFrameworkCore.TypedOriginalValues</a></p>
+<blockquote>
+<p>Microsoft SQL Server is a relational database management system developed by Microsoft. As a database server, it is a software product with the primary function of storing and retrieving data as requested by other software applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/">Microsoft.EntityFrameworkCore.SqlServer</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.Design">Microsoft.EntityFrameworkCore.SqlServer.Design</a></p>
+<blockquote>
+<p>SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine. SQLite is the most used database engine in the world.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Data.Sqlite/">Microsoft.Data.Sqlite</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite/">Microsoft.EntityFrameworkCore.Sqlite</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.Design/">Microsoft.EntityFrameworkCore.Sqlite.Design</a></p>
+<blockquote>
+<p>PostgreSQL, often simply Postgres, is an object-relational database management system (ORDBMS) with an emphasis on extensibility and standards compliance. As a database server, its primary functions are to store data securely and return that data in response to requests from other software applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Npgsql/">Npgsql</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/">Npgsql.EntityFrameworkCore.PostgreSQL</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.Design/">Npgsql.EntityFrameworkCore.PostgreSQL.Design</a></p>
+<blockquote>
+<p>Library to create and use COMB (timestamped sequential) GUID variants for Microsoft SQL Server and PostgreSQL.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RT.Comb/">RT.Comb</a></p>
+<hr>
+<h2 id="Aspect-oriented-programming-AOP"><a href="#Aspect-oriented-programming-AOP" class="headerlink" title="Aspect-oriented programming (AOP)"></a>Aspect-oriented programming (AOP)</h2><blockquote>
+<p>Cecil is a library written by Jb Evain to generate and inspect programs and libraries in the ECMA CIL format. It has full support for generics, and support some debugging symbol format. In simple English, with Cecil, you can load existing managed assemblies, browse all the contained types, modify them on the fly and save back to the disk the modified assembly.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Mono.Cecil/">Mono.Cecil</a></p>
+<blockquote>
+<p>Castle Core provides common Castle Project abstractions including logging services. It also features Castle DynamicProxy a lightweight runtime proxy generator, and Castle DictionaryAdapter.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Castle.Core">Castle.Core</a></p>
+<blockquote>
+<p>Extensible tool for weaving .net assemblies</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Fody/">Fody</a></p>
+<hr>
+<h2 id="Validation"><a href="#Validation" class="headerlink" title="Validation"></a>Validation</h2><blockquote>
+<p>A validation library for .NET that uses a fluent interface to construct strongly-typed validation rules.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FluentValidation">FluentValidation</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FluentValidation.AspNetCore/">FluentValidation.AspNetCore</a></p>
+<hr>
+<h2 id="Distributed-Systems"><a href="#Distributed-Systems" class="headerlink" title="Distributed Systems"></a>Distributed Systems</h2><blockquote>
+<p>Build powerful concurrent &amp; distributed applications more easily.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Akka">Akka</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Akka.Logger.Serilog/">Akka.Logger.Serilog</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Akka.DI.AutoFac/">Akka.DI.AutoFac</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Akka.TestKit.Xunit2/">Akka.TestKit.Xunit2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Akka.Persistence.SqlServer/">Akka.Persistence.SqlServer</a></p>
+<blockquote>
+<p>Orleans is a framework that provides a straight-forward approach to building distributed high-scale computing applications, without the need to learn and apply complex concurrency or other scaling patterns.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Orleans.Core">Microsoft.Orleans.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Orleans.Client">Microsoft.Orleans.Client</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Orleans.Server">Microsoft.Orleans.Server</a></p>
+<hr>
+<h2 id="Scheduling"><a href="#Scheduling" class="headerlink" title="Scheduling"></a>Scheduling</h2><blockquote>
+<p>Quartz Scheduling Framework for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Quartz/">Quartz.NET</a></p>
+<hr>
+<h2 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h2><blockquote>
+<p>Embedded .NET NoSQL Document Store in a single data file</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LiteDB">LiteDB</a></p>
+<blockquote>
+<p>High performance Redis client, incorporating both synchronous and asynchronous usage.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/StackExchange.Redis/">StackExchange.Redis</a></p>
+<blockquote>
+<p>Official .NET driver for MongoDB.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MongoDB.Driver/">MongoDB.Driver</a></p>
+<blockquote>
+<p>Postgresql as a Document Database and Event Store for .Net Applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Marten/">Marten</a></p>
+<blockquote>
+<p>A C#/.NET RethinkDB database driver with 100% ReQL API coverage. Architecturally, this driver is a port of the official Java driver.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/RethinkDb.Driver/">RethinkDb.Driver</a></p>
+<hr>
+<h2 id="Object-Mapper"><a href="#Object-Mapper" class="headerlink" title="Object Mapper"></a>Object Mapper</h2><blockquote>
+<p>A convention-based object-object mapper. AutoMapper uses a fluent configuration API to define an object-object mapping strategy. AutoMapper uses a convention-based matching algorithm to match up source to destination values. Currently, AutoMapper is designed for model projection scenarios to flatten complex object models to DTOs and other simple objects, whose design is better suited for serialization, communication, messaging, or simply an anti-corruption layer between the domain and application layer.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/AutoMapper/">AutoMapper</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/AutoMapper.Data/">AutoMapper.Data</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/AutoMapper.Extensions.Microsoft.DependencyInjection/">AutoMapper.Extensions.Microsoft.DependencyInjection</a></p>
+<hr>
+<h2 id="Html-Manipulation"><a href="#Html-Manipulation" class="headerlink" title="Html Manipulation"></a>Html Manipulation</h2><blockquote>
+<p>This is an agile HTML parser that builds a read/write DOM and supports plain XPATH or XSLT (you actually don’t HAVE to understand XPATH nor XSLT to use it, don’t worry…). It is a .NET code library that allows you to parse “out of the web” HTML files. The parser is very tolerant with “real world” malformed HTML. The object model is very similar to what proposes System.Xml, but for HTML documents (or streams).</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/HtmlAgilityPack/">HtmlAgilityPack</a></p>
+<hr>
+<h2 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h2><blockquote>
+<p>CacheManager is an open source caching abstraction layer for .NET written in C#. It supports various cache providers and implements many advanced features. The main goal of the CacheManager package is to make developer’s life easier to handle even very complex caching scenarios.<br>With CacheManager it is possible to implement multiple layers of caching, e.g. in-process caching in front of a distributed cache, in just a few lines of code. CacheManager is not just an interface to unify the programming model for various cache providers, which will make it very easy to change the caching strategy later on in a project. It also offers additional features, like cache synchronization, concurrent updates, serialization, events, performance counters… The developer can opt-in to those features only if needed.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Core/">CacheManager.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Microsoft.Extensions.Logging/">CacheManager.Microsoft.Extensions.Logging</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Microsoft.Extensions.Configuration/">CacheManager.Microsoft.Extensions.Configuration</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Microsoft.Extensions.Caching.Memory/">CacheManager.Microsoft.Extensions.Caching.Memory</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.SystemRuntimeCaching/">CacheManager.SystemRuntimeCaching</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Serialization.Json/">CacheManager.Serialization.Json</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.StackExchange.Redis/">CacheManager.StackExchange.Redis</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CacheManager.Serialization.ProtoBuf/">CacheManager.Serialization.ProtoBuf</a></p>
+<blockquote>
+<p>Lazy cache is a simple,thread safe in-memory caching service</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LazyCache/">LazyCache</a></p>
+<hr>
+<h2 id="Lexer-Parser-Frameworks"><a href="#Lexer-Parser-Frameworks" class="headerlink" title="Lexer/Parser Frameworks"></a>Lexer/Parser Frameworks</h2><blockquote>
+<p>Tiny C# Monadic Parser Framework</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Sprache">Sprache</a></p>
+<blockquote>
+<p>A parser combinator library for C#</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Superpower">Superpower</a></p>
+<blockquote>
+<p>ANTLR (ANother Tool for Language Recognition) is a powerful parser generator for reading, processing, executing, or translating structured text or binary files.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Antlr4.Runtime.Standard/">Antlr4.Runtime.Standard</a></p>
+<hr>
+<h2 id="Command-Line-Parsers"><a href="#Command-Line-Parsers" class="headerlink" title="Command Line Parsers"></a>Command Line Parsers</h2><blockquote>
+<p>The ultimate command line application framework</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/PowerArgs/">PowerArgs</a></p>
+<hr>
+<h2 id="Bot-Framework"><a href="#Bot-Framework" class="headerlink" title="Bot Framework"></a>Bot Framework</h2><blockquote>
+<p>Microsoft Bot Builder is a powerful framework for constructing bots that can handle both freeform interactions and more guided ones where the possibilities are explicitly shown to the user. It is easy to use and leverages C# to provide a natural way to write bots.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Bot.Builder/">Microsoft.Bot.Builder</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Bot.Builder.Integration.AspNet.Core/">Microsoft.Bot.Builder.Integration.AspNet.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Microsoft/BotFramework-Emulator">Bot Framework Emulator</a></p>
+<hr>
+<h2 id="Build-Systems"><a href="#Build-Systems" class="headerlink" title="Build Systems"></a>Build Systems</h2><blockquote>
+<p>The Microsoft Build Engine (MSBuild) is the build platform for .NET and Visual Studio.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build/">Microsoft.Build</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Runtime/">Microsoft.Build.Runtime</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Engine/">Microsoft.Build.Engine</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Utilities.Core/">Microsoft.Build.Utilities.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Tasks.Core/">Microsoft.Build.Tasks.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Conversion.Core/">Microsoft.Build.Conversion.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Build.Localization/">Microsoft.Build.Localization</a></p>
+<blockquote>
+<p>NuGet is a free and open-source package manager designed for the Microsoft development platform.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NuGet.Frameworks/">NuGet.Frameworks</a></p>
+<blockquote>
+<p>A cross-platform build automation system with C# DSL.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Nuke.Core/">Nuke.Core</a></p>
+<blockquote>
+<p>Cake (C# Make) is a cross platform build automation system with a C# DSL to do things like compiling code, copy files/folders, running unit tests, compress files and build NuGet packages.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Cake/">Cake</a></p>
+<hr>
+<h2 id="Report-Engines"><a href="#Report-Engines" class="headerlink" title="Report Engines"></a>Report Engines</h2><blockquote>
+<p>PdfReport.Core is a code first reporting engine, which is built on top of the iTextSharp.LGPLv2.Core and EPPlus.Core libraries.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/PdfRpt.Core/">PdfRpt.Core</a></p>
+<hr>
+<h2 id="Cryptography"><a href="#Cryptography" class="headerlink" title="Cryptography"></a>Cryptography</h2><blockquote>
+<p>The Bouncy Castle Crypto package is a C# implementation of cryptographic algorithms and protocols, it was developed by the Legion of the Bouncy Castle, a registered Australian Charity, with a little help! The Legion, and the latest goings on with this package, can be found at <a target="_blank" rel="noopener" href="http://www.bouncycastle.org/">http://www.bouncycastle.org</a>. In addition to providing basic cryptography algorithms, the package also provides support for CMS, TSP, X.509 certificate generation and a variety of other standards such as OpenPGP.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Portable.BouncyCastle/">Portable.BouncyCastle</a></p>
+<blockquote>
+<p>FNV-1a hash algorithm in C#</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Aesop.Fnv1a/">Aesop.Fnv1a</a></p>
+<blockquote>
+<p>bcrypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999.[1] Besides incorporating a salt to protect against rainbow table attacks, bcrypt is an adaptive function: over time, the iteration count can be increased to make it slower, so it remains resistant to brute-force search attacks even with increasing computation power.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/BCrypt.Net-Core/">BCrypt.Net-Core</a></p>
+<blockquote>
+<p>Rijndael256 makes encrypting data and files a breeze with the AES symmetric-key cipher Rijndael.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rijndael256.Core/">Rijndael256.Core</a></p>
+<blockquote>
+<p>Fast version of Crc32 &amp; Crc32C algorithms for .NET and .NET Core. It is up to 3x-5x times better than other “fast” implemenations. Code based on Crc32C.NET library.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Crc32.NET/">Crc32.NET</a></p>
+<blockquote>
+<p>Jwt.Net, a JWT (JSON Web Token) implementation for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/JWT">JWT</a></p>
+<blockquote>
+<p>Managed .NET wrapper for unmanaged PKCS#11 libraries</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Pkcs11Interop/">Pkcs11Interop</a></p>
+<hr>
+<h2 id="Benchmarks"><a href="#Benchmarks" class="headerlink" title="Benchmarks"></a>Benchmarks</h2><blockquote>
+<p>BenchmarkDotNet is a powerful .NET library for benchmarking. Benchmarking is really hard (especially microbenchmarking), you can easily make a mistake during performance measurements. BenchmarkDotNet will protect you from the common pitfalls (even for experienced developers) because it does all the dirty work for you: it generates an isolated project per each benchmark method, does several launches of this project, run multiple iterations of the method (include warm-up), and so on. Usually, you even shouldn’t care about a number of iterations because BenchmarkDotNet chooses it automatically to achieve the requested level of precision.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/BenchmarkDotNet/">BenchmarkDotNet</a></p>
+<blockquote>
+<p>App Metrics is an open-source .NET Standard library used to record application metrics.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/App.Metrics/">App.Metrics</a></p>
+<hr>
+<h2 id="Template-Engines"><a href="#Template-Engines" class="headerlink" title="Template Engines"></a>Template Engines</h2><blockquote>
+<p>DotLiquid is a templating system ported to the .NET framework from Ruby’s Liquid Markup.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DotLiquid/">DotLiquid</a></p>
+<blockquote>
+<p>A fast, powerful, safe and lightweight text templating language and engine for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Scriban/">Scriban</a></p>
+<blockquote>
+<p>A fast, powerful, CommonMark compliant, extensible Markdown processor for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Markdig/">Markdig.NET</a></p>
+<hr>
+<h2 id="Reactive-Extensions-Rx"><a href="#Reactive-Extensions-Rx" class="headerlink" title="Reactive Extensions (Rx)"></a>Reactive Extensions (Rx)</h2><blockquote>
+<p>In computing, reactive programming is an asynchronous programming paradigm concerned with data streams and the propagation of change. This means that it becomes possible to express static (e.g. arrays) or dynamic (e.g. event emitters) data streams with ease via the employed programming language(s), and that an inferred dependency within the associated execution model exists, which facilitates the automatic propagation of the change involved with data flow.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Reactive">System.Reactive</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Reactive.Linq/">System.Reactive.Linq</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Interactive/">System.Interactive</a></p>
+<blockquote>
+<p>Reactive collections based on Rx.Net</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DynamicData/">DynamicData</a></p>
+<hr>
+<h2 id="Command-Query-Responsibility-Segregation-CQRS"><a href="#Command-Query-Responsibility-Segregation-CQRS" class="headerlink" title="Command Query Responsibility Segregation (CQRS)"></a>Command Query Responsibility Segregation (CQRS)</h2><blockquote>
+<p>Simple, unambitious mediator implementation in .NET.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MediatR/">MediatR</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MediatR.Extensions.Microsoft.DependencyInjection/">MediatR.Extensions.Microsoft.DependencyInjection</a></p>
+<hr>
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><blockquote>
+<p>Docker is an open platform for developers and sysadmins to build, ship, and run distributed applications, whether on laptops, data center VMs, or the cloud.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Docker.DotNet/">Docker.DotNet</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Docker.DotNet.BasicAuth/">Docker.DotNet.BasicAuth</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Docker.DotNet.X509/">Docker.DotNet.X509</a></p>
+<hr>
+<h2 id="Exception-Handling"><a href="#Exception-Handling" class="headerlink" title="Exception Handling"></a>Exception Handling</h2><blockquote>
+<p>Polly is a .NET 4.5 / .NET Standard 1.1 library that allows developers to express resilience and transient fault handling policies such as Retry, Circuit Breaker, Timeout, Bulkhead Isolation and Fallback in a fluent and thread-safe manner.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Polly/">Polly</a></p>
+<hr>
+<h2 id="Workflow-Engines"><a href="#Workflow-Engines" class="headerlink" title="Workflow Engines"></a>Workflow Engines</h2><blockquote>
+<p>Create state machines and lightweight state machine-based workflows directly in .NET code</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Stateless">Stateless</a></p>
+<hr>
+<h2 id="Reflection-Expression"><a href="#Reflection-Expression" class="headerlink" title="Reflection/Expression"></a>Reflection/Expression</h2><blockquote>
+<p>In .NET reflection is slow… well, kinda slow. If you need access to the members of an arbitrary type, with the type and member-names known only at runtime - then it is frankly hard (especially for DLR types). This library makes such access easy and fast.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FastMember/">FastMember</a></p>
+<blockquote>
+<p>Tired of slow .NET Reflection API? This package will let you get rid of this overhead by replacing Reflection calls with much faster delegates. </p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DelegatesFactory/">DelegatesFactory</a></p>
+<blockquote>
+<p>Expression tree compilation is used by wide range of tools, e.g. IoC/DI containers, Serializers, OO Mappers. But the performance of compilation with Expression.Compile() is just slow. Moreover, the compiled delegate may be slower than manually created delegate.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FastExpressionCompiler">FastExpressionCompiler</a></p>
+<hr>
+<h2 id="DateTime"><a href="#DateTime" class="headerlink" title="DateTime"></a>DateTime</h2><blockquote>
+<p>Noda Time is a date and time API acting as an alternative to the built-in DateTime/DateTimeOffset etc types built into the .NET framework.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NodaTime/">NodaTime</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NodaTime.Serialization.JsonNet/">NodaTime.Serialization.JsonNet</a></p>
+<blockquote>
+<p>Extensive time period calculations and individual calendar periods.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/TimePeriodLibrary.NET/">TimePeriodLibrary.NET</a></p>
+<blockquote>
+<p>This project is a merge of several common DateTime operations on the form of extensions to System.DateTime, including natural date difference text (precise and human rounded), holidays and working days calculations on several culture locales. Feedback will be much appreciated.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DateTimeExtensions/">DateTimeExtensions</a></p>
+<hr>
+<h2 id="Search-Engines"><a href="#Search-Engines" class="headerlink" title="Search Engines"></a>Search Engines</h2><blockquote>
+<p>Strongly typed interface to Elasticsearch. Fluent and classic object initializer mappings of requests and responses. Uses and exposes Elasticsearch.Net</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NEST/">NEST</a></p>
+<blockquote>
+<p>Lucene.Net is a full-text search engine library capable of advanced text analysis, indexing, and searching. It can be used to easily add search capabilities to applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Lucene.Net/">Lucene.Net</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Lucene.Net.Queries">Lucene.Net.Queries</a></p>
+<hr>
+<h2 id="Object-Tracking"><a href="#Object-Tracking" class="headerlink" title="Object Tracking"></a>Object Tracking</h2><blockquote>
+<p>Generate tracking information about an operation being executed.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Audit.NET/">Audit.NET</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Audit.NET.SqlServer/">Audit.NET.SqlServer</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Audit.NET.Redis/">Audit.NET.Redis</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Audit.NET.MongoDB/">Audit.NET.MongoDB</a></p>
+<hr>
+<h2 id="Identity-Managers"><a href="#Identity-Managers" class="headerlink" title="Identity Managers"></a>Identity Managers</h2><blockquote>
+<p>ASP.NET Core Identity is the membership system for building ASP.NET Core web applications, including membership, login, and user data. ASP.NET Core Identity allows you to add login features to your application and makes it easy to customize data about the logged in user.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Identity/">Microsoft.AspNetCore.Identity</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/">Microsoft.AspNetCore.Identity.EntityFrameworkCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.Service">Microsoft.AspNetCore.Identity.Service</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.Service.EntityFrameworkCore/">Microsoft.AspNetCore.Identity.Service.EntityFrameworkCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.Specification.Tests/">Microsoft.AspNetCore.Identity.Specification.Tests</a></p>
+<blockquote>
+<p>OpenID Connect and OAuth 2.0 Framework for ASP.NET Core</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/IdentityServer4">IdentityServer4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/IdentityServer4.AccessTokenValidation/">IdentityServer4.AccessTokenValidation</a></p>
+<blockquote>
+<p>Easy-to-use OpenID Connect server for ASP.NET Core</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/OpenIddict/">OpenIddict</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/OpenIddict.Mvc/">OpenIddict.Mvc</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/OpenIddict.EntityFrameworkCore/">OpenIddict.EntityFrameworkCore</a></p>
+<hr>
+<h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><blockquote>
+<p>MailKit is an Open Source cross-platform .NET mail-client library that is based on MimeKit and optimized for mobile devices.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MailKit/">MailKit</a></p>
+<blockquote>
+<p>A .NET Fake SMTP Server</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/netDumbster">netDumbster</a></p>
+<hr>
+<h2 id="Language-Integrated-Query-LINQ"><a href="#Language-Integrated-Query-LINQ" class="headerlink" title="Language Integrated Query (LINQ)"></a>Language Integrated Query (LINQ)</h2><blockquote>
+<p>re-linq Frontend: A foundation for parsing LINQ expression trees and generating queries in SQL or other languages.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Remotion.Linq/">Remotion.Linq</a></p>
+<blockquote>
+<p>LINQ to Regex library provides language integrated access to the .NET regular expressions.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LinqToRegex/">LinqToRegex</a></p>
+<blockquote>
+<p>Dynamic LINQ lets you express queries as text.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/System.Linq.Dynamic.Core/">System.Linq.Dynamic.Core</a></p>
+<blockquote>
+<p>This project enhances LINQ to Objects with extra methods, in a manner which keeps to the spirit of LINQ.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/morelinq/">morelinq</a></p>
+<blockquote>
+<p>A collection of extension methods to IQueryable and IEnumerable that enable easy searching and ranking. Searches can be performed against multiple properties and support a wide range of types</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NinjaNye.SearchExtensions/">NinjaNye.SearchExtensions</a></p>
+<blockquote>
+<p>MathExtensions is a library for .NET that aims to extend the basic but yet incomplete System.Math, with simple and useful extensions methods regarding various mathematical domains, like methods for combinatorics, sequence analysis, generation and manipulation, random extractions, etc.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/TommasoScalici.MathExtensions/">TommasoScalici.MathExtensions</a></p>
+<hr>
+<h2 id="AspNetCore"><a href="#AspNetCore" class="headerlink" title="AspNetCore"></a>AspNetCore</h2><blockquote>
+<p>A service API versioning library for Microsoft ASP.NET Core.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning/">Microsoft.AspNetCore.Mvc.Versioning</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer/">Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer</a></p>
+<blockquote>
+<p>The automatic type-safe REST library for Xamarin and .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Refit/">Refit</a></p>
+<blockquote>
+<p>SignalR, Incredibly simple real-time web for ASP.NET Core</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.SignalR">Microsoft.AspNetCore.SignalR</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.SignalR.Core">Microsoft.AspNetCore.SignalR.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.SignalR.Client">Microsoft.AspNetCore.SignalR.Client</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.AspNetCore.SignalR.Redis">Microsoft.AspNetCore.SignalR.Redis</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/@aspnet/signalr-client">signalr-client</a></p>
+<blockquote>
+<p>Free, open source and cross-platform framework for creating modular and extendable web applications based on ASP.NET Core.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.Infrastructure/">ExtCore.Infrastructure</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.WebApplication/">ExtCore.WebApplication</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.Data.EntityFramework/">ExtCore.Data.EntityFramework</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.Data.EntityFramework.SqlServer/">ExtCore.Data.EntityFramework.SqlServer</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.Data.EntityFramework.Sqlite/">ExtCore.Data.EntityFramework.Sqlite</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ExtCore.Data.EntityFramework.PostgreSql/">ExtCore.Data.EntityFramework.PostgreSql</a></p>
+<blockquote>
+<p>Nancy is a lightweight web framework for the .Net platform, inspired by Sinatra. Nancy aim at delivering a low ceremony approach to building light, fast web applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Nancy/">Nancy</a></p>
+<blockquote>
+<p>Botwin is a library that allows Nancy-esque routing for use with ASP.NET Core.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Botwin">Botwin</a></p>
+<blockquote>
+<p>AspNetCore.Health enables load balancers to monitor the status of deployed Web applications.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/AspNetCore.Health">AspNetCore.Health</a></p>
+<blockquote>
+<p>Warden is an open source library built to solve the problem of monitoring the resources.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden/">Warden</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.Process/">Warden.Watchers.Process</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.Web/">Warden.Watchers.Web</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Integrations.HttpApi/">Warden.Integrations.HttpApi</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.Server/">Warden.Watchers.Server</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.MsSql/">Warden.Watchers.MsSql</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Integrations.MsSql/">Warden.Integrations.MsSql</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.Redis/">Warden.Watchers.Redis</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.MongoDb/">Warden.Watchers.MongoDb</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Warden.Watchers.Disk/">Warden.Watchers.Disk</a></p>
+<blockquote>
+<p>A lightweight ASP.Net Core library for runtime CSS and JavaScript file management, minification, combination &amp; compression</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Smidge">Smidge</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Smidge.Nuglify">Smidge.Nuglify</a></p>
+<blockquote>
+<p>A runtime bundler and minifier for ASP.NET Core</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/LigerShark.WebOptimizer.Core/">LigerShark.WebOptimizer.Core</a></p>
+<blockquote>
+<p>AspNetCoreRateLimit is an ASP.NET Core rate limiting solution designed to control the rate of requests that clients can make to a Web API or MVC app based on IP address or client ID. The AspNetCoreRateLimit package contains an IpRateLimitMiddleware and a ClientRateLimitMiddleware, with each middleware you can set multiple limits for different scenarios like allowing an IP or Client to make a maximum number of calls in a time interval like per second, 15 minutes, etc. You can define these limits to address all requests made to an API or you can scope the limits to each API URL or HTTP verb and path.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/AspNetCoreRateLimit/">AspNetCoreRateLimit</a></p>
+<blockquote>
+<p>R4MVC is a Roslyn code generator for ASP.NET Core MVC apps that creates strongly typed helpers that eliminate the use of literal strings in many places</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/R4Mvc">R4Mvc</a></p>
+<blockquote>
+<p>ASP.NET Core client web browser detection extension to resolve devices, platforms, engine of the client.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Wangkanai.Detection/2.0.0-beta8">Wangkanai.Detection</a></p>
+<blockquote>
+<p>Lightweight mini-profiler, designed for ASP.NET Core MVC (<em>not</em> System.Web) websites</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MiniProfiler.AspNetCore.Mvc/">MiniProfiler.AspNetCore.Mvc</a></p>
+<blockquote>
+<p>SaasKit is a .NET toolkit for building SaaS (Software As A Service) applications.<br>The goal of the project is to help developers build SaaS products without getting in the way. It aims to be platform agnostic and as simple to use as possible.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/SaasKit.Multitenancy/">SaasKit.Multitenancy</a></p>
+<blockquote>
+<p>Sieve is a simple, clean, and extensible framework for .NET Core that adds sorting, filtering, and pagination functionality out of the box. Most common use case would be for serving ASP.NET Core GET queries. </p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Sieve">Sieve</a></p>
+<blockquote>
+<p>JSON Localization Resources</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/My.Extensions.Localization.Json">My.Extensions.Localization.Json</a></p>
+<hr>
+<h2 id="Swagger"><a href="#Swagger" class="headerlink" title="Swagger"></a>Swagger</h2><blockquote>
+<p>NSwag: The Swagger API toolchain for .NET and TypeScript</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.Core/">NSwag.Core</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.Annotations/">NSwag.Annotations</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.Commands/">NSwag.Commands</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.ConsoleCore/">NSwag.ConsoleCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.AssemblyLoaderCore/">NSwag.AssemblyLoaderCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.AspNetCore/">NSwag.AspNetCore</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.SwaggerGeneration/">NSwag.SwaggerGeneration</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.CodeGeneration/">NSwag.CodeGeneration</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.CodeGeneration.CSharp/">NSwag.CodeGeneration.CSharp</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.CodeGeneration.TypeScript/">NSwag.CodeGeneration.TypeScript</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/NSwag.SwaggerGeneration.WebApi/">NSwag.SwaggerGeneration.WebApi</a></p>
+<blockquote>
+<p>Swagger tooling for API’s built with ASP.NET Core. Generate beautiful API documentation, including a UI to explore and test operations, directly from your routes, controllers and models.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Swashbuckle.AspNetCore/">Swashbuckle.AspNetCore</a></p>
+<blockquote>
+<p>.NET models with JSON and YAML writers for OpenAPI specification</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.OpenApi">Microsoft.OpenApi</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.OpenApi.Readers/">Microsoft.OpenApi.Readers</a></p>
+<hr>
+<h2 id="Bot-Engine"><a href="#Bot-Engine" class="headerlink" title="Bot Engine"></a>Bot Engine</h2><blockquote>
+<p>Microsoft Bot Builder is a powerful framework for constructing bots that can handle both freeform interactions and more guided ones where the possibilities are explicitly shown to the user. It is easy to use and leverages C# to provide a natural way to write bots.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.Bot.Builder/">Microsoft.Bot.Builder</a></p>
+<hr>
+<h2 id="Machine-Learning"><a href="#Machine-Learning" class="headerlink" title="Machine Learning"></a>Machine Learning</h2><blockquote>
+<p>ML.NET is a cross-platform open-source machine learning framework which makes machine learning accessible to .NET developers.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Microsoft.ML/">Microsoft.ML</a></p>
+<blockquote>
+<p>.NET Bindings for TensorFlow</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/TensorFlowSharp/">TensorFlowSharp</a></p>
+<hr>
+<h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="Miscellaneous"></a>Miscellaneous</h2><blockquote>
+<p>Humanizer meets all your .NET needs for manipulating and displaying strings, enums, dates, times, timespans, numbers and quantities</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Humanizer">Humanizer</a></p>
+<blockquote>
+<p>(pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Dynamitey/">Dynamitey</a></p>
+<blockquote>
+<p>Enums.NET is a high-performance type-safe .NET enum utility library</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Enums.NET/">Enums.NET</a></p>
+<blockquote>
+<p>A fluent, portable URL builder. To make HTTP calls off the fluent chain, check out Flurl.Http.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Flurl/">Flurl</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Flurl.Http/">Flurl.Http</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Flurl.Http.Xml/">Flurl.Http.Xml</a></p>
+<blockquote>
+<p>Simple, reliable feature toggles in .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/FeatureToggle/">FeatureToggle</a></p>
+<blockquote>
+<p>A fast globbing library for .NET / .NETStandard applications. Outperforms Regex.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DotNet.Glob/">DotNet.Glob</a></p>
+<blockquote>
+<p>UnitConversion is designed to be expansible through factories or through concrete converter implementations.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/UnitConversion">UnitConversion</a></p>
+<blockquote>
+<p>Provides easy-to-use and robust fully distributed locks (using SQLServer) as well as wrappers for named system-wide locks (using WaitHandles)</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/DistributedLock">DistributedLock</a></p>
+<blockquote>
+<p>What you have been waiting for. Perform a deep compare of any two .NET objects using reflection. Shows the differences between the two objects.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/CompareNETObjects/">CompareNETObjects</a></p>
+<blockquote>
+<p>C# implementation of ua-parser</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/UAParser/">UAParser</a></p>
+<blockquote>
+<p>A library implementing different string similarity and distance measures.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/feature23/StringSimilarity.NET">StringSimilarity.NET</a></p>
+<blockquote>
+<p>Functional Extensions for C#</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/vkhorikov/CSharpFunctionalExtensions">CSharpFunctionalExtensions</a></p>
+<blockquote>
+<p>A powerful Dynamic Sql Query Builder supporting Sql Server, MySql, PostgreSql and Firebird</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/SqlKata">SqlKata</a></p>
+<blockquote>
+<p>Tiny.RestClient facilitates the dialog between your API and your application. It hides all the complexity of communication, deserialisation …</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Tiny.RestClient/">Tiny.RestClient</a></p>
+<blockquote>
+<p>An async-based GitHub API client library for .NET and .NET Core</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/octokit">Octokit</a></p>
+<blockquote>
+<p>Crontab for .NET</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/ncrontab">NCrontab</a></p>
+<blockquote>
+<p>Extensions to LINQ to Objects</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/morelinq/">MoreLINQ</a></p>
+<blockquote>
+<p>Utility libraries to interact with discs, filesystem formats and more</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Discutils/0.14.2-alpha">DiscUtils</a></p>
+<blockquote>
+<p>The client API for Event Store. Get the open source or commercial versions of Event Store server from <a target="_blank" rel="noopener" href="https://eventstore.org/">https://eventstore.org/</a></p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/EventStore.Client/">EventStore.Client</a></p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><blockquote>
+<p>Request/response Inspector middleware for ASP.NET Core. like Glimpse.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/Rin">Rin</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.nuget.org/packages/MiniProfiler/">MiniProfiler</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/dfederm/ReferenceTrimmer">ReferenceTrimmer</a></p>
+<hr>
+</div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/dotnet/">dotnet</a><a class="link-muted mr-2" rel="tag" href="/tags/awesome/">awesome</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/the-dotnet-world-guard/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">The .NET World - Guard</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/a-professional-asp.net-core-api-mini-profiler/"><span class="level-item">A Professional ASP.NET Core API - MiniProfiler</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/pic.png" alt="Hamed Fathi"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Hamed Fathi</p><p class="is-size-6 is-block">Senior Software Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Austria</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">30</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">86</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://twitter.com/Hamed__Fathi" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/hamedfathi"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="LinkedIn" href="https://www.linkedin.com/in/hamedfathi"><i class="fab fa-linkedin"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/Hamed__Fathi"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="StackOverflow" href="https://stackoverflow.com/users/3166171/hamedfathi"><i class="fab fa-stack-overflow"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Facebook" href="https://www.facebook.com/hamedfathi88"><i class="fab fa-facebook"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/aspnetcore/"><span class="level-start"><span class="level-item">aspnetcore</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/aspnetcore-api/"><span class="level-start"><span class="level-item">aspnetcore-api</span></span><span class="level-end"><span class="level-item tag">18</span></span></a></li><li><a class="level is-mobile" href="/categories/aurelia/"><span class="level-start"><span class="level-item">aurelia</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/dotnet/"><span class="level-start"><span class="level-item">dotnet</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/amqp/"><span class="tag">amqp</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/api/"><span class="tag">api</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/aspnetcore/"><span class="tag">aspnetcore</span><span class="tag">22</span></a></div><div class="control"><a class="tags has-addons" href="/tags/aurelia2/"><span class="tag">aurelia2</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/awesome/"><span class="tag">awesome</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/backgroundtask/"><span class="tag">backgroundtask</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/binding/"><span class="tag">binding</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bogus/"><span class="tag">bogus</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/bootstrap5/"><span class="tag">bootstrap5</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cache/"><span class="tag">cache</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/caching/"><span class="tag">caching</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/chai/"><span class="tag">chai</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cors/"><span class="tag">cors</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/csharp/"><span class="tag">csharp</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/csharp9/"><span class="tag">csharp9</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/css-in-js/"><span class="tag">css-in-js</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/default-interface-method/"><span class="tag">default-interface-method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/di/"><span class="tag">di</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/distributed/"><span class="tag">distributed</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dotnet/"><span class="tag">dotnet</span><span class="tag">26</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dotnet5/"><span class="tag">dotnet5</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/dryioc/"><span class="tag">dryioc</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/e2e/"><span class="tag">e2e</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/easynetq/"><span class="tag">easynetq</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/emotionjs/"><span class="tag">emotionjs</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/end-to-end/"><span class="tag">end-to-end</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/exception/"><span class="tag">exception</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/extension-method/"><span class="tag">extension-method</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/fakedata/"><span class="tag">fakedata</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/feature/"><span class="tag">feature</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/featureflag/"><span class="tag">featureflag</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/featuremanagement/"><span class="tag">featuremanagement</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/file/"><span class="tag">file</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/fluentvalidation/"><span class="tag">fluentvalidation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/guard/"><span class="tag">guard</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/header/"><span class="tag">header</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/health/"><span class="tag">health</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/healthcheck/"><span class="tag">healthcheck</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/healthy/"><span class="tag">healthy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hostedservices/"><span class="tag">hostedservices</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/inmemory/"><span class="tag">inmemory</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ioc/"><span class="tag">ioc</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/jest/"><span class="tag">jest</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/lerna/"><span class="tag">lerna</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/localization/"><span class="tag">localization</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/log/"><span class="tag">log</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/masstransit/"><span class="tag">masstransit</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/messagebroker/"><span class="tag">messagebroker</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/middleware/"><span class="tag">middleware</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/miniprofiler/"><span class="tag">miniprofiler</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mixon/"><span class="tag">mixon</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/mocha/"><span class="tag">mocha</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/model/"><span class="tag">model</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/modelbinding/"><span class="tag">modelbinding</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/monorepository/"><span class="tag">monorepository</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/openapi/"><span class="tag">openapi</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pagination/"><span class="tag">pagination</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/paging/"><span class="tag">paging</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pipeline/"><span class="tag">pipeline</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/plugin/"><span class="tag">plugin</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/polly/"><span class="tag">polly</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/profiler/"><span class="tag">profiler</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/puppeteer/"><span class="tag">puppeteer</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/queue/"><span class="tag">queue</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/rabbitmq/"><span class="tag">rabbitmq</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ratelimit/"><span class="tag">ratelimit</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/redis/"><span class="tag">redis</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/refit/"><span class="tag">refit</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/request/"><span class="tag">request</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/resiliency/"><span class="tag">resiliency</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/response/"><span class="tag">response</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/roslyn/"><span class="tag">roslyn</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/rss/"><span class="tag">rss</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/security/"><span class="tag">security</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sourcegenerator/"><span class="tag">sourcegenerator</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sqlserver/"><span class="tag">sqlserver</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/swagger/"><span class="tag">swagger</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/tailwindcss/"><span class="tag">tailwindcss</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/test/"><span class="tag">test</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/testdata/"><span class="tag">testdata</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/unhealthy/"><span class="tag">unhealthy</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/upload/"><span class="tag">upload</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/validation/"><span class="tag">validation</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/versioning/"><span class="tag">versioning</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/webapi/"><span class="tag">webapi</span><span class="tag">20</span></a></div><div class="control"><a class="tags has-addons" href="/tags/webpack/"><span class="tag">webpack</span><span class="tag">1</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-07-28T00:00:00.000Z">2023-07-28</time></p><p class="title"><a href="/the-dotnet-world-mixin/">The .NET World - Mixin</a></p><p class="categories"><a href="/categories/dotnet/">dotnet</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-12-08T00:00:00.000Z">2020-12-08</time></p><p class="title"><a href="/the-dotnet-world-csharp-source-generator/">The .NET World - C# Source Generator</a></p><p class="categories"><a href="/categories/dotnet/">dotnet</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-11-09T00:00:00.000Z">2020-11-09</time></p><p class="title"><a href="/write-a-custom-plugin-with-aurelia-2-and-lerna/">Write a custom plugin with Aurelia 2 and Lerna</a></p><p class="categories"><a href="/categories/aurelia/">aurelia</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-23T00:00:00.000Z">2020-10-23</time></p><p class="title"><a href="/a-professional-asp.net-core-api-rabbitmq/">A Professional ASP.NET Core API - RabbitMQ</a></p><p class="categories"><a href="/categories/aspnetcore-api/">aspnetcore-api</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2020-10-22T00:00:00.000Z">2020-10-22</time></p><p class="title"><a href="/a-professional-asp.net-core-rss/">A Professional ASP.NET Core - RSS</a></p><p class="categories"><a href="/categories/aspnetcore/">aspnetcore</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/07/"><span class="level-start"><span class="level-item">July 2023</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/12/"><span class="level-start"><span class="level-item">December 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/11/"><span class="level-start"><span class="level-item">November 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/10/"><span class="level-start"><span class="level-item">October 2020</span></span><span class="level-end"><span class="level-item tag">11</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/09/"><span class="level-start"><span class="level-item">September 2020</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/08/"><span class="level-start"><span class="level-item">August 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/07/"><span class="level-start"><span class="level-item">July 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/archives/2020/04/"><span class="level-start"><span class="level-item">April 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Hamed Fathi&#039;s Blog</a><p class="is-size-7"><span>&copy; 2023 Hamed Fathi</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
