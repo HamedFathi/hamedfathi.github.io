@@ -21,6 +21,8 @@ Pros:
 
 4. **Avoiding Class Explosion**: In languages or scenarios where multiple inheritances are not allowed or lead to complexity, mixins can add class functionality without creating new subclasses for every possible combination of behaviours.
 
+<!-- more -->
+
 Cons:
 
 1. **Complexity**: Mixins can increase complexity, as it may take time to determine where a particular method or property is defined. Using multiple mixins can lead to problems understanding the flow and interaction of different class functionalities.
