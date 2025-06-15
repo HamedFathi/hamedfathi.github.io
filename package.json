@@ -1,35 +1,36 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server"
+  "name": "my-portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Modern portfolio template with animations and glassmorphism effects",
+  "author": "Rishikesh S",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rishikesh2003/my-portfolio"
   },
-  "hexo": {
-    "version": "6.0.0"
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "bulma-stylus": "^0.8.0",
-    "hexo": "^6.0.0",
-    "hexo-component-inferno": "^2.0.2",
-    "hexo-generator-archive": "^1.0.0",
-    "hexo-generator-category": "^1.0.0",
-    "hexo-generator-index": "^2.0.0",
-    "hexo-generator-json-content": "^4.2.3",
-    "hexo-generator-tag": "^1.0.0",
-    "hexo-log": "^3.0.0",
-    "hexo-pagination": "^2.0.0",
-    "hexo-renderer-ejs": "^1.0.0",
-    "hexo-renderer-inferno": "^0.1.3",
-    "hexo-renderer-marked": "^4.0.0",
-    "hexo-renderer-stylus": "^2.0.0",
-    "hexo-server": "^2.0.0",
-    "hexo-theme-landscape": "^0.0.3",
-    "hexo-wordcount": "^6.0.1",
-    "inferno": "^7.3.3",
-    "inferno-create-element": "^7.3.3"
+    "@astrojs/react": "^4.2.1",
+    "@radix-ui/react-slot": "^1.1.2",
+    "@tailwindcss/vite": "^4.0.14",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "aos": "^2.3.4",
+    "astro": "^5.5.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.5.0",
+    "lucide-react": "^0.483.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.14",
+    "tw-animate-css": "^1.2.4"
   }
 }
