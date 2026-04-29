@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "Hamed Fathi",
-  location: "Vienna, Austria",
+  location: "Amsterdam, Netherlands",
   github: "https://github.com/HamedFathi",
   linkedin: "https://www.linkedin.com/in/hamedfathi/",
   youtube: "https://www.youtube.com/@HamedFathiTech"
